@@ -19,6 +19,8 @@ __all__ = [
     "CotacaoFornecedor",
     "EtapaProducao",
     "ContratacaoServico",
+    "EntregaServico",
 ]
 from backend.app.models.ordem_servico import OrdemServico
 from backend.app.models.etapa_producao import EtapaProducao
+from backend.app.models.entrega import EntregaServico

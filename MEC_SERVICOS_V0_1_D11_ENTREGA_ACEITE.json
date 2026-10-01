@@ -1,0 +1,25 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D11-ENTREGA-ACEITE-2026-10-01",
+  "ast_ok": true,
+  "metadata_preflight_ok": true,
+  "table_entregas_servico": true,
+  "supplier_delivery_only": true,
+  "client_accept_reject_only": true,
+  "rejection_requires_reason": true,
+  "accepted_delivery_closes_order": true,
+  "accepted_delivery_closes_contract": true,
+  "rejected_delivery_allows_new_delivery": true,
+  "database_changed": true,
+  "database_already_migrated": false,
+  "changed": [
+    "backend\\app\\models\\entrega.py",
+    "backend\\app\\repositories\\entrega.py",
+    "backend\\app\\schemas\\entrega.py",
+    "backend\\app\\services\\entrega.py",
+    "backend\\app\\api\\rotas\\entregas.py",
+    "tests\\test_entregas.py",
+    "backend\\app\\models\\__init__.py",
+    "backend\\app\\api\\roteador.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D11_ENTREGA_ACEITE_20261001_093743"
+}
