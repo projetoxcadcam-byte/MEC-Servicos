@@ -30,3 +30,5 @@ from backend.app.api.rotas.pagamentos import roteador as roteador_pagamentos
 roteador_api.include_router(roteador_pagamentos)
 from backend.app.api.rotas.integracao_pagamentos import roteador as roteador_integracao_pagamentos
 roteador_api.include_router(roteador_integracao_pagamentos)
+from backend.app.api.rotas.avaliacoes import roteador as roteador_avaliacoes
+roteador_api.include_router(roteador_avaliacoes)

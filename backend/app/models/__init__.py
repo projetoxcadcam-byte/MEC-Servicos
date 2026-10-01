@@ -30,3 +30,4 @@ from backend.app.models.entrega import EntregaServico
 from backend.app.models.pagamento import PagamentoContratacao
 from backend.app.models.intencao_pagamento import IntencaoPagamento
 from backend.app.models.evento_gateway_pagamento import EventoGatewayPagamento
+from backend.app.models.avaliacao import AvaliacaoOficina
