@@ -1,0 +1,39 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D13-INTEGRACAO-PAGAMENTOS-2026-10-01",
+  "ast_ok": true,
+  "d12_baseline_ok": true,
+  "table_intencoes_pagamento": true,
+  "table_eventos_gateway_pagamento": true,
+  "database": {
+    "database_exists": true,
+    "database_changed": true,
+    "database_already_migrated": false,
+    "rows_intencoes": 0,
+    "rows_eventos": 0
+  },
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D13_INTEGRACAO_PAGAMENTOS_20261001_100932",
+  "backed_up": 5,
+  "changed_files": [
+    "backend/app/integracoes/__init__.py",
+    "backend/app/integracoes/pagamento.py",
+    "backend/app/models/intencao_pagamento.py",
+    "backend/app/models/evento_gateway_pagamento.py",
+    "backend/app/repositories/intencao_pagamento.py",
+    "backend/app/schemas/intencao_pagamento.py",
+    "backend/app/services/integracao_pagamento.py",
+    "backend/app/api/rotas/integracao_pagamentos.py",
+    "tests/test_integracao_pagamentos.py",
+    "backend/app/models/__init__.py",
+    "backend/app/api/roteador.py",
+    "README.md",
+    "docs/README.md"
+  ],
+  "gateway_abstraction": true,
+  "fake_gateway": true,
+  "idempotency": true,
+  "signed_webhook": true,
+  "webhook_event_idempotency": true,
+  "success_event_creates_d12_payment": true,
+  "failed_event_preserves_no_payment": true,
+  "external_real_gateway": false
+}

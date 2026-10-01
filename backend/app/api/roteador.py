@@ -26,3 +26,7 @@ roteador_api.include_router(ordens_servico_router)
 roteador_api.include_router(roteador_etapas_producao)
 from backend.app.api.rotas.entregas import roteador as roteador_entregas
 roteador_api.include_router(roteador_entregas)
+from backend.app.api.rotas.pagamentos import roteador as roteador_pagamentos
+roteador_api.include_router(roteador_pagamentos)
+from backend.app.api.rotas.integracao_pagamentos import roteador as roteador_integracao_pagamentos
+roteador_api.include_router(roteador_integracao_pagamentos)

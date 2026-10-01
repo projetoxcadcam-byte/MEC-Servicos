@@ -20,7 +20,13 @@ __all__ = [
     "EtapaProducao",
     "ContratacaoServico",
     "EntregaServico",
+    "PagamentoContratacao",
+    "IntencaoPagamento",
+    "EventoGatewayPagamento",
 ]
 from backend.app.models.ordem_servico import OrdemServico
 from backend.app.models.etapa_producao import EtapaProducao
 from backend.app.models.entrega import EntregaServico
+from backend.app.models.pagamento import PagamentoContratacao
+from backend.app.models.intencao_pagamento import IntencaoPagamento
+from backend.app.models.evento_gateway_pagamento import EventoGatewayPagamento

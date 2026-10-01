@@ -117,3 +117,35 @@ python -m uvicorn backend.app.principal:app --reload
 ## V0.1 D9 — Ordem de Serviço
 
 A contratação ativa pode gerar uma ordem de serviço única, com ciclo `aberta`, `em_execucao`, `concluida` ou `cancelada`.
+
+## D12 — Pagamentos
+
+Nesta etapa foi criado o núcleo financeiro da contratação:
+
+- registro de pagamentos parciais ou integrais;
+- cálculo de total pago e saldo;
+- status financeiro `pendente`, `parcial`, `pago` e `cancelado`;
+- formas de pagamento controladas;
+- bloqueio de pagamento acima do saldo;
+- bloqueio de pagamento para contratação cancelada;
+- cancelamento de lançamento preservando o histórico;
+- consulta do histórico de pagamentos;
+- resumo financeiro por contratação.
+
+O D12 registra o **livro financeiro interno da contratação**. Não integra gateway, banco ou adquirente externo nesta etapa.
+
+## D13 — Integração de Pagamentos
+
+Nesta etapa foi criada a camada de integração de pagamentos, mantendo o D12 como livro financeiro interno:
+
+- intenção de pagamento vinculada à contratação;
+- gateway abstrato com implementação `fake` para testes;
+- chave de idempotência para evitar duplicação de cobranças;
+- `external_payment_id` do provedor;
+- webhook assinado;
+- processamento idempotente de eventos;
+- evento `payment.succeeded` convertendo a intenção em lançamento D12;
+- eventos `payment.failed` e `payment.cancelled`;
+- separação entre intenção de pagamento, evento do gateway e lançamento financeiro.
+
+A integração externa real permanece desacoplada do domínio e poderá ser adicionada posteriormente por um adaptador de provedor.

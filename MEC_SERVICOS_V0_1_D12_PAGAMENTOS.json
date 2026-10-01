@@ -1,0 +1,34 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D12-PAGAMENTOS-2026-10-01",
+  "head_expected": "c0367b3",
+  "ast_ok": true,
+  "table_pagamentos_contratacao": true,
+  "orm_table_created": true,
+  "database": {
+    "database_exists": true,
+    "database_changed": true,
+    "database_already_migrated": false,
+    "rows_existing": 0
+  },
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D12_PAGAMENTOS_20261001_100035",
+  "backed_up": 5,
+  "changed_files": [
+    "backend/app/models/pagamento.py",
+    "backend/app/repositories/pagamento.py",
+    "backend/app/schemas/pagamento.py",
+    "backend/app/services/pagamento.py",
+    "backend/app/api/rotas/pagamentos.py",
+    "tests/test_pagamentos.py",
+    "backend/app/models/__init__.py",
+    "backend/app/api/roteador.py",
+    "README.md",
+    "docs/README.md"
+  ],
+  "internal_financial_ledger_only": true,
+  "partial_payments": true,
+  "balance_calculation": true,
+  "overpayment_blocked": true,
+  "cancelled_contract_payment_blocked": true,
+  "payment_cancellation_preserves_history": true,
+  "external_gateway_integration": false
+}
