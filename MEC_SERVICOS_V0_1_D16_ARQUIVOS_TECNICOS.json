@@ -1,0 +1,70 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D16-ARQUIVOS-TECNICOS-2026-10-01",
+  "timestamp_local": "2026-10-01T11:38:54-03:00",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "d15_baseline_ok": true,
+  "ast_ok": true,
+  "missing": [],
+  "ast_errors": [],
+  "table_arquivos_tecnicos": true,
+  "database": {
+    "database_changed": true,
+    "database_already_migrated": false,
+    "rows_existing": 0,
+    "table": "arquivos_tecnicos"
+  },
+  "database_changed": true,
+  "database_already_migrated": false,
+  "backed_up": 4,
+  "changed_files": [
+    "backend/app/models/arquivo_tecnico.py",
+    "backend/app/repositories/arquivo_tecnico.py",
+    "backend/app/schemas/arquivo_tecnico.py",
+    "backend/app/services/arquivo_tecnico.py",
+    "backend/app/api/rotas/arquivos_tecnicos.py",
+    "tests/test_arquivos_tecnicos.py",
+    "backend/app/api/roteador.py",
+    "backend/app/models/__init__.py",
+    "requirements.txt"
+  ],
+  "storage": {
+    "backend": "local_filesystem",
+    "directory": "storage/arquivos_tecnicos",
+    "allowed_extensions": [
+      ".step",
+      ".stp",
+      ".iges",
+      ".igs",
+      ".dxf",
+      ".dwg",
+      ".pdf"
+    ],
+    "max_size_mb": 100,
+    "sha256": true,
+    "logical_unlink": true,
+    "physical_delete": false
+  },
+  "security": {
+    "generated_physical_filename": true,
+    "path_traversal_protection": true,
+    "streaming_upload": true
+  },
+  "dependencies": {
+    "python_multipart_required": true,
+    "python_multipart_installed": false
+  },
+  "not_in_scope": {
+    "cad_parser": false,
+    "viewer": false,
+    "s3": false
+  },
+  "endpoints": [
+    "POST /api/v1/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+    "GET /api/v1/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+    "GET /api/v1/arquivos-tecnicos/{arquivo_id}",
+    "GET /api/v1/arquivos-tecnicos/{arquivo_id}/download",
+    "DELETE /api/v1/arquivos-tecnicos/{arquivo_id}"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D16_ARQUIVOS_TECNICOS_20261001_113854"
+}

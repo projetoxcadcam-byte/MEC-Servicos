@@ -34,3 +34,5 @@ from backend.app.api.rotas.avaliacoes import roteador as roteador_avaliacoes
 roteador_api.include_router(roteador_avaliacoes)
 from backend.app.api.rotas.ranking_fornecedores import roteador as roteador_ranking_fornecedores
 roteador_api.include_router(roteador_ranking_fornecedores)
+from backend.app.api.rotas.arquivos_tecnicos import roteador as roteador_arquivos_tecnicos
+roteador_api.include_router(roteador_arquivos_tecnicos)

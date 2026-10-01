@@ -1,0 +1,276 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D16-DIAGNOSTICO-ARQUIVOS-TECNICOS-FIX1-ROOT-VALIDATION-2026-10-01",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "generated_at": "2026-10-01T11:07:28.451705-03:00",
+  "targets": {},
+  "d15": {
+    "expected_files_present": true,
+    "files": {
+      "MEC_SERVICOS_V0_1_D15_RANKING_FORNECEDORES.py": {
+        "exists": true,
+        "sha256": "c572052697ea37c4905b71450df9adb6be03d2aa4e6019fc42d297995fd2d972",
+        "ast_ok": true
+      },
+      "MEC_SERVICOS_V0_1_D15_RANKING_FORNECEDORES.json": {
+        "exists": true,
+        "sha256": "b3f7de6d5eac88a2f89fc6cf5ef879ac3082ab866b4353641c6f8fe021ddcc73"
+      },
+      "MEC_SERVICOS_V0_1_D15_RANKING_FORNECEDORES_RELATORIO.txt": {
+        "exists": true,
+        "sha256": "a5e291f920e8eb6a4cbd56bed085adbb2f34c439b4c0ebf836e810665ba0509a"
+      },
+      "backend/app/api/rotas/ranking_fornecedores.py": {
+        "exists": true,
+        "sha256": "3ac51518dc6c9909b8507861808e5bc762d77e982ad4cbe5a324c84989d0c99d",
+        "ast_ok": true
+      },
+      "backend/app/repositories/ranking_fornecedor.py": {
+        "exists": true,
+        "sha256": "95b25c0c5f119d94187a251ea53be5ee5ffff361737bac5db8647b2d2777d330",
+        "ast_ok": true
+      },
+      "backend/app/schemas/ranking_fornecedor.py": {
+        "exists": true,
+        "sha256": "e2c1f1f76b9ab342999d5fc81f6e958763be2ce2f94252637efaa5e2cebee968",
+        "ast_ok": true
+      },
+      "backend/app/services/ranking_fornecedor.py": {
+        "exists": true,
+        "sha256": "d39aede04699c5454fb641f20ce299f4d35a69146f6499993f23b5adbab4dbcb",
+        "ast_ok": true
+      },
+      "tests/test_ranking_fornecedores.py": {
+        "exists": true,
+        "sha256": "dee7a377a1d40bad8b191238e9b7fa81aaf7942a5679f64b0edfcc2bb48c25f7",
+        "ast_ok": true
+      }
+    }
+  },
+  "git": {
+    "branch": "main",
+    "head": "9e1d61b",
+    "tags_at_head": "v0.1.0-d15",
+    "status": "?? CGX_diagnostico_MOLD_COOLING_BUBBLERS_v0_8_9.py\n?? MEC_SERVICOS_V0_1_D16_DIAGNOSTICO_ARQUIVOS_TECNICOS.py\n?? MEC_SERVICOS_V0_1_D16_DIAGNOSTICO_ARQUIVOS_TECNICOS_FIX1.py\n?? README_MOLD_CORE_v0_8_9.md\n?? src/\n?? tests/mold/",
+    "clean": false
+  },
+  "dependencies": {
+    "fastapi": "0.142.2",
+    "sqlalchemy": "2.1.1",
+    "python_multipart": "missing_or_error: No module named 'multipart'"
+  },
+  "architecture": {
+    "backend/app/database/base.py": {
+      "exists": true,
+      "sha256": "169ee7e047f140ec73aa6df8f83fab632bbad0ff3c7995087b008134ffc8b9ce",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": true,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/database/sessao.py": {
+      "exists": true,
+      "sha256": "0eb809448955331d1ce4b65e06153882bd5f523e839f6736f66ca323c54c658a",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": false,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/principal.py": {
+      "exists": true,
+      "sha256": "7a4a04cbaae7e0b99e2acae3a4c7c031d494e108184c699e35ab431c4898db48",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": false,
+        "create_all": false,
+        "FastAPI": true,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": true
+      }
+    },
+    "backend/app/api/roteador.py": {
+      "exists": true,
+      "sha256": "20d7cad120486c4ad0d928d3d071595a9f40be19b09070945c88dc1412dbba2d",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": false,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": true,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": true
+      }
+    },
+    "backend/app/models/__init__.py": {
+      "exists": true,
+      "sha256": "3e2fc87d85a76f4ba02a0b847dbbca3a4ad776e3d9e3c04bbced76d6f04435ce",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": false,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/models/solicitacao.py": {
+      "exists": true,
+      "sha256": "5e975e2300c7474b8d0dcf03f08594b1b9ec57a1c8c3c1f82120870c5ef8fadd",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": true,
+        "class Empresa": false,
+        "__tablename__": true,
+        "Base": true,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/schemas/solicitacao.py": {
+      "exists": true,
+      "sha256": "460c40a287e1d32e10d29545b8fbd53af040f22b4201fb5a3f1403ca0e9f3a5e",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": true,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": true,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/services/solicitacao.py": {
+      "exists": false
+    },
+    "backend/app/repositories/solicitacao.py": {
+      "exists": false
+    },
+    "backend/app/models/empresa.py": {
+      "exists": true,
+      "sha256": "56f2bdbc9930627574ee50b1a19624a903e43ddb330a75dc1c5355b8f5e78730",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": true,
+        "__tablename__": true,
+        "Base": true,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": false,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    },
+    "backend/app/api/rotas/solicitacoes.py": {
+      "exists": true,
+      "sha256": "10765d225ffa1204ec535eaa9ce9100c8a2a66f693cc19d3fd40fbd845a43ef5",
+      "ast_ok": true,
+      "tokens": {
+        "class SolicitacaoServico": false,
+        "class Empresa": false,
+        "__tablename__": false,
+        "Base": false,
+        "create_all": false,
+        "FastAPI": false,
+        "APIRouter": true,
+        "UploadFile": false,
+        "File(": false,
+        "multipart": false,
+        "Form(": false,
+        "FileResponse": false,
+        "StreamingResponse": false,
+        "include_router": false
+      }
+    }
+  },
+  "safety": {
+    "allowed_extensions": [
+      ".step",
+      ".stp",
+      ".iges",
+      ".igs",
+      ".dxf",
+      ".dwg",
+      ".pdf"
+    ],
+    "max_size_mb_initial": 100,
+    "hash": "SHA-256",
+    "physical_delete_on_unlink": false,
+    "initial_backend": "local_filesystem",
+    "future_backend": "S3_or_cloud_storage",
+    "cad_parser_in_d16": false,
+    "viewer_in_d16": false
+  }
+}
