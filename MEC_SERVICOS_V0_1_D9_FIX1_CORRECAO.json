@@ -1,0 +1,22 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D9-FIX1-CORRECAO-BASELINE-2026-10-01",
+  "files_checked": [
+    "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\backend\\app\\models\\ordem_servico.py",
+    "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\backend\\app\\api\\rotas\\ordens_servico.py",
+    "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\backend\\app\\api\\roteador.py",
+    "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\test_ordens_servico.py"
+  ],
+  "changed": [
+    "backend\\app\\models\\ordem_servico.py",
+    "backend\\app\\api\\rotas\\ordens_servico.py",
+    "tests\\test_ordens_servico.py",
+    "backend\\app\\api\\roteador.py"
+  ],
+  "ast_ok": true,
+  "metadata_preflight_ok": true,
+  "process_table": "processos_fabricacao",
+  "process_model": "ProcessoFabricacao",
+  "ordem_router_registered": true,
+  "ordem_router_prefix": "",
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D9_FIX1_20261001_090307"
+}

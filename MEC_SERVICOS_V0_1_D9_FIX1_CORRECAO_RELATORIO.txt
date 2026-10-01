@@ -1,0 +1,13 @@
+Plataforma de Serviços Mecânicos — D9 FIX1
+REVISION= MEC-SERVICOS-V0.1-D9-FIX1-CORRECAO-BASELINE-2026-10-01
+ROOT= C:\Users\Omega\Desktop\MEC-Servicos
+AST_OK= True
+METADATA_PREFLIGHT_OK= True
+PROCESS_TABLE= processos_fabricacao
+PROCESS_MODEL= ProcessoFabricacao
+ORDEM_ROUTER_REGISTERED= True
+ORDEM_ROUTER_PREFIX= ''
+CHANGED= 4
+BACKUP_DIR= C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\V0_1_D9_FIX1_20261001_090307
+REPORT= C:\Users\Omega\Desktop\MEC-Servicos\MEC_SERVICOS_V0_1_D9_FIX1_CORRECAO_RELATORIO.txt
+JSON= C:\Users\Omega\Desktop\MEC-Servicos\MEC_SERVICOS_V0_1_D9_FIX1_CORRECAO.json

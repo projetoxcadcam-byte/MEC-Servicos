@@ -19,3 +19,4 @@ __all__ = [
     "CotacaoFornecedor",
     "ContratacaoServico",
 ]
+from backend.app.models.ordem_servico import OrdemServico

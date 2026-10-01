@@ -19,4 +19,6 @@ roteador_api.include_router(roteador_capacidades)
 roteador_api.include_router(roteador_solicitacoes)
 roteador_api.include_router(roteador_cotacoes)
 from backend.app.api.rotas.contratacoes import roteador as roteador_contratacoes
+from backend.app.api.rotas.ordens_servico import roteador as ordens_servico_router
 roteador_api.include_router(roteador_contratacoes)
+roteador_api.include_router(ordens_servico_router)

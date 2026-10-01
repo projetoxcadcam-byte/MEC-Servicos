@@ -113,3 +113,7 @@ python -m uvicorn backend.app.principal:app --reload
 - `http://127.0.0.1:8000/api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/aceitar`
 - `http://127.0.0.1:8000/api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/recusar`
 - `http://127.0.0.1:8000/docs`
+
+## V0.1 D9 — Ordem de Serviço
+
+A contratação ativa pode gerar uma ordem de serviço única, com ciclo `aberta`, `em_execucao`, `concluida` ou `cancelada`.
