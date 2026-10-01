@@ -1,0 +1,55 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D4-CAPACIDADE-TECNICA-2026-10-01",
+  "status": "OK",
+  "d3_baseline_verified": true,
+  "files_ok": true,
+  "ast_ok": true,
+  "changed": [
+    "README.md",
+    "backend/app/models/__init__.py",
+    "backend/app/database/inicializacao.py",
+    "backend/app/api/roteador.py",
+    "backend/app/repositories/__init__.py",
+    "backend/app/schemas/__init__.py"
+  ],
+  "created": [
+    "backend/app/models/processo.py",
+    "backend/app/models/material.py",
+    "backend/app/models/capacidade.py",
+    "backend/app/models/maquina.py",
+    "backend/app/models/material_fornecedor.py",
+    "backend/app/schemas/processo.py",
+    "backend/app/schemas/material.py",
+    "backend/app/schemas/capacidade.py",
+    "backend/app/repositories/capacidade.py",
+    "backend/app/services/capacidade.py",
+    "backend/app/api/rotas/capacidades.py",
+    "tests/test_capacidade_tecnica.py",
+    "backend/app/api/rotas/processos.py",
+    "backend/app/api/rotas/materiais.py"
+  ],
+  "backed_up": [
+    "data\\mec_servicos.db"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D4_CAPACIDADE_TECNICA_20261001_062311",
+  "missing": [],
+  "ast_errors": [],
+  "new_tables": [
+    "processos_fabricacao",
+    "materiais",
+    "capacidades_fornecedor",
+    "maquinas",
+    "materiais_fornecedor"
+  ],
+  "units": {
+    "dimensions": "mm",
+    "dimension_decimals": 3,
+    "tolerance": "mm",
+    "tolerance_decimals": 4
+  },
+  "next": [
+    "python -m pytest",
+    "python -m uvicorn backend.app.principal:app --reload"
+  ]
+}

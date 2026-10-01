@@ -1,0 +1,52 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D6-COTACOES-FORNECEDORES-2026-10-01",
+  "script": "MEC_SERVICOS_V0_1_D6_COTACOES_FORNECEDORES.py",
+  "timestamp_local": "2026-10-01T06:56:57-03:00",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "status": "OK",
+  "d5_baseline_verified": true,
+  "files_ok": true,
+  "ast_ok": true,
+  "changed": [
+    "README.md",
+    "backend/app/models/__init__.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/api/roteador.py"
+  ],
+  "created": [
+    "backend/app/models/cotacao.py",
+    "backend/app/schemas/cotacao.py",
+    "backend/app/repositories/cotacao.py",
+    "backend/app/services/cotacao.py",
+    "backend/app/api/rotas/cotacoes.py",
+    "tests/test_cotacoes.py"
+  ],
+  "backed_up": [
+    "data\\mec_servicos.db",
+    "README.md",
+    "backend/app/models/__init__.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/api/roteador.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D6_COTACOES_FORNECEDORES_20261001_065657",
+  "missing": [],
+  "content_mismatch": [],
+  "ast_errors": [],
+  "database_changed_by_script": false,
+  "database_backup_created": true,
+  "new_table": "cotacoes_fornecedor",
+  "new_endpoints": [
+    "POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes",
+    "GET /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes"
+  ],
+  "commercial_rules": [
+    "somente fornecedor ou ambos pode enviar cotação",
+    "fornecedor deve ser tecnicamente compatível com a solicitação",
+    "uma solicitação admite no máximo uma cotação por fornecedor",
+    "valor total deve ser maior que zero",
+    "prazo deve ser maior que zero",
+    "validade deve ser maior que zero"
+  ],
+  "commercial_decision": "aceite, recusa, negociação e contratação não implementados no D6"
+}

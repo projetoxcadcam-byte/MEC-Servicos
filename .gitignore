@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Testes e ferramentas
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# IDE e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dados e execução local
+storage/
+uploads/
+logs/
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Artefatos de compilação
+build/
+dist/
+*.egg-info/
+
+# Backups locais das migra��es
+_mec_backups/

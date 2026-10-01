@@ -1,0 +1,54 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D7-DECISAO-COTACOES-2026-10-01",
+  "script": "MEC_SERVICOS_V0_1_D7_DECISAO_COTACOES.py",
+  "timestamp_local": "2026-10-01T07:13:10-03:00",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "status": "OK",
+  "d6_baseline_verified": true,
+  "files_ok": true,
+  "ast_ok": true,
+  "changed": [
+    "README.md",
+    "backend/app/models/cotacao.py",
+    "backend/app/schemas/cotacao.py",
+    "backend/app/repositories/cotacao.py",
+    "backend/app/services/cotacao.py",
+    "backend/app/api/rotas/cotacoes.py",
+    "tests/test_cotacoes.py"
+  ],
+  "backed_up": [
+    "data\\mec_servicos.db",
+    "README.md",
+    "backend/app/models/cotacao.py",
+    "backend/app/schemas/cotacao.py",
+    "backend/app/repositories/cotacao.py",
+    "backend/app/services/cotacao.py",
+    "backend/app/api/rotas/cotacoes.py",
+    "tests/test_cotacoes.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D7_DECISAO_COTACOES_20261001_071310",
+  "missing": [],
+  "content_mismatch": [],
+  "ast_errors": [],
+  "database_migration": {
+    "database_exists": true,
+    "database_migrated": true,
+    "already_migrated": false,
+    "rows_preserved": 1,
+    "cotacao_1_preserved": true,
+    "error": null
+  },
+  "database_changed_by_script": true,
+  "lifecycle_statuses": [
+    "enviada",
+    "aceita",
+    "recusada",
+    "expirada",
+    "cancelada"
+  ],
+  "new_endpoints": [
+    "POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/aceitar",
+    "POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/recusar"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D3-FIX1-PORTUGUES-2026-09-30",
+  "status": "CONFLICT",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "baseline_files_present": 35,
+  "conflicts": [
+    ".env.example",
+    ".gitignore",
+    "README.md",
+    "backend/__init__.py",
+    "backend/app/__init__.py",
+    "backend/app/api/__init__.py",
+    "backend/app/auth/__init__.py",
+    "backend/app/database/__init__.py",
+    "backend/app/models/__init__.py",
+    "backend/app/repositories/__init__.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/services/__init__.py",
+    "docs/README.md"
+  ],
+  "message": "Nenhum arquivo foi alterado."
+}

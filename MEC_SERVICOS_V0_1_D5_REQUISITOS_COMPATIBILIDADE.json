@@ -1,0 +1,67 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D5-REQUISITOS-COMPATIBILIDADE-2026-10-01",
+  "script": "MEC_SERVICOS_V0_1_D5_REQUISITOS_COMPATIBILIDADE.py",
+  "timestamp_local": "2026-10-01T06:43:44-03:00",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "status": "OK",
+  "d4_baseline_verified": true,
+  "files_ok": true,
+  "ast_ok": true,
+  "changed": [
+    "README.md",
+    "backend/app/api/roteador.py",
+    "backend/app/models/__init__.py",
+    "backend/app/schemas/__init__.py"
+  ],
+  "created": [
+    "backend/app/api/rotas/solicitacoes.py",
+    "backend/app/models/solicitacao.py",
+    "backend/app/repositories/compatibilidade.py",
+    "backend/app/schemas/solicitacao.py",
+    "backend/app/services/compatibilidade.py",
+    "tests/test_compatibilidade_fornecedores.py"
+  ],
+  "already_target": [],
+  "backed_up": [
+    "data\\mec_servicos.db",
+    "README.md",
+    "backend/app/api/roteador.py",
+    "backend/app/models/__init__.py",
+    "backend/app/schemas/__init__.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D5_REQUISITOS_COMPATIBILIDADE_20261001_064344",
+  "missing": [],
+  "content_mismatch": [],
+  "ast_errors": [],
+  "database_changed_by_script": false,
+  "database_backup_created": true,
+  "new_table": "solicitacoes_servico",
+  "new_endpoints": [
+    "POST /api/v1/solicitacoes-servico",
+    "GET /api/v1/solicitacoes-servico/{solicitacao_id}",
+    "GET /api/v1/solicitacoes-servico/{solicitacao_id}/fornecedores-compativeis"
+  ],
+  "compatibility_rules": [
+    "empresa fornecedora deve ser do tipo fornecedor ou ambos",
+    "processo do fornecedor deve ser igual ao processo solicitado",
+    "material deve estar vinculado ao fornecedor",
+    "X requerido <= X máximo do fornecedor",
+    "Y requerido <= Y máximo do fornecedor",
+    "Z requerido <= Z máximo do fornecedor",
+    "tolerância mínima do fornecedor <= tolerância requerida"
+  ],
+  "dimensional_rotation": "não implementada nesta etapa",
+  "target_hashes_sha256": {
+    "README.md": "2309f71cf0c636a4ff235e24ac7f13d15c59d9757651b8919e496b286c65d935",
+    "backend/app/api/roteador.py": "ff0e3dba0951da5bd9ae51ef0707712985e9920c580936a5d8016cd68e2ec6b5",
+    "backend/app/models/__init__.py": "04c72bd89788d578561f7acd7318117517e54eb64ced9952728f9c6ab01fc684",
+    "backend/app/schemas/__init__.py": "6d2eba99bbbc5d43b31c073b8c4485ea3799c98e782d5d7677001e7d95638326",
+    "backend/app/api/rotas/solicitacoes.py": "10765d225ffa1204ec535eaa9ce9100c8a2a66f693cc19d3fd40fbd845a43ef5",
+    "backend/app/models/solicitacao.py": "5e975e2300c7474b8d0dcf03f08594b1b9ec57a1c8c3c1f82120870c5ef8fadd",
+    "backend/app/repositories/compatibilidade.py": "49fc99c0af6d702a574eb9d7a55367db2f8cd6c717169b89f90bf8836433377e",
+    "backend/app/schemas/solicitacao.py": "460c40a287e1d32e10d29545b8fbd53af040f22b4201fb5a3f1403ca0e9f3a5e",
+    "backend/app/services/compatibilidade.py": "cc00cb2d08c1d910250b8b4da12058e7500d9b69eedb864f35b0421e63eced6b",
+    "tests/test_compatibilidade_fornecedores.py": "521f5543d8114e04e71742d777d9d5e9d85811d855ebe003ee07c30a0e6df688"
+  }
+}

@@ -1,0 +1,64 @@
+Plataforma de Serviços Mecânicos — V0.1 D1 Bootstrap
+REVISION=MEC-SERVICOS-V0.1-D1-BOOTSTRAP-2026-09-30
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+CGX_GUARD_OK=True
+FILES_OK=True
+AST_OK=True
+CONFLICTS=0
+MISSING=0
+
+CREATED:
+  .env.example
+  .gitignore
+  README.md
+  backend/__init__.py
+  backend/app/__init__.py
+  backend/app/api/__init__.py
+  backend/app/api/router.py
+  backend/app/api/routes/__init__.py
+  backend/app/api/routes/health.py
+  backend/app/auth/__init__.py
+  backend/app/core/__init__.py
+  backend/app/core/config.py
+  backend/app/database/__init__.py
+  backend/app/main.py
+  backend/app/models/__init__.py
+  backend/app/repositories/__init__.py
+  backend/app/schemas/__init__.py
+  backend/app/services/__init__.py
+  docs/README.md
+  pyproject.toml
+  requirements.txt
+  tests/__init__.py
+  tests/test_health.py
+
+IDENTICAL_EXISTING:
+  (none)
+
+CONFLICTS_NOT_OVERWRITTEN:
+  (none)
+
+MISSING_FILES:
+  (none)
+
+AST_ERRORS:
+  (none)
+
+DEPENDENCIES:
+  fastapi=MISSING
+  uvicorn=MISSING
+  pydantic_settings=MISSING
+  pytest=MISSING
+  httpx=MISSING
+
+NEXT:
+  1. Criar/ativar .venv, se ainda nao existir.
+  2. python -m pip install -r requirements.txt
+  3. python -m pytest
+  4. python -m uvicorn backend.app.main:app --reload
+
+OBSERVACAO:
+  O bootstrap nao sobrescreve arquivos existentes com conteudo diferente.
+  Se CONFLICTS > 0, envie este relatorio antes de alterar qualquer arquivo.

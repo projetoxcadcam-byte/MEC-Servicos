@@ -1,0 +1,76 @@
+Plataforma de Serviços Mecânicos — V0.1 D2 Database
+REVISION=MEC-SERVICOS-V0.1-D2-DATABASE-2026-09-30
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D1_BASELINE_PRESENT=True
+FILES_OK=True
+AST_OK=True
+SQLALCHEMY_INSTALLED=False
+CHANGED=16
+ALREADY_TARGET=0
+BACKED_UP=9
+
+CHANGED_FILES:
+  .env.example
+  .gitignore
+  backend/app/api/router.py
+  backend/app/core/config.py
+  backend/app/database/__init__.py
+  backend/app/main.py
+  backend/app/models/__init__.py
+  requirements.txt
+  tests/test_health.py
+  backend/app/api/routes/database.py
+  backend/app/database/base.py
+  backend/app/database/init_db.py
+  backend/app/database/session.py
+  backend/app/models/company.py
+  data/.gitkeep
+  tests/test_database.py
+
+BACKED_UP_FILES:
+  .env.example
+  .gitignore
+  backend/app/api/router.py
+  backend/app/core/config.py
+  backend/app/database/__init__.py
+  backend/app/main.py
+  backend/app/models/__init__.py
+  requirements.txt
+  tests/test_health.py
+
+BACKUP_DIR=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\V0_1_D2_DATABASE_20260930_181848
+
+MISSING_TARGET:
+  (none)
+
+CONTENT_MISMATCH:
+  (none)
+
+AST_ERRORS:
+  (none)
+
+DEPENDENCIES:
+  fastapi=INSTALLED
+  uvicorn=INSTALLED
+  pydantic_settings=INSTALLED
+  sqlalchemy=MISSING
+  pytest=INSTALLED
+  httpx=INSTALLED
+
+DATABASE_BASELINE:
+  ENGINE=SQLite
+  URL=sqlite:///./data/mec_servicos.db
+  MODEL=Company
+  TABLE=companies
+
+NEXT:
+  1. python -m pip install -r requirements.txt
+  2. python -m pytest
+  3. python -m uvicorn backend.app.main:app --reload
+  4. Testar /api/v1/database/health
+
+OBSERVACAO:
+  SQLite e apenas o banco local desta etapa de desenvolvimento.
+  A camada foi separada para permitir PostgreSQL futuramente.

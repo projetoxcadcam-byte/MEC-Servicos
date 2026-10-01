@@ -1,0 +1,39 @@
+Plataforma de Serviços Mecânicos — V0.1 D5
+REVISION=MEC-SERVICOS-V0.1-D5-REQUISITOS-COMPATIBILIDADE-2026-10-01
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D4_BASELINE_VERIFIED=True
+FILES_OK=True
+AST_OK=True
+CHANGED=4
+CREATED=6
+ALREADY_TARGET=0
+BACKED_UP=5
+DATABASE_CHANGED_BY_SCRIPT=False
+
+NOVA_TABELA:
+  solicitacoes_servico
+
+NOVOS_ENDPOINTS:
+  POST /api/v1/solicitacoes-servico
+  GET /api/v1/solicitacoes-servico/{solicitacao_id}
+  GET /api/v1/solicitacoes-servico/{solicitacao_id}/fornecedores-compativeis
+
+REGRAS_DE_COMPATIBILIDADE:
+  fornecedor = fornecedor ou ambos
+  processo = processo solicitado
+  material = material vinculado ao fornecedor
+  X requerido <= X máximo
+  Y requerido <= Y máximo
+  Z requerido <= Z máximo
+  tolerância mínima do fornecedor <= tolerância requerida
+
+REGRA_DIMENSIONAL:
+  correspondência direta dos eixos
+  rotação automática entre eixos = não implementada no D5
+
+PROXIMO:
+  1. python -m pytest
+  2. python -m uvicorn backend.app.principal:app --reload
+  3. validar o endpoint de compatibilidade com o banco real

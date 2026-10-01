@@ -1,0 +1,92 @@
+Plataforma de Serviços Mecânicos — V0.1 D3 FIX2 Português
+REVISION=MEC-SERVICOS-V0.1-D3-FIX2-PORTUGUES-2026-09-30
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+FIX1_ISSUE_CORRECTED=True
+FILES_OK=True
+AST_OK=True
+CREATED=16
+CHANGED=13
+ALREADY_TARGET=3
+REMOVED=17
+BACKED_UP=31
+ENV_MIGRATED=False
+
+CRIADOS:
+  backend/app/api/rotas/__init__.py
+  backend/app/api/rotas/banco_dados.py
+  backend/app/api/rotas/empresas.py
+  backend/app/api/rotas/saude.py
+  backend/app/api/roteador.py
+  backend/app/core/configuracao.py
+  backend/app/database/inicializacao.py
+  backend/app/database/sessao.py
+  backend/app/models/empresa.py
+  backend/app/principal.py
+  backend/app/repositories/empresa.py
+  backend/app/schemas/empresa.py
+  backend/app/services/empresa.py
+  tests/test_banco_dados.py
+  tests/test_empresas_api.py
+  tests/test_saude.py
+
+ALTERADOS:
+  .env.example
+  .gitignore
+  README.md
+  backend/__init__.py
+  backend/app/__init__.py
+  backend/app/api/__init__.py
+  backend/app/auth/__init__.py
+  backend/app/database/__init__.py
+  backend/app/models/__init__.py
+  backend/app/repositories/__init__.py
+  backend/app/schemas/__init__.py
+  backend/app/services/__init__.py
+  docs/README.md
+
+JÁ EM PORTUGUÊS:
+  backend/app/core/__init__.py
+  backend/app/database/base.py
+  pyproject.toml
+
+REMOVIDOS_APOS_BACKUP:
+  backend/app/api/router.py
+  backend/app/api/routes/__init__.py
+  backend/app/api/routes/companies.py
+  backend/app/api/routes/database.py
+  backend/app/api/routes/health.py
+  backend/app/core/config.py
+  backend/app/database/init_db.py
+  backend/app/database/session.py
+  backend/app/main.py
+  backend/app/models/company.py
+  backend/app/repositories/company.py
+  backend/app/schemas/company.py
+  backend/app/services/company.py
+  tests/__init__.py
+  tests/test_companies_api.py
+  tests/test_database.py
+  tests/test_health.py
+
+BACKUP:
+  C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\V0_1_D3_FIX2_PORTUGUES_20260930_185430
+
+MIGRACAO_BANCO:
+  companies -> empresas
+  legal_name -> razao_social
+  document -> documento
+  company_type -> tipo_empresa
+  client -> cliente
+  supplier -> fornecedor
+  both -> ambos
+
+OBSERVACAO:
+  O registro legado existente é preservado durante a migração.
+  A validação de novos documentos aceita 11 ou 14 dígitos.
+
+PROXIMO:
+  1. python -m pytest
+  2. python -m uvicorn backend.app.principal:app --reload
+  3. Abrir http://127.0.0.1:8000/docs

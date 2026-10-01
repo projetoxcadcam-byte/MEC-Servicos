@@ -1,0 +1,10 @@
+[project]
+name = "mec-servicos"
+version = "0.1.0"
+description = "Plataforma B2B independente para intermediação de serviços mecânicos."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

@@ -1,0 +1,33 @@
+Plataforma de Serviços Mecânicos — V0.1 D6
+REVISION=MEC-SERVICOS-V0.1-D6-COTACOES-FORNECEDORES-2026-10-01
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D5_BASELINE_VERIFIED=True
+FILES_OK=True
+AST_OK=True
+CHANGED=4
+CREATED=6
+BACKED_UP=5
+DATABASE_CHANGED_BY_SCRIPT=False
+
+NOVA_TABELA:
+  cotacoes_fornecedor
+
+NOVOS_ENDPOINTS:
+  POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes
+  GET /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes
+
+REGRAS_COMERCIAIS:
+  fornecedor deve ser fornecedor ou ambos
+  fornecedor deve ser tecnicamente compatível
+  uma cotação por fornecedor por solicitação
+  valor, prazo e validade devem ser positivos
+
+DECISAO_COMERCIAL:
+  aceite, recusa, negociação e contratação = não implementados no D6
+
+PROXIMO:
+  1. python -m pytest
+  2. python -m uvicorn backend.app.principal:app --reload
+  3. validar criação e consulta de cotação no banco real

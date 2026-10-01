@@ -1,0 +1,20 @@
+Plataforma de Serviços Mecânicos — V0.1 D3 FIX1 Português
+REVISION=MEC-SERVICOS-V0.1-D3-FIX1-PORTUGUES-2026-09-30
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+STATUS=CONFLICT
+NO_FILES_CHANGED=True
+
+CONFLICTS:
+  .env.example
+  .gitignore
+  README.md
+  backend/__init__.py
+  backend/app/__init__.py
+  backend/app/api/__init__.py
+  backend/app/auth/__init__.py
+  backend/app/database/__init__.py
+  backend/app/models/__init__.py
+  backend/app/repositories/__init__.py
+  backend/app/schemas/__init__.py
+  backend/app/services/__init__.py
+  docs/README.md

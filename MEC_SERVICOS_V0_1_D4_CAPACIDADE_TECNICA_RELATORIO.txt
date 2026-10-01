@@ -1,0 +1,28 @@
+Plataforma de Serviços Mecânicos — V0.1 D4 Capacidade Técnica
+REVISION=MEC-SERVICOS-V0.1-D4-CAPACIDADE-TECNICA-2026-10-01
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D3_BASELINE_VERIFIED=True
+FILES_OK=True
+AST_OK=True
+CHANGED=6
+CREATED=14
+BACKED_UP=1
+BACKUP_DIR=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\V0_1_D4_CAPACIDADE_TECNICA_20261001_062311
+
+NOVAS_TABELAS:
+  processos_fabricacao
+  materiais
+  capacidades_fornecedor
+  maquinas
+  materiais_fornecedor
+
+UNIDADES:
+  dimensoes=mm (3 casas decimais)
+  tolerancias=mm (4 casas decimais)
+
+PROXIMO:
+  python -m pytest
+  python -m uvicorn backend.app.principal:app --reload
+  http://127.0.0.1:8000/docs

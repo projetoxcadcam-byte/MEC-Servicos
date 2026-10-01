@@ -1,0 +1,49 @@
+Plataforma de Serviços Mecânicos — V0.1 D3 Companies
+REVISION=MEC-SERVICOS-V0.1-D3-COMPANIES-2026-09-30
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D2_BASELINE_PRESENT=True
+FILES_OK=True
+AST_OK=True
+CHANGED=9
+BACKED_UP=4
+
+CHANGED_FILES:
+  backend/app/api/router.py
+  backend/app/repositories/__init__.py
+  backend/app/schemas/__init__.py
+  backend/app/services/__init__.py
+  backend/app/api/routes/companies.py
+  backend/app/repositories/company.py
+  backend/app/schemas/company.py
+  backend/app/services/company.py
+  tests/test_companies_api.py
+
+BACKED_UP_FILES:
+  backend/app/api/router.py
+  backend/app/repositories/__init__.py
+  backend/app/schemas/__init__.py
+  backend/app/services/__init__.py
+
+BACKUP_DIR=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\V0_1_D3_COMPANIES_20260930_182438
+
+API:
+  POST /api/v1/companies
+  GET  /api/v1/companies
+  GET  /api/v1/companies/{company_id}
+
+VALIDATION:
+  company_type=client|supplier|both
+  document=11 or 14 digits after normalization
+  duplicate document -> 409
+  missing company -> 404
+
+NEXT:
+  1. python -m pytest
+  2. python -m uvicorn backend.app.main:app --reload
+  3. Abrir http://127.0.0.1:8000/docs
+
+NOTE:
+  D3 normalizes CPF/CNPJ punctuation but does not yet validate official checksum digits.
+  Official document checksum validation can be added in a later dedicated step.

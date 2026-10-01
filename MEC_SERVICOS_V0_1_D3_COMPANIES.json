@@ -1,0 +1,60 @@
+{
+  "project": "Plataforma de Serviços Mecânicos",
+  "revision": "MEC-SERVICOS-V0.1-D3-COMPANIES-2026-09-30",
+  "script": "MEC_SERVICOS_V0_1_D3_COMPANIES.py",
+  "timestamp_local": "2026-09-30T18:24:38-03:00",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "status": "OK",
+  "d2_baseline_present": true,
+  "files_ok": true,
+  "ast_ok": true,
+  "changed": [
+    "backend/app/api/router.py",
+    "backend/app/repositories/__init__.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/services/__init__.py",
+    "backend/app/api/routes/companies.py",
+    "backend/app/repositories/company.py",
+    "backend/app/schemas/company.py",
+    "backend/app/services/company.py",
+    "tests/test_companies_api.py"
+  ],
+  "already_target": [],
+  "backed_up": [
+    "backend/app/api/router.py",
+    "backend/app/repositories/__init__.py",
+    "backend/app/schemas/__init__.py",
+    "backend/app/services/__init__.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D3_COMPANIES_20260930_182438",
+  "missing_target": [],
+  "content_mismatch": [],
+  "ast_errors": [],
+  "target_hashes_sha256": {
+    "backend/app/api/router.py": "31fa7362a97fd4b68aae0de13110ac1fdf2076ab495ddeb75ec1579b46f5c17f",
+    "backend/app/api/routes/companies.py": "10ba9d1215ce41b7f6be6539fff382325f226f27f68847e57299d7e6d8934203",
+    "backend/app/repositories/__init__.py": "004d2cea901fa637fc167b321d28b46a9856834972b79d9a6a7aab74bf100e2f",
+    "backend/app/repositories/company.py": "d5cf307462c2e7327d1f9b1896d02e7d3267a04216ef50432cdacfa39253ad4a",
+    "backend/app/schemas/__init__.py": "c4a9f875fcefbfafd61639242466e3657fccc1869dae219c5d59fe2e9c7036c3",
+    "backend/app/schemas/company.py": "7f74e183457cf8d1ee7c51780b769fe40c6075ce11af5d47ddf6b9df4dce4564",
+    "backend/app/services/__init__.py": "3f6c3dee5c87e4662f9391203d99a7648993f0a6a06188ede63106d88b322f42",
+    "backend/app/services/company.py": "7ff6ac38536d7a9e307b7c3cd4ce3370b6ca289f98c19258f15ee39943bdb72d",
+    "tests/test_companies_api.py": "7db0e873597fbce32169755a20e4573ce07e44010546b514ccf367999ba162c1"
+  },
+  "features": [
+    "CompanyCreate/CompanyRead schemas",
+    "company type validation: client/supplier/both",
+    "CPF/CNPJ format normalization by digit count",
+    "CompanyRepository",
+    "CompanyService",
+    "POST /api/v1/companies",
+    "GET /api/v1/companies",
+    "GET /api/v1/companies/{company_id}",
+    "duplicate document conflict = HTTP 409",
+    "company not found = HTTP 404"
+  ],
+  "next_commands": [
+    "python -m pytest",
+    "python -m uvicorn backend.app.main:app --reload"
+  ]
+}

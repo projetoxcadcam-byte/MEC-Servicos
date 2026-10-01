@@ -1,0 +1,41 @@
+Plataforma de Serviços Mecânicos — V0.1 D7
+REVISION=MEC-SERVICOS-V0.1-D7-DECISAO-COTACOES-2026-10-01
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+
+STATUS=OK
+D6_BASELINE_VERIFIED=True
+FILES_OK=True
+AST_OK=True
+CHANGED=7
+BACKED_UP=8
+DATABASE_MIGRATED=True
+DATABASE_ALREADY_MIGRATED=False
+ROWS_PRESERVED=1
+COTACAO_1_PRESERVED=True
+
+CICLO_COTACAO:
+  enviada
+  aceita
+  recusada
+  expirada
+  cancelada
+
+REGRAS_D7:
+  somente a empresa cliente da solicitação pode decidir
+  uma solicitação pode ter no máximo uma cotação aceita
+  ao aceitar uma cotação, as demais pendentes são recusadas
+  cotação decidida não pode ser decidida novamente
+  cotação vencida passa para expirada
+  solicitação com cotação aceita não recebe novas cotações
+
+NOVOS_ENDPOINTS:
+  POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/aceitar
+  POST /api/v1/solicitacoes-servico/{solicitacao_id}/cotacoes/{cotacao_id}/recusar
+
+NAO_IMPLEMENTADO:
+  autenticação, negociação, contratação, pagamento e avaliação
+
+PROXIMO:
+  1. python -m pytest
+  2. python -m uvicorn backend.app.principal:app --reload
+  3. testar aceite e recusa no banco real
