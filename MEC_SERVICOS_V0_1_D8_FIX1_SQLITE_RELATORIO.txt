@@ -1,0 +1,11 @@
+Plataforma de Serviços Mecânicos — D8 FIX1
+REVISION= MEC-SERVICOS-V0.1-D8-FIX1-SQLITE-STATICPOOL-2026-10-01
+ROOT= C:\Users\Omega\Desktop\MEC-Servicos
+TARGET= C:\Users\Omega\Desktop\MEC-Servicos\tests\test_contratacoes.py
+BACKUP= C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\D8_FIX1_SQLITE_20261001_080641\test_contratacoes.py
+CHANGED= True
+AST_OK= True
+STATICPOOL_OK= True
+SQLITE_MEMORY_SHARED_OK= True
+EXPECTED_ENGINE= sqlite:// + StaticPool + check_same_thread=False
+D8_FIX1_SQLITE_APPLIED= True

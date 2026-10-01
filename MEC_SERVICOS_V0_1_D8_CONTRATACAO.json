@@ -1,0 +1,16 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D8-CONTRATACAO-2026-10-01",
+  "files_ok": true,
+  "ast_ok": true,
+  "created": 6,
+  "changed": 10,
+  "backed_up": 5,
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D8_CONTRATACAO_20261001_075204",
+  "database": {
+    "database_changed": true,
+    "database_already_migrated": false,
+    "rows_preserved": 0
+  },
+  "contratacao_preparada": true,
+  "solicitacao_encerrada_apos_contratacao": true
+}

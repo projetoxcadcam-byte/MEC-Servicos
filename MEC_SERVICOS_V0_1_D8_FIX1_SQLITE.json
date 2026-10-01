@@ -1,0 +1,12 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D8-FIX1-SQLITE-STATICPOOL-2026-10-01",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "target": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\test_contratacoes.py",
+  "target_exists": true,
+  "changed": true,
+  "backup": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D8_FIX1_SQLITE_20261001_080641\\test_contratacoes.py",
+  "ast_ok": true,
+  "staticpool_ok": true,
+  "sqlite_memory_shared_ok": true,
+  "error": null
+}

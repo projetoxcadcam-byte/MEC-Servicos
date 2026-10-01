@@ -18,3 +18,5 @@ roteador_api.include_router(roteador_materiais)
 roteador_api.include_router(roteador_capacidades)
 roteador_api.include_router(roteador_solicitacoes)
 roteador_api.include_router(roteador_cotacoes)
+from backend.app.api.rotas.contratacoes import roteador as roteador_contratacoes
+roteador_api.include_router(roteador_contratacoes)

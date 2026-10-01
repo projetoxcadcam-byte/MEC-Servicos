@@ -12,22 +12,41 @@ permanecem com seus nomes oficiais.
 
 ## Estado
 
-**V0.1 D7 — Decisão Comercial das Cotações**
+**V0.1 D8 — Contratação**
 
 Nesta etapa foram estruturados:
 
-- ciclo de vida da cotação;
-- aceite de uma cotação pelo cliente da solicitação;
-- recusa de uma cotação pelo cliente da solicitação;
-- registro da data de encerramento;
-- registro da empresa que tomou a decisão;
-- rejeição automática das demais cotações pendentes quando uma é aceita;
-- bloqueio de novas cotações depois que uma solicitação já possui cotação aceita;
-- expiração automática das cotações vencidas durante consultas ou decisões;
-- preservação do histórico das cotações.
+- criação de uma contratação a partir de uma cotação aceita;
+- validação de que a empresa é a cliente da solicitação;
+- validação de que a cotação pertence à solicitação;
+- validação de que a cotação está `aceita`;
+- registro do fornecedor, valor e prazo contratados;
+- uma única contratação por solicitação;
+- encerramento comercial da solicitação após a contratação;
+- consulta da contratação;
+- cancelamento da contratação pelo cliente proprietário.
 
-O projeto continua independente do CGX Platform.
+A contratação mantém o projeto independente do CGX Platform.
 
+## Contratação
+
+Uma contratação pode estar em:
+
+- `ativa`
+- `cancelada`
+- `encerrada`
+
+A contratação é criada somente a partir da cotação aceita correspondente à solicitação.
+
+## O que ainda não faz parte do D8
+
+- autenticação de usuários;
+- negociação de preço;
+- contraproposta;
+- ordem de produção;
+- pagamento;
+- avaliação;
+- ranking de fornecedores.
 ## Ciclo da cotação
 
 Uma cotação pode estar em:
@@ -63,11 +82,15 @@ O D7 não altera o motor de compatibilidade.
 - autenticação de usuários;
 - negociação de preço;
 - contraproposta;
-- contratação;
 - ordem de produção;
 - pagamento;
 - avaliação;
 - ranking de fornecedores.
+
+## Endpoints de contratação
+
+- `http://127.0.0.1:8000/api/v1/solicitacoes-servico/{solicitacao_id}/contratacao`
+- `http://127.0.0.1:8000/api/v1/solicitacoes-servico/{solicitacao_id}/contratacao/cancelar`
 
 ## Executar
 
