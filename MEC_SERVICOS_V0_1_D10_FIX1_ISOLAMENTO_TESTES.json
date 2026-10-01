@@ -1,0 +1,9 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D10-FIX1-ISOLAMENTO-TESTES-2026-10-01",
+  "target": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\test_acompanhamento_producao.py",
+  "changed": true,
+  "ast_ok": true,
+  "root_cause": "O teste D10 mantinha um SQLite in-memory com StaticPool no escopo do módulo; os cinco testes reutilizavam o mesmo banco e repetiam codigo/nome únicos de processo/material.",
+  "fix": "Fixture function-scoped cria um novo engine SQLite in-memory para cada teste, executa create_all antes e drop_all depois.",
+  "backup": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D10_FIX1_ISOLAMENTO_TESTES_20261001_091508\\tests\\test_acompanhamento_producao.py"
+}

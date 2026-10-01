@@ -1,0 +1,11 @@
+Plataforma de Serviços Mecânicos — D10 FIX1 Isolamento dos Testes
+REVISION= MEC-SERVICOS-V0.1-D10-FIX1-ISOLAMENTO-TESTES-2026-10-01
+ROOT= C:\Users\Omega\Desktop\MEC-Servicos
+TARGET= C:\Users\Omega\Desktop\MEC-Servicos\tests\test_acompanhamento_producao.py
+AST_OK= True
+FIXTURE_SCOPE= function
+SQLITE_MEMORY_ISOLATION= True
+DROP_ALL_AFTER_TEST= True
+BACKUP= C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\D10_FIX1_ISOLAMENTO_TESTES_20261001_091508\tests\test_acompanhamento_producao.py
+REPORT= C:\Users\Omega\Desktop\MEC-Servicos\MEC_SERVICOS_V0_1_D10_FIX1_ISOLAMENTO_TESTES_RELATORIO.txt
+JSON= C:\Users\Omega\Desktop\MEC-Servicos\MEC_SERVICOS_V0_1_D10_FIX1_ISOLAMENTO_TESTES.json

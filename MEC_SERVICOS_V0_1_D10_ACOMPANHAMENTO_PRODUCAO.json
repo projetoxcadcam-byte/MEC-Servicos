@@ -1,0 +1,29 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D10-ACOMPANHAMENTO-PRODUCAO-2026-10-01",
+  "ast_ok": true,
+  "metadata_preflight_ok": true,
+  "tables": [
+    "ordens_servico",
+    "etapas_producao"
+  ],
+  "stages": [
+    "aguardando_material",
+    "em_usinagem",
+    "em_solda_dobra",
+    "em_acabamento",
+    "pronto_para_envio"
+  ],
+  "supplier_only_update": true,
+  "history_preserved": true,
+  "changed": [
+    "backend\\app\\models\\etapa_producao.py",
+    "backend\\app\\repositories\\etapa_producao.py",
+    "backend\\app\\schemas\\etapa_producao.py",
+    "backend\\app\\services\\etapa_producao.py",
+    "backend\\app\\api\\rotas\\etapas_producao.py",
+    "tests\\test_acompanhamento_producao.py",
+    "backend\\app\\models\\__init__.py",
+    "backend\\app\\api\\roteador.py"
+  ],
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D10_ACOMPANHAMENTO_PRODUCAO_20261001_091103"
+}
