@@ -1,0 +1,18 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D15-RANKING-FORNECEDORES-2026-10-01",
+  "d14_baseline_ok": true,
+  "ast_ok": true,
+  "database_changed": false,
+  "database_migration_required": false,
+  "backed_up": 1,
+  "changed_files": 6,
+  "derived_from_d14_evaluations": true,
+  "suppliers_only": true,
+  "average_rating_primary_order": "desc",
+  "rating_count_tie_break": "desc",
+  "unrated_suppliers_last": true,
+  "name_tie_break": "asc",
+  "deterministic_position": true,
+  "history_preserved": true,
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D15_RANKING_FORNECEDORES_20261001_104544"
+}
