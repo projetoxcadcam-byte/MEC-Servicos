@@ -42,7 +42,7 @@ const USUARIOS: Array<AuthUser & { senha: string }> = [
     role: "cliente",
   },
   {
-    id: 3,
+    id: 4,
     nome: "Fornecedor Demo",
     email: "fornecedor@mec-servicos.local",
     senha: "fornecedor123",

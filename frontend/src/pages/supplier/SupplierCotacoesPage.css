@@ -1,0 +1,32 @@
+.f24-page .c23-alert a { color: inherit; font-weight: 700; }
+.f24-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.f24-tab { display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 8px; border: 1px solid #2d405a; color: #a3b9d5; text-decoration: none; font-size: 13px; font-weight: 700; background: #101b2a; }
+.f24-tab-active, .f24-tab:hover { color: #cbe0ff; border-color: #4772ab; background: #183455; }
+.f24-page .f24-selected { background: #172c45; }
+.f24-pagination { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-top: 1px solid #28384d; color: #8aa1bf; font-size: 12px; }
+.f24-pagination > div { display: flex; gap: 8px; }
+.f24-columns { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, 1fr); gap: 20px; align-items: start; }
+.f24-detail, .f24-form-panel { padding: 22px; }
+.f24-section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+.f24-section-head h2, .f24-section-head h3 { font-size: 18px; margin: 0; color: #e7eef9; }
+.f24-section-head > svg { color: #6ea5f5; }
+.f24-section-head > span { max-width: 55%; text-align: right; overflow-wrap: anywhere; }
+.f24-files-head { margin-top: 26px; margin-bottom: 12px; }
+.f24-files { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.f24-files li { display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid #2b3d54; border-radius: 8px; background: #0e1826; }
+.f24-files li > svg { color: #71a6f0; flex-shrink: 0; }
+.f24-files li > span { flex: 1; min-width: 0; }
+.f24-files strong { display: block; color: #c2d3ea; font-size: 12px; overflow-wrap: anywhere; }
+.f24-files small { display: block; color: #7991b1; font-size: 11px; margin-top: 5px; }
+.f24-form { margin-top: 20px; }
+.f24-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.f24-form label { display: block; font-size: 12px; font-weight: 700; color: #a8bfdb; margin: 0 0 8px; }
+.f24-form input, .f24-form textarea { width: 100%; margin-bottom: 16px; }
+.f24-form textarea { border: 1px solid #33465e; border-radius: 8px; padding: 11px; background: #0c1521; color: #e7eef9; font: inherit; font-size: 13px; line-height: 1.6; resize: vertical; }
+.f24-form textarea:focus-visible, .f24-tab:focus-visible { outline: 2px solid #8dbaff; outline-offset: 3px; }
+.f24-form fieldset:disabled { opacity: .7; }
+.f24-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.f24-form .f24-submit { margin-top: 12px; width: 100%; }
+.f24-review { margin-top: 20px; }
+@media (max-width: 1120px) { .f24-columns { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .f24-detail, .f24-form-panel { padding: 17px; } .f24-form-grid { grid-template-columns: 1fr; gap: 0; } .f24-tabs { flex-direction: column; } .f24-pagination { flex-wrap: wrap; gap: 14px; } .f24-files li { flex-wrap: wrap; } .f24-files li .c23-button { width: 100%; } .f24-section-head { align-items: flex-start; flex-direction: column; } .f24-section-head > span { max-width: 100%; text-align: left; } }

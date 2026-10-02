@@ -1,3 +1,8 @@
+from backend.app.api.rotas.portal_entregas import roteador as roteador_portal_entregas
+from backend.app.api.rotas.portal_producao import roteador as roteador_portal_producao
+from backend.app.api.rotas.portal_ordens_servico import roteador as roteador_portal_ordens_servico
+from backend.app.api.rotas.portal_contratacoes import roteador as roteador_portal_contratacoes
+from backend.app.api.rotas.portal_fornecedor import roteador as roteador_portal_fornecedor
 from fastapi import APIRouter
 
 from backend.app.api.rotas.banco_dados import roteador as roteador_banco
@@ -36,3 +41,8 @@ from backend.app.api.rotas.ranking_fornecedores import roteador as roteador_rank
 roteador_api.include_router(roteador_ranking_fornecedores)
 from backend.app.api.rotas.arquivos_tecnicos import roteador as roteador_arquivos_tecnicos
 roteador_api.include_router(roteador_arquivos_tecnicos)
+roteador_api.include_router(roteador_portal_fornecedor)
+roteador_api.include_router(roteador_portal_contratacoes)
+roteador_api.include_router(roteador_portal_ordens_servico)
+roteador_api.include_router(roteador_portal_producao)
+roteador_api.include_router(roteador_portal_entregas)

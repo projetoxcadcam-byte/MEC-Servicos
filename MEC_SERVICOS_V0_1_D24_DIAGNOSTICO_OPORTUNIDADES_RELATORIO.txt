@@ -1,0 +1,52 @@
+MEC-Serviços D24 — Diagnóstico de Oportunidades
+REVISION=MEC-SERVICOS-V0.1-D24-DIAGNOSTICO-OPORTUNIDADES-2026-10-02
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+EMPRESA_ID=3 (cadastro de fornecedor no AuthContext.tsx)
+EMPRESA=Fornecedor Incompativel D6 | tipo=fornecedor
+BANCO=C:\Users\Omega\Desktop\MEC-Servicos\data\mec_servicos.db
+BANCO_SOMENTE_LEITURA=True
+CAPACIDADES_CADASTRADAS=0
+MATERIAIS_ACEITOS=Nenhum material vinculado
+SOLICITACOES_NO_BANCO=6
+OPORTUNIDADES_NO_PORTAL_D24=0
+EIXOS=Comparados na ordem X/Y/Z cadastrada; não há rotação automática.
+
+SOLICITACAO=#6 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=50.000 x 800.000 x 500.000 mm | tolerancia=0.0200 mm | quantidade=10
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+
+SOLICITACAO=#5 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=500.000 x 600.000 x 500.000 mm | tolerancia=0.0200 mm | quantidade=1
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+
+SOLICITACAO=#4 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=500.000 x 300.000 x 250.000 mm | tolerancia=0.0200 mm | quantidade=5
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+
+SOLICITACAO=#3 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=600.000 x 400.000 x 300.000 mm | tolerancia=0.0200 mm | quantidade=10
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O cliente já aceitou uma cotação para este pedido.
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+
+SOLICITACAO=#2 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=900.000 x 400.000 x 300.000 mm | tolerancia=0.0200 mm | quantidade=10
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+
+SOLICITACAO=#1 | status=aberta | processo=Usinagem CNC | material=Aluminio 6061
+REQUISITOS=X/Y/Z=600.000 x 400.000 x 300.000 mm | tolerancia=0.0200 mm | quantidade=10
+DISPONIVEL_PARA_COTAR=False
+MOTIVO=O cliente já aceitou uma cotação para este pedido.
+MOTIVO=O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.
+MOTIVO=O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1).
+PROXIMO=Confira os motivos antes de cadastrar ou alterar capacidades. Cadastre valores que representem a capacidade real do fornecedor.
+RESULTADO=OK

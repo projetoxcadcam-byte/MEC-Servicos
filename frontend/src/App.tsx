@@ -1,3 +1,9 @@
+import PortalEntregasPage from "./pages/entregas/PortalEntregasPage";
+import PortalProducaoPage from "./pages/producao/PortalProducaoPage";
+import PortalOrdensServicoPage from "./pages/ordens/PortalOrdensServicoPage";
+import PortalContratacoesPage from "./pages/contratacoes/PortalContratacoesPage";
+import SupplierCotacoesPage from "./pages/supplier/SupplierCotacoesPage";
+import ClientCotacoesPage from "./pages/client/ClientCotacoesPage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -144,53 +150,33 @@ export default function App() {
 
                     <Route path="solicitacoes" element={<ClientSolicitacoesPage />} />
 
-          <Route
-            path="cotacoes"
-            element={
-              <ModulePage
-                title="Cotações Recebidas"
-                description="Visualize e compare as cotações recebidas."
-              />
-            }
-          />
+          <Route path="cotacoes" element={<ClientCotacoesPage />} />
 
           <Route
             path="contratacoes"
             element={
-              <ModulePage
-                title="Minhas Contratações"
-                description="Acompanhe os serviços contratados."
-              />
+              <PortalContratacoesPage perfil="cliente" />
             }
           />
 
           <Route
             path="ordens-servico"
             element={
-              <ModulePage
-                title="Ordens de Serviço"
-                description="Acompanhe as ordens relacionadas aos seus serviços."
-              />
+              <PortalOrdensServicoPage perfil="cliente" />
             }
           />
 
           <Route
             path="producao"
             element={
-              <ModulePage
-                title="Acompanhamento de Produção"
-                description="Acompanhe a produção dos seus serviços."
-              />
+              <PortalProducaoPage perfil="cliente" />
             }
           />
 
           <Route
             path="entregas"
             element={
-              <ModulePage
-                title="Entregas e Aceite"
-                description="Receba, aceite ou rejeite suas entregas."
-              />
+              <PortalEntregasPage perfil="cliente" />
             }
           />
 
@@ -230,60 +216,42 @@ export default function App() {
           <Route
             path="solicitacoes"
             element={
-              <ModulePage
-                title="Solicitações Disponíveis"
-                description="Consulte solicitações de clientes e oportunidades para cotação."
-              />
+              <SupplierCotacoesPage modo="oportunidades" />
             }
           />
 
           <Route
             path="cotacoes"
             element={
-              <ModulePage
-                title="Minhas Cotações"
-                description="Gerencie as cotações enviadas aos clientes."
-              />
+              <SupplierCotacoesPage modo="cotacoes" />
             }
           />
 
           <Route
             path="contratacoes"
             element={
-              <ModulePage
-                title="Contratações"
-                description="Acompanhe os serviços contratados pelos clientes."
-              />
+              <PortalContratacoesPage perfil="fornecedor" />
             }
           />
 
           <Route
             path="ordens-servico"
             element={
-              <ModulePage
-                title="Ordens de Serviço"
-                description="Gerencie suas ordens de serviço."
-              />
+              <PortalOrdensServicoPage perfil="fornecedor" />
             }
           />
 
           <Route
             path="producao"
             element={
-              <ModulePage
-                title="Produção"
-                description="Acompanhe e atualize a execução dos serviços."
-              />
+              <PortalProducaoPage perfil="fornecedor" />
             }
           />
 
           <Route
             path="entregas"
             element={
-              <ModulePage
-                title="Entregas"
-                description="Gerencie as entregas dos serviços concluídos."
-              />
+              <PortalEntregasPage perfil="fornecedor" />
             }
           />
 

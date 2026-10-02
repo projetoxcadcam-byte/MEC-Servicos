@@ -1,0 +1,160 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D24-DIAGNOSTICO-OPORTUNIDADES-2026-10-02",
+  "gerado_em_utc": "2026-10-02T14:39:23.802327+00:00",
+  "resultado": "OK",
+  "alteracoes_no_banco": false,
+  "banco": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\data\\mec_servicos.db",
+  "banco_somente_leitura": true,
+  "empresa": {
+    "id": 3,
+    "razao_social": "Fornecedor Incompativel D6",
+    "tipo_empresa": "fornecedor"
+  },
+  "capacidades": [],
+  "materiais": [],
+  "total_solicitacoes_no_banco": 6,
+  "total_oportunidades_portal_d24": 0,
+  "limite_analisado": 100,
+  "solicitacoes": [
+    {
+      "solicitacao_id": 6,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "50.000",
+        "800.000",
+        "500.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 10,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    },
+    {
+      "solicitacao_id": 5,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "500.000",
+        "600.000",
+        "500.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 1,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    },
+    {
+      "solicitacao_id": 4,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "500.000",
+        "300.000",
+        "250.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 5,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    },
+    {
+      "solicitacao_id": 3,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "600.000",
+        "400.000",
+        "300.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 10,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O cliente já aceitou uma cotação para este pedido.",
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    },
+    {
+      "solicitacao_id": 2,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "900.000",
+        "400.000",
+        "300.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 10,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    },
+    {
+      "solicitacao_id": 1,
+      "empresa_cliente_id": 2,
+      "status": "aberta",
+      "processo_id": 1,
+      "processo_nome": "Usinagem CNC",
+      "material_id": 1,
+      "material_nome": "Aluminio 6061",
+      "dimensoes_mm": [
+        "600.000",
+        "400.000",
+        "300.000"
+      ],
+      "tolerancia_requerida_mm": "0.0200",
+      "quantidade": 10,
+      "capacidade_comparada_id": null,
+      "checagens": [],
+      "disponivel_para_cotar": false,
+      "motivos": [
+        "O cliente já aceitou uma cotação para este pedido.",
+        "O material Aluminio 6061 (ID 1) não está vinculado ao fornecedor.",
+        "O fornecedor não possui capacidade cadastrada para Usinagem CNC (ID 1)."
+      ]
+    }
+  ]
+}
