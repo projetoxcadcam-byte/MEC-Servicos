@@ -1,0 +1,12 @@
+MEC Servicos — D22 Arquivos Tecnicos Frontend Funcional
+REVISION=MEC-SERVICOS-V0.1-D22-ARQUIVOS-TECNICOS-FRONTEND-FUNCIONAL-2026-10-02
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+BACKUP_DIR=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\D22_ARQUIVOS_TECNICOS_FRONTEND_20261002_071931
+BACKED_UP=['frontend\\src\\App.tsx']
+PATCH={'import_added': True, 'client_route_replaced': True, 'already_patched': False}
+BACKEND_CONTRACT={'upload_endpoint': True, 'upload_field_file': True, 'list_endpoint': True, 'download_endpoint': True, 'delete_endpoint': True, 'allowed_extensions': True, 'max_100mb': True, 'sha256': True, 'active_soft_unlink': True}
+SOLICITACOES_CONTRACT={'prefix': True, 'list_route': True, 'empresa_cliente_id': True, 'filters_company': True}
+FRONTEND_CHECKS={'page_exists': True, 'css_exists': True, 'route_import': True, 'client_route': True, 'admin_route_untouched': True, 'api_import': True, 'auth_import': True, 'list_solicitations': True, 'company_filter': True, 'multipart_file_field': True, 'upload_endpoint': True, 'download_endpoint': True, 'delete_endpoint': True, 'client_limit': True, 'accepted_extensions': True, 'css_selector': True}
+NPM_BUILD=OK
+BACKEND_CHANGED=False
+RESULTADO=OK

@@ -1,67 +1,129 @@
-﻿import { NavLink, Outlet } from "react-router-dom";
 
-const menu = [
-  ["Dashboard", "/cliente"],
-  ["Solicitações", "/cliente/solicitacoes"],
-  ["Cotações", "/cliente/cotacoes"],
-  ["Contratações", "/cliente/contratacoes"],
-  ["Ordens de Serviço", "/cliente/ordens-servico"],
-  ["Produção", "/cliente/producao"],
-  ["Entregas e Aceite", "/cliente/entregas"],
-  ["Pagamentos", "/cliente/pagamentos"],
-  ["Avaliações", "/cliente/avaliacoes"],
-  ["Arquivos Técnicos", "/cliente/arquivos-tecnicos"],
+import {
+  Archive,
+  ClipboardList,
+  CreditCard,
+  FileText,
+  Gauge,
+  Handshake,
+  PackageCheck,
+  Settings2,
+  Star,
+  Wrench,
+  LogOut,
+  type LucideIcon,
+} from "lucide-react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+import "./PortalLayout.css";
+
+type MenuItem = {
+  label: string;
+  path: string;
+  icon: LucideIcon;
+};
+
+const menu: MenuItem[] = [
+  { label: "Dashboard", path: "/cliente", icon: Gauge },
+  { label: "Minhas Solicitações", path: "/cliente/solicitacoes", icon: ClipboardList },
+  { label: "Cotações Recebidas", path: "/cliente/cotacoes", icon: FileText },
+  { label: "Minhas Contratações", path: "/cliente/contratacoes", icon: Handshake },
+  { label: "Ordens de Serviço", path: "/cliente/ordens-servico", icon: Wrench },
+  { label: "Acompanhamento de Produção", path: "/cliente/producao", icon: Settings2 },
+  { label: "Entregas e Aceite", path: "/cliente/entregas", icon: PackageCheck },
+  { label: "Pagamentos", path: "/cliente/pagamentos", icon: CreditCard },
+  { label: "Avaliações", path: "/cliente/avaliacoes", icon: Star },
+  { label: "Arquivos Técnicos", path: "/cliente/arquivos-tecnicos", icon: Archive },
 ];
 
+function initials(nome: string) {
+  return nome
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((parte) => parte[0]?.toUpperCase())
+    .join("") || "C";
+}
+
 export default function ClientLayout() {
+  const { user, logout } = useAuth();
+  const location = useLocation();
+
+  const paginaAtual =
+    [...menu]
+      .sort((a, b) => b.path.length - a.path.length)
+      .find((item) =>
+        item.path === "/cliente"
+          ? location.pathname === "/cliente"
+          : location.pathname.startsWith(item.path),
+      ) ?? menu[0];
+
+  const IconAtual = paginaAtual.icon;
+
   return (
-    <div className="app-shell">
-      <aside className="sidebar">
-        <div className="brand">
-          <div className="brand-mark">M</div>
-          <div>
+    <div className="portal-shell">
+      <aside className="portal-sidebar">
+        <div className="portal-brand">
+          <div className="portal-brand-mark">M</div>
+          <div className="portal-brand-copy">
             <strong>MEC</strong>
-            <span>Cliente</span>
+            <span>Serviços Mecânicos</span>
           </div>
         </div>
 
-        <nav className="navigation">
-          {menu.map(([label, path]) => (
+        <div className="portal-role">Portal do Cliente</div>
+
+        <nav className="portal-navigation">
+          {menu.map(({ label, path, icon: Icon }) => (
             <NavLink
               key={path}
               to={path}
               end={path === "/cliente"}
               className={({ isActive }) =>
-                `nav-item ${isActive ? "active" : ""}`
+                `portal-nav-item ${isActive ? "active" : ""}`
               }
+              title={label}
             >
-              {label}
+              <Icon size={19} strokeWidth={1.8} />
+              <span>{label}</span>
             </NavLink>
           ))}
         </nav>
 
-        <div className="sidebar-footer">
-          <span>Portal do Cliente</span>
-          <small>MEC-Serviços V0.1</small>
+        <div className="portal-sidebar-footer">
+          <span>Plataforma B2B de fabricação mecânica</span>
+          <small>Portal Cliente · V0.1</small>
         </div>
       </aside>
 
-      <main className="main-area">
-        <header className="topbar">
-          <div>
-            <span className="topbar-label">MEC-SERVICOS / CLIENTE</span>
-            <h1>Portal do Cliente</h1>
+      <main className="portal-main">
+        <header className="portal-topbar">
+          <div className="portal-page-title">
+            <div className="portal-page-title-icon">
+              <IconAtual size={18} />
+            </div>
+            <div>
+              <strong>{paginaAtual.label}</strong>
+              <span>Portal do Cliente · MEC Serviços</span>
+            </div>
           </div>
 
-          <div className="status">
-            <span className="status-dot" />
-            Sistema operacional
+          <div className="portal-user">
+            <div className="portal-user-avatar">{initials(user?.nome ?? "Cliente")}</div>
+            <div className="portal-user-copy">
+              <strong>{user?.nome ?? "Cliente"}</strong>
+              <span>{user?.email ?? "cliente@mec-servicos.local"}</span>
+            </div>
+            <button className="portal-logout" type="button" onClick={logout} title="Sair">
+              <LogOut size={15} />
+              <span>Sair</span>
+            </button>
           </div>
         </header>
 
-        <section className="content">
+        <div className="portal-content">
           <Outlet />
-        </section>
+        </div>
       </main>
     </div>
   );

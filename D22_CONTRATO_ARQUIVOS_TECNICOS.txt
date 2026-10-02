@@ -1,0 +1,361 @@
+﻿===== API =====
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, File, UploadFile, status
+from fastapi.responses import FileResponse
+from sqlalchemy.orm import Session
+
+from backend.app.database.sessao import obter_banco
+from backend.app.schemas.arquivo_tecnico import ArquivoTecnicoResposta
+from backend.app.services.arquivo_tecnico import ServicoArquivoTecnico
+
+
+roteador = APIRouter(tags=["arquivos-tecnicos"])
+
+
+@roteador.post(
+    "/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+    response_model=ArquivoTecnicoResposta,
+    status_code=status.HTTP_201_CREATED,
+)
+async def enviar_arquivo_tecnico(
+    solicitacao_id: int,
+    file: UploadFile = File(...),
+    banco: Session = Depends(obter_banco),
+) -> ArquivoTecnicoResposta:
+    item = await ServicoArquivoTecnico(banco).criar(solicitacao_id, file)
+    return ArquivoTecnicoResposta.model_validate(item)
+
+
+@roteador.get(
+    "/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+    response_model=list[ArquivoTecnicoResposta],
+)
+def listar_arquivos_tecnicos(
+    solicitacao_id: int,
+    banco: Session = Depends(obter_banco),
+) -> list[ArquivoTecnicoResposta]:
+    itens = ServicoArquivoTecnico(banco).listar(solicitacao_id)
+    return [ArquivoTecnicoResposta.model_validate(item) for item in itens]
+
+
+@roteador.get(
+    "/arquivos-tecnicos/{arquivo_id}",
+    response_model=ArquivoTecnicoResposta,
+)
+def obter_arquivo_tecnico(
+    arquivo_id: int,
+    banco: Session = Depends(obter_banco),
+) -> ArquivoTecnicoResposta:
+    item = ServicoArquivoTecnico(banco).obter(arquivo_id)
+    return ArquivoTecnicoResposta.model_validate(item)
+
+
+@roteador.get(
+    "/arquivos-tecnicos/{arquivo_id}/download",
+    response_class=FileResponse,
+)
+def baixar_arquivo_tecnico(
+    arquivo_id: int,
+    banco: Session = Depends(obter_banco),
+) -> FileResponse:
+    servico = ServicoArquivoTecnico(banco)
+    item = servico.obter(arquivo_id)
+    caminho = servico.caminho_seguro(item)
+
+    return FileResponse(
+        path=caminho,
+        media_type=item.content_type or "application/octet-stream",
+        filename=item.nome_original,
+    )
+
+
+@roteador.delete(
+    "/arquivos-tecnicos/{arquivo_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def desvincular_arquivo_tecnico(
+    arquivo_id: int,
+    banco: Session = Depends(obter_banco),
+) -> None:
+    ServicoArquivoTecnico(banco).desvincular(arquivo_id)
+
+===== SCHEMA =====
+from __future__ import annotations
+
+from datetime import datetime
+
+from pydantic import BaseModel, ConfigDict
+
+
+class ArquivoTecnicoResposta(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    solicitacao_id: int
+    nome_original: str
+    extensao: str
+    content_type: str | None
+    tamanho_bytes: int
+    sha256: str
+    criado_em: datetime
+    ativo: bool
+
+===== SERVICE =====
+from __future__ import annotations
+
+import hashlib
+import os
+import uuid
+from pathlib import Path
+
+from fastapi import HTTPException, UploadFile
+from sqlalchemy.orm import Session
+
+from backend.app.models.arquivo_tecnico import ArquivoTecnico
+from backend.app.models.solicitacao import SolicitacaoServico
+from backend.app.repositories.arquivo_tecnico import RepositorioArquivoTecnico
+
+
+class ServicoArquivoTecnico:
+    ALLOWED_EXTENSIONS = frozenset(
+        {".step", ".stp", ".iges", ".igs", ".dxf", ".dwg", ".pdf"}
+    )
+    MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024
+    CHUNK_SIZE = 1024 * 1024
+    STORAGE_ROOT = Path("storage") / "arquivos_tecnicos"
+
+    def __init__(self, banco: Session, *, storage_root: Path | None = None) -> None:
+        self.banco = banco
+        self.repositorio = RepositorioArquivoTecnico(banco)
+        self.storage_root = (
+            storage_root.resolve()
+            if storage_root is not None
+            else (Path(__file__).resolve().parents[3] / self.STORAGE_ROOT).resolve()
+        )
+
+    def _solicitacao_existe(self, solicitacao_id: int) -> None:
+        if self.banco.get(SolicitacaoServico, solicitacao_id) is None:
+            raise HTTPException(
+                status_code=404,
+                detail="solicitacao_nao_encontrada",
+            )
+
+    def _validar_extensao(self, filename: str | None) -> tuple[str, str]:
+        nome = Path(filename or "").name
+        if not nome or nome in {".", ".."}:
+            raise HTTPException(
+                status_code=400,
+                detail="nome_arquivo_obrigatorio",
+            )
+        if len(nome) > 255:
+            raise HTTPException(
+                status_code=400,
+                detail="nome_arquivo_muito_longo",
+            )
+
+        extensao = Path(nome).suffix.lower()
+        if extensao not in self.ALLOWED_EXTENSIONS:
+            raise HTTPException(
+                status_code=415,
+                detail="extensao_arquivo_nao_permitida",
+            )
+        return nome, extensao
+
+    async def criar(
+        self,
+        solicitacao_id: int,
+        arquivo: UploadFile,
+    ) -> ArquivoTecnico:
+        self._solicitacao_existe(solicitacao_id)
+        nome_original, extensao = self._validar_extensao(arquivo.filename)
+
+        self.storage_root.mkdir(parents=True, exist_ok=True)
+        nome_fisico = f"{uuid.uuid4().hex}{extensao}"
+        destino = self.storage_root / nome_fisico
+        temporario = self.storage_root / f".{nome_fisico}.part"
+
+        total = 0
+        digest = hashlib.sha256()
+
+        try:
+            with temporario.open("wb") as saida:
+                while True:
+                    bloco = await arquivo.read(self.CHUNK_SIZE)
+                    if not bloco:
+                        break
+
+                    total += len(bloco)
+                    if total > self.MAX_FILE_SIZE_BYTES:
+                        raise HTTPException(
+                            status_code=413,
+                            detail="arquivo_excede_limite_de_tamanho",
+                        )
+
+                    digest.update(bloco)
+                    saida.write(bloco)
+
+            os.replace(temporario, destino)
+
+            item = ArquivoTecnico(
+                solicitacao_id=solicitacao_id,
+                nome_original=nome_original,
+                extensao=extensao,
+                content_type=arquivo.content_type,
+                tamanho_bytes=total,
+                sha256=digest.hexdigest(),
+                caminho_arquivo=str(destino),
+                ativo=True,
+            )
+
+            try:
+                return self.repositorio.criar(item)
+            except Exception:
+                self.banco.rollback()
+                destino.unlink(missing_ok=True)
+                raise
+
+        except HTTPException:
+            temporario.unlink(missing_ok=True)
+            destino.unlink(missing_ok=True)
+            raise
+        except Exception:
+            temporario.unlink(missing_ok=True)
+            destino.unlink(missing_ok=True)
+            raise
+        finally:
+            await arquivo.close()
+
+    def listar(self, solicitacao_id: int) -> list[ArquivoTecnico]:
+        self._solicitacao_existe(solicitacao_id)
+        return self.repositorio.listar_ativos_por_solicitacao(solicitacao_id)
+
+    def obter(self, arquivo_id: int) -> ArquivoTecnico:
+        item = self.repositorio.obter_ativo_por_id(arquivo_id)
+        if item is None:
+            raise HTTPException(
+                status_code=404,
+                detail="arquivo_tecnico_nao_encontrado",
+            )
+        return item
+
+    def caminho_seguro(self, item: ArquivoTecnico) -> Path:
+        caminho = Path(item.caminho_arquivo).resolve()
+        if not caminho.is_relative_to(self.storage_root):
+            raise HTTPException(
+                status_code=500,
+                detail="caminho_arquivo_invalido",
+            )
+        if not caminho.is_file():
+            raise HTTPException(
+                status_code=404,
+                detail="arquivo_fisico_nao_encontrado",
+            )
+        return caminho
+
+    def desvincular(self, arquivo_id: int) -> None:
+        item = self.repositorio.obter_ativo_por_id(arquivo_id)
+        if item is None:
+            raise HTTPException(
+                status_code=404,
+                detail="arquivo_tecnico_nao_encontrado",
+            )
+
+        item.ativo = False
+        self.repositorio.salvar(item)
+
+===== MODEL =====
+from __future__ import annotations
+
+from datetime import datetime
+
+from sqlalchemy import Boolean, CheckConstraint, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy.orm import Mapped, mapped_column
+
+from backend.app.database.base import Base
+
+
+class ArquivoTecnico(Base):
+    __tablename__ = "arquivos_tecnicos"
+    __table_args__ = (
+        CheckConstraint(
+            "tamanho_bytes >= 0",
+            name="ck_arquivos_tecnicos_tamanho",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    solicitacao_id: Mapped[int] = mapped_column(
+        ForeignKey("solicitacoes_servico.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True,
+    )
+    nome_original: Mapped[str] = mapped_column(String(255), nullable=False)
+    extensao: Mapped[str] = mapped_column(String(10), nullable=False)
+    content_type: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    tamanho_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
+    sha256: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    caminho_arquivo: Mapped[str] = mapped_column(Text, nullable=False)
+    criado_em: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+    ativo: Mapped[bool] = mapped_column(
+        Boolean,
+        nullable=False,
+        default=True,
+        server_default="1",
+        index=True,
+    )
+
+===== REPOSITORY =====
+from __future__ import annotations
+
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from backend.app.models.arquivo_tecnico import ArquivoTecnico
+
+
+class RepositorioArquivoTecnico:
+    def __init__(self, banco: Session) -> None:
+        self.banco = banco
+
+    def criar(self, arquivo: ArquivoTecnico) -> ArquivoTecnico:
+        self.banco.add(arquivo)
+        self.banco.commit()
+        self.banco.refresh(arquivo)
+        return arquivo
+
+    def obter_ativo_por_id(self, arquivo_id: int) -> ArquivoTecnico | None:
+        return self.banco.scalar(
+            select(ArquivoTecnico).where(
+                ArquivoTecnico.id == arquivo_id,
+                ArquivoTecnico.ativo.is_(True),
+            )
+        )
+
+    def listar_ativos_por_solicitacao(
+        self,
+        solicitacao_id: int,
+    ) -> list[ArquivoTecnico]:
+        return list(
+            self.banco.scalars(
+                select(ArquivoTecnico)
+                .where(
+                    ArquivoTecnico.solicitacao_id == solicitacao_id,
+                    ArquivoTecnico.ativo.is_(True),
+                )
+                .order_by(
+                    ArquivoTecnico.criado_em.desc(),
+                    ArquivoTecnico.id.desc(),
+                )
+            )
+        )
+
+    def salvar(self, arquivo: ArquivoTecnico) -> ArquivoTecnico:
+        self.banco.add(arquivo)
+        self.banco.commit()
+        self.banco.refresh(arquivo)
+        return arquivo

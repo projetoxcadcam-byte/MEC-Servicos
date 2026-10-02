@@ -1,0 +1,23 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D18-PORTAL-CLIENTE-SOLICITACOES-2026-10-01",
+  "backend_list_endpoint": true,
+  "frontend_client_request_page": true,
+  "frontend_api_proxy": true,
+  "tests_created": true,
+  "database_migration_required": false,
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D18_PORTAL_CLIENTE_20261001_155417",
+  "backed_up_files": 3,
+  "scope": [
+    "listar solicitações por empresa cliente",
+    "criar solicitação",
+    "carregar processos",
+    "carregar materiais",
+    "indicadores do cliente",
+    "histórico de solicitações"
+  ],
+  "not_in_scope": [
+    "autenticação real no backend",
+    "vínculo de arquivo técnico",
+    "cotações"
+  ]
+}

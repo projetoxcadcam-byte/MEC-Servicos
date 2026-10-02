@@ -1,0 +1,26 @@
+MEC-Serviços D22 FIX1 — Upload multipart
+REVISION=MEC-SERVICOS-V0.1-D22-FIX1-UPLOAD-MULTIPART-2026-10-02
+RAIZ=C:\Users\Omega\Desktop\MEC-Servicos
+BACKUP=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\D22_FIX1_UPLOAD_MULTIPART_20261002_075240_360565
+API_ALTERADA=True
+NPM_BUILD_RETURNCODE=0
+FONTES_LIDAS_PRESERVADAS=True
+RESTAURADO=False
+RESULTADO=OK
+VALIDACAO_NO_NAVEGADOR=PENDENTE
+
+SAÍDA DO BUILD:
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+[36mvite v8.3.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 1967 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:   0.29 kB
+dist/assets/index-CqN76nz-.css   18.73 kB │ gzip:   4.39 kB
+dist/assets/index-D_dQ3qDV.js   359.38 kB │ gzip: 112.24 kB
+
+[32m✓ built in 780ms[39m

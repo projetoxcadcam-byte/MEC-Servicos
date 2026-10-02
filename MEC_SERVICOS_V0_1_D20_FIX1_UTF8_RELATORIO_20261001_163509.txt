@@ -1,0 +1,13 @@
+MEC Serviços — D20 FIX1 UTF-8 Frontend Completo
+REVISION=MEC-SERVICOS-V0.1-D20-FIX1-UTF8-FRONTEND-COMPLETO-2026-10-01
+ROOT=C:\Users\Omega\Desktop\MEC-Servicos
+FRONTEND=C:\Users\Omega\Desktop\MEC-Servicos\frontend
+BACKUP_DIR=C:\Users\Omega\Desktop\MEC-Servicos\_mec_backups\D20_FIX1_UTF8_FRONTEND_20261001_163509
+SCANNED_FILES=21
+CHANGED_FILES=1
+BACKED_UP_FILES=1
+
+ARQUIVOS ALTERADOS:
+frontend\src\pages\auth\LoginPage.tsx
+
+RESULTADO=OK

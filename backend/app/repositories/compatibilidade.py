@@ -22,6 +22,19 @@ class RepositorioCompatibilidade:
         self.banco.refresh(solicitacao)
         return solicitacao
 
+    def listar_solicitacoes_por_cliente(
+        self,
+        empresa_cliente_id: int,
+    ) -> list[SolicitacaoServico]:
+        consulta = (
+            select(SolicitacaoServico)
+            .where(
+                SolicitacaoServico.empresa_cliente_id == empresa_cliente_id
+            )
+            .order_by(SolicitacaoServico.id.desc())
+        )
+        return list(self.banco.scalars(consulta).all())
+
     def listar_fornecedores_compativeis(
         self,
         solicitacao: SolicitacaoServico,

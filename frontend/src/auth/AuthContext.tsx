@@ -53,7 +53,7 @@ const USUARIOS: Array<AuthUser & { senha: string }> = [
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 function carregarSessao(): AuthUser | null {
-  // Remove a sessÃ£o antiga que usava localStorage.
+  // Remove a sessão antiga que usava localStorage.
   localStorage.removeItem(LEGACY_STORAGE_KEY);
 
   const salvo = sessionStorage.getItem(SESSION_KEY);

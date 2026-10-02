@@ -74,6 +74,14 @@ class ServicoCompatibilidade:
             raise SolicitacaoNaoEncontrada(solicitacao_id)
         return solicitacao
 
+    def listar_solicitacoes_por_cliente(
+        self,
+        empresa_cliente_id: int,
+    ) -> list[SolicitacaoServico]:
+        return self.repositorio.listar_solicitacoes_por_cliente(
+            empresa_cliente_id
+        )
+
     def listar_fornecedores_compativeis(
         self,
         solicitacao_id: int,

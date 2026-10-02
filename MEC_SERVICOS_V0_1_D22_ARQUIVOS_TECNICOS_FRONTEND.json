@@ -1,0 +1,52 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D22-ARQUIVOS-TECNICOS-FRONTEND-FUNCIONAL-2026-10-02",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D22_ARQUIVOS_TECNICOS_FRONTEND_20261002_071931",
+  "backed_up": [
+    "frontend\\src\\App.tsx"
+  ],
+  "backend_contract": {
+    "upload_endpoint": true,
+    "upload_field_file": true,
+    "list_endpoint": true,
+    "download_endpoint": true,
+    "delete_endpoint": true,
+    "allowed_extensions": true,
+    "max_100mb": true,
+    "sha256": true,
+    "active_soft_unlink": true
+  },
+  "solicitacoes_contract": {
+    "prefix": true,
+    "list_route": true,
+    "empresa_cliente_id": true,
+    "filters_company": true
+  },
+  "frontend_checks": {
+    "page_exists": true,
+    "css_exists": true,
+    "route_import": true,
+    "client_route": true,
+    "admin_route_untouched": true,
+    "api_import": true,
+    "auth_import": true,
+    "list_solicitations": true,
+    "company_filter": true,
+    "multipart_file_field": true,
+    "upload_endpoint": true,
+    "download_endpoint": true,
+    "delete_endpoint": true,
+    "client_limit": true,
+    "accepted_extensions": true,
+    "css_selector": true
+  },
+  "patch": {
+    "import_added": true,
+    "client_route_replaced": true,
+    "already_patched": false
+  },
+  "npm_build_returncode": 0,
+  "npm_build_output_tail": "\n> frontend@0.0.0 build\n> tsc -b && vite build\n\n\u001b[36mvite v8.3.2 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 1967 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.45 kB │ gzip:   0.29 kB\ndist/assets/index-CqN76nz-.css   18.73 kB │ gzip:   4.39 kB\ndist/assets/index-C6Rm3UDr.js   359.42 kB │ gzip: 112.25 kB\n\n\u001b[32m✓ built in 433ms\u001b[39m\n",
+  "result": "OK",
+  "restored": false
+}

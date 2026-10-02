@@ -1,0 +1,57 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D21-FIX2-BACKEND-CONTRATO-2026-10-01",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D21_FIX2_BACKEND_CONTRATO_20261001_165545",
+  "changed": [],
+  "d16_router_before_fix": {
+    "module": "backend.app.api.rotas.arquivos_tecnicos",
+    "routes": [
+      {
+        "path": "/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+        "methods": [
+          "POST"
+        ],
+        "endpoint": "enviar_arquivo_tecnico"
+      },
+      {
+        "path": "/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": "listar_arquivos_tecnicos"
+      },
+      {
+        "path": "/arquivos-tecnicos/{arquivo_id}",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": "obter_arquivo_tecnico"
+      },
+      {
+        "path": "/arquivos-tecnicos/{arquivo_id}/download",
+        "methods": [
+          "GET"
+        ],
+        "endpoint": "baixar_arquivo_tecnico"
+      },
+      {
+        "path": "/arquivos-tecnicos/{arquivo_id}",
+        "methods": [
+          "DELETE"
+        ],
+        "endpoint": "desvincular_arquivo_tecnico"
+      }
+    ]
+  },
+  "openapi_after_fix": {
+    "solicitacao_list_path": "/api/v1/solicitacoes-servico",
+    "multipart_routes": [
+      {
+        "path": "/api/v1/solicitacoes-servico/{solicitacao_id}/arquivos-tecnicos",
+        "method": "POST"
+      }
+    ]
+  },
+  "pytest_returncode": 0,
+  "status": "OK"
+}

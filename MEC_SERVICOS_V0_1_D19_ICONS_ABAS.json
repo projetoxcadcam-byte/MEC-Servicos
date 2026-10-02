@@ -1,0 +1,18 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D19-FIX4-ROTA-CLIENTE-AUTO-ICONS-ABAS-2026-10-01",
+  "build_fixes": [
+    "FormEvent convertido para import type",
+    "rota /cliente criada ou corrigida automaticamente sem exigir que o bloco /cliente já exista"
+  ],
+  "visual": {
+    "library": "lucide-react",
+    "client_icons": true,
+    "admin_icons": true,
+    "supplier_icons": true,
+    "named_tabs": true,
+    "responsive_sidebar": true,
+    "topbar_with_current_page": true
+  },
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D19_ICONS_ABAS_20261001_161151",
+  "backed_up_files": 7
+}

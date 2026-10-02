@@ -1,11 +1,14 @@
+
 from __future__ import annotations
 
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from backend.app.database.sessao import obter_banco
+from backend.app.models.empresa import Empresa
 from backend.app.models.solicitacao import SolicitacaoServico
 from backend.app.schemas.solicitacao import (
     FornecedorCompativelLeitura,
@@ -63,6 +66,43 @@ def criar_solicitacao(
 
 
 @roteador.get(
+    "",
+    response_model=list[SolicitacaoServicoLeitura],
+)
+def listar_solicitacoes(
+    empresa_cliente_id: int,
+    banco: SessaoBanco,
+) -> list[SolicitacaoServicoLeitura]:
+    empresa = banco.get(Empresa, empresa_cliente_id)
+
+    if empresa is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="empresa_cliente_nao_encontrada",
+        )
+
+    if empresa.tipo_empresa != "cliente":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="empresa_nao_e_cliente",
+        )
+
+    itens = banco.scalars(
+        select(SolicitacaoServico)
+        .where(SolicitacaoServico.empresa_cliente_id == empresa_cliente_id)
+        .order_by(
+            SolicitacaoServico.criada_em.desc(),
+            SolicitacaoServico.id.desc(),
+        )
+    ).all()
+
+    return [
+        SolicitacaoServicoLeitura.model_validate(item)
+        for item in itens
+    ]
+
+
+@roteador.get(
     "/{solicitacao_id}",
     response_model=SolicitacaoServicoLeitura,
 )
@@ -102,6 +142,7 @@ def listar_fornecedores_compativeis(
         ) from exc
 
     solicitacao = banco.get(SolicitacaoServico, solicitacao_id)
+
     if solicitacao is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

@@ -1,0 +1,35 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D22-FIX2-ARQUIVOS-ZIP-RAR-2026-10-02",
+  "resultado": "ERRO",
+  "restaurado": true,
+  "arquivos_alterados": [
+    "backend\\app\\services\\arquivo_tecnico.py",
+    "frontend\\src\\pages\\client\\ClientArquivosTecnicosPage.tsx"
+  ],
+  "etapas": [
+    {
+      "nome": "validacao extensoes",
+      "returncode": 0,
+      "saida": "ZIP_RAR_MAIUSCULAS_MINUSCULAS_OK=True\nFORMATOS_ANTERIORES_OK=True\nBLOQUEIO_EXTENSAO_INDEVIDA_OK=True\nLIMITE_100_MB_OK=True\n"
+    },
+    {
+      "nome": "pytest",
+      "returncode": 2,
+      "saida": "\n=================================== ERRORS ====================================\n_____ ERROR collecting tests/mold/test_mold_v089_cooling_bubbler_core.py ______\nImportError while importing test module 'C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\mold\\test_mold_v089_cooling_bubbler_core.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n..\\..\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests\\mold\\test_mold_v089_cooling_bubbler_core.py:5: in <module>\n    from cgx.mold import MoldBase\nE   ModuleNotFoundError: No module named 'cgx'\n__ ERROR collecting tests/mold/test_mold_v089_cooling_bubbler_mechanical.py ___\nImportError while importing test module 'C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\mold\\test_mold_v089_cooling_bubbler_mechanical.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n..\\..\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests\\mold\\test_mold_v089_cooling_bubbler_mechanical.py:3: in <module>\n    from cgx.mold import MoldBase\nE   ModuleNotFoundError: No module named 'cgx'\n______ ERROR collecting tests/mold/test_mold_v089_cooling_bubbler_occ.py ______\nImportError while importing test module 'C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\mold\\test_mold_v089_cooling_bubbler_occ.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n..\\..\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests\\mold\\test_mold_v089_cooling_bubbler_occ.py:3: in <module>\n    from OCP.BRepGProp import BRepGProp\nE   ModuleNotFoundError: No module named 'OCP'\n__ ERROR collecting tests/mold/test_mold_v089_cooling_bubbler_persistence.py __\nImportError while importing test module 'C:\\Users\\Omega\\Desktop\\MEC-Servicos\\tests\\mold\\test_mold_v089_cooling_bubbler_persistence.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n..\\..\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\importlib\\__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests\\mold\\test_mold_v089_cooling_bubbler_persistence.py:5: in <module>\n    from cgx.mold.configuration import MoldConfiguratorState\nE   ModuleNotFoundError: No module named 'cgx'\n============================== warnings summary ===============================\n.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\n  C:\\Users\\Omega\\Desktop\\MEC-Servicos\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nERROR tests/mold/test_mold_v089_cooling_bubbler_core.py\nERROR tests/mold/test_mold_v089_cooling_bubbler_mechanical.py\nERROR tests/mold/test_mold_v089_cooling_bubbler_occ.py\nERROR tests/mold/test_mold_v089_cooling_bubbler_persistence.py\n!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!\n"
+    }
+  ],
+  "validacao_no_navegador": "PENDENTE",
+  "raiz": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "contrato": {
+    "limite_backend_100_mb": true,
+    "limite_tela_100_mb": true,
+    "upload_formdata": true,
+    "campo_file_tela": true,
+    "campo_file_backend": true,
+    "endpoint_upload": true,
+    "multipart_fix1_preservado": true,
+    "build_disponivel": true
+  },
+  "backup": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D22_FIX2_ARQUIVOS_ZIP_RAR_20261002_081127_091867",
+  "erro": "A etapa pytest falhou; confira a saída acima e o relatório."
+}

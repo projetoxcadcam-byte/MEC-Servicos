@@ -15,7 +15,7 @@ from backend.app.repositories.arquivo_tecnico import RepositorioArquivoTecnico
 
 class ServicoArquivoTecnico:
     ALLOWED_EXTENSIONS = frozenset(
-        {".step", ".stp", ".iges", ".igs", ".dxf", ".dwg", ".pdf"}
+        {".step", ".stp", ".iges", ".igs", ".dxf", ".dwg", ".pdf", ".zip", ".rar"}
     )
     MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024
     CHUNK_SIZE = 1024 * 1024

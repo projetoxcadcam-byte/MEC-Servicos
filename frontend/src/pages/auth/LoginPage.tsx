@@ -34,7 +34,7 @@ export default function LoginPage() {
     const usuario = login(email, senha);
 
     if (!usuario) {
-      setErro("E-mail ou senha invÃ¡lidos.");
+      setErro("E-mail ou senha inválidos.");
       return;
     }
 
@@ -44,17 +44,17 @@ export default function LoginPage() {
 
   return (
     <main className="login-page">
-      <section className="login-card" aria-label="Acesso Ã  plataforma MEC ServiÃ§os">
+      <section className="login-card" aria-label="Acesso à plataforma MEC Serviços">
         <div className="login-brand">
           <div className="login-logo">M</div>
           <div>
             <strong>MEC</strong>
-            <span>ServiÃ§os</span>
+            <span>Serviços</span>
           </div>
         </div>
 
         <div className="login-heading">
-          <span>ACESSO Ã€ PLATAFORMA</span>
+          <span>ACESSO À PLATAFORMA</span>
           <h1>Entrar</h1>
           <p>Acesse o portal correspondente ao seu perfil.</p>
         </div>
@@ -92,7 +92,7 @@ export default function LoginPage() {
         </form>
 
         <div className="login-demo">
-          <strong>Acessos de demonstraÃ§Ã£o</strong>
+          <strong>Acessos de demonstração</strong>
           <span>Administrador: admin@mec-servicos.local / admin123</span>
           <span>Cliente: cliente@mec-servicos.local / cliente123</span>
           <span>Fornecedor: fornecedor@mec-servicos.local / fornecedor123</span>

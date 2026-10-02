@@ -1,0 +1,20 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D22-FIX1-UPLOAD-MULTIPART-2026-10-02",
+  "resultado": "OK",
+  "restaurado": false,
+  "api_alterada": true,
+  "validacao_no_navegador": "PENDENTE",
+  "raiz": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "contrato": {
+    "formdata_na_pagina": true,
+    "campo_file_na_pagina": true,
+    "post_formdata_no_endpoint": true,
+    "endpoint_upload_backend": true,
+    "campo_file_no_backend": true,
+    "script_build_disponivel": true
+  },
+  "backup": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\D22_FIX1_UPLOAD_MULTIPART_20261002_075240_360565",
+  "npm_build_returncode": 0,
+  "build_saida": "\n> frontend@0.0.0 build\n> tsc -b && vite build\n\n\u001b[36mvite v8.3.2 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 1967 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.45 kB │ gzip:   0.29 kB\ndist/assets/index-CqN76nz-.css   18.73 kB │ gzip:   4.39 kB\ndist/assets/index-D_dQ3qDV.js   359.38 kB │ gzip: 112.24 kB\n\n\u001b[32m✓ built in 780ms\u001b[39m\n",
+  "fontes_lidas_preservadas": true
+}

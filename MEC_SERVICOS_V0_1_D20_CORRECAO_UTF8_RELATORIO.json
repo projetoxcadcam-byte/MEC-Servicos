@@ -1,0 +1,13 @@
+{
+  "revision": "MEC-SERVICOS-V0.1-D20-FIX-UTF8-MOJIBAKE-FRONTEND-2026-10-01",
+  "root": "C:\\Users\\Omega\\Desktop\\MEC-Servicos",
+  "frontend": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\frontend",
+  "backup_dir": "C:\\Users\\Omega\\Desktop\\MEC-Servicos\\_mec_backups\\V0_1_D20_UTF8_FRONTEND_20261001_162827",
+  "scanned_text_files": 34,
+  "changed_files": 2,
+  "backed_up_files": 2,
+  "files": [
+    "frontend\\src\\App.tsx",
+    "frontend\\src\\auth\\AuthContext.tsx"
+  ]
+}

@@ -8,6 +8,8 @@ import SupplierLayout from "./layouts/SupplierLayout";
 
 import Dashboard from "./pages/Dashboard";
 import ClientDashboard from "./pages/client/ClientDashboard";
+import ClientArquivosTecnicosPage from "./pages/client/ClientArquivosTecnicosPage";
+import ClientSolicitacoesPage from "./pages/client/ClientSolicitacoesPage";
 import SupplierDashboard from "./pages/supplier/SupplierDashboard";
 import ModulePage from "./pages/ModulePage";
 import LoginPage from "./pages/auth/LoginPage";
@@ -33,8 +35,8 @@ export default function App() {
             path="solicitacoes"
             element={
               <ModulePage
-                title="SolicitaÃ§Ãµes"
-                description="Gerenciamento das solicitaÃ§Ãµes de serviÃ§os mecÃ¢nicos."
+                title="Solicitações"
+                description="Gerenciamento das solicitações de serviços mecânicos."
               />
             }
           />
@@ -43,8 +45,8 @@ export default function App() {
             path="cotacoes"
             element={
               <ModulePage
-                title="CotaÃ§Ãµes"
-                description="CotaÃ§Ãµes e propostas dos fornecedores."
+                title="Cotações"
+                description="Cotações e propostas dos fornecedores."
               />
             }
           />
@@ -53,8 +55,8 @@ export default function App() {
             path="contratacoes"
             element={
               <ModulePage
-                title="ContrataÃ§Ãµes"
-                description="ContrataÃ§Ãµes de serviÃ§os entre clientes e fornecedores."
+                title="Contratações"
+                description="Contratações de serviços entre clientes e fornecedores."
               />
             }
           />
@@ -63,8 +65,8 @@ export default function App() {
             path="ordens-servico"
             element={
               <ModulePage
-                title="Ordens de ServiÃ§o"
-                description="ExecuÃ§Ã£o e controle das ordens de serviÃ§o."
+                title="Ordens de Serviço"
+                description="Execução e controle das ordens de serviço."
               />
             }
           />
@@ -73,8 +75,8 @@ export default function App() {
             path="producao"
             element={
               <ModulePage
-                title="Acompanhamento de ProduÃ§Ã£o"
-                description="Acompanhamento das etapas de produÃ§Ã£o."
+                title="Acompanhamento de Produção"
+                description="Acompanhamento das etapas de produção."
               />
             }
           />
@@ -94,7 +96,7 @@ export default function App() {
             element={
               <ModulePage
                 title="Pagamentos"
-                description="Controle financeiro e pagamentos das contrataÃ§Ãµes."
+                description="Controle financeiro e pagamentos das contratações."
               />
             }
           />
@@ -103,8 +105,8 @@ export default function App() {
             path="avaliacoes"
             element={
               <ModulePage
-                title="AvaliaÃ§Ãµes"
-                description="AvaliaÃ§Ãµes e reputaÃ§Ã£o dos fornecedores."
+                title="Avaliações"
+                description="Avaliações e reputação dos fornecedores."
               />
             }
           />
@@ -114,7 +116,7 @@ export default function App() {
             element={
               <ModulePage
                 title="Ranking de Fornecedores"
-                description="Consulta da classificaÃ§Ã£o derivada das avaliaÃ§Ãµes."
+                description="Consulta da classificação derivada das avaliações."
               />
             }
           />
@@ -123,8 +125,8 @@ export default function App() {
             path="arquivos-tecnicos"
             element={
               <ModulePage
-                title="Arquivos TÃ©cnicos"
-                description="Gerenciamento dos arquivos tÃ©cnicos dos serviÃ§os."
+                title="Arquivos Técnicos"
+                description="Gerenciamento dos arquivos técnicos dos serviços."
               />
             }
           />
@@ -140,22 +142,14 @@ export default function App() {
         >
           <Route index element={<ClientDashboard />} />
 
-          <Route
-            path="solicitacoes"
-            element={
-              <ModulePage
-                title="Minhas SolicitaÃ§Ãµes"
-                description="Crie e acompanhe suas solicitaÃ§Ãµes de serviÃ§os mecÃ¢nicos."
-              />
-            }
-          />
+                    <Route path="solicitacoes" element={<ClientSolicitacoesPage />} />
 
           <Route
             path="cotacoes"
             element={
               <ModulePage
-                title="CotaÃ§Ãµes Recebidas"
-                description="Visualize e compare as cotaÃ§Ãµes recebidas."
+                title="Cotações Recebidas"
+                description="Visualize e compare as cotações recebidas."
               />
             }
           />
@@ -164,8 +158,8 @@ export default function App() {
             path="contratacoes"
             element={
               <ModulePage
-                title="Minhas ContrataÃ§Ãµes"
-                description="Acompanhe os serviÃ§os contratados."
+                title="Minhas Contratações"
+                description="Acompanhe os serviços contratados."
               />
             }
           />
@@ -174,8 +168,8 @@ export default function App() {
             path="ordens-servico"
             element={
               <ModulePage
-                title="Ordens de ServiÃ§o"
-                description="Acompanhe as ordens relacionadas aos seus serviÃ§os."
+                title="Ordens de Serviço"
+                description="Acompanhe as ordens relacionadas aos seus serviços."
               />
             }
           />
@@ -184,8 +178,8 @@ export default function App() {
             path="producao"
             element={
               <ModulePage
-                title="Acompanhamento de ProduÃ§Ã£o"
-                description="Acompanhe a produÃ§Ã£o dos seus serviÃ§os."
+                title="Acompanhamento de Produção"
+                description="Acompanhe a produção dos seus serviços."
               />
             }
           />
@@ -205,7 +199,7 @@ export default function App() {
             element={
               <ModulePage
                 title="Pagamentos"
-                description="Consulte pagamentos e situaÃ§Ã£o financeira das contrataÃ§Ãµes."
+                description="Consulte pagamentos e situação financeira das contratações."
               />
             }
           />
@@ -214,21 +208,13 @@ export default function App() {
             path="avaliacoes"
             element={
               <ModulePage
-                title="AvaliaÃ§Ãµes"
-                description="Avalie os fornecedores dos serviÃ§os contratados."
+                title="Avaliações"
+                description="Avalie os fornecedores dos serviços contratados."
               />
             }
           />
 
-          <Route
-            path="arquivos-tecnicos"
-            element={
-              <ModulePage
-                title="Arquivos TÃ©cnicos"
-                description="Gerencie os arquivos tÃ©cnicos das suas solicitaÃ§Ãµes."
-              />
-            }
-          />
+          <Route path="arquivos-tecnicos" element={<ClientArquivosTecnicosPage />} />
         </Route>
 
         <Route
@@ -245,8 +231,8 @@ export default function App() {
             path="solicitacoes"
             element={
               <ModulePage
-                title="SolicitaÃ§Ãµes DisponÃ­veis"
-                description="Consulte solicitaÃ§Ãµes de clientes e oportunidades para cotaÃ§Ã£o."
+                title="Solicitações Disponíveis"
+                description="Consulte solicitações de clientes e oportunidades para cotação."
               />
             }
           />
@@ -255,8 +241,8 @@ export default function App() {
             path="cotacoes"
             element={
               <ModulePage
-                title="Minhas CotaÃ§Ãµes"
-                description="Gerencie as cotaÃ§Ãµes enviadas aos clientes."
+                title="Minhas Cotações"
+                description="Gerencie as cotações enviadas aos clientes."
               />
             }
           />
@@ -265,8 +251,8 @@ export default function App() {
             path="contratacoes"
             element={
               <ModulePage
-                title="ContrataÃ§Ãµes"
-                description="Acompanhe os serviÃ§os contratados pelos clientes."
+                title="Contratações"
+                description="Acompanhe os serviços contratados pelos clientes."
               />
             }
           />
@@ -275,8 +261,8 @@ export default function App() {
             path="ordens-servico"
             element={
               <ModulePage
-                title="Ordens de ServiÃ§o"
-                description="Gerencie suas ordens de serviÃ§o."
+                title="Ordens de Serviço"
+                description="Gerencie suas ordens de serviço."
               />
             }
           />
@@ -285,8 +271,8 @@ export default function App() {
             path="producao"
             element={
               <ModulePage
-                title="ProduÃ§Ã£o"
-                description="Acompanhe e atualize a execuÃ§Ã£o dos serviÃ§os."
+                title="Produção"
+                description="Acompanhe e atualize a execução dos serviços."
               />
             }
           />
@@ -296,7 +282,7 @@ export default function App() {
             element={
               <ModulePage
                 title="Entregas"
-                description="Gerencie as entregas dos serviÃ§os concluÃ­dos."
+                description="Gerencie as entregas dos serviços concluídos."
               />
             }
           />
@@ -315,8 +301,8 @@ export default function App() {
             path="avaliacoes"
             element={
               <ModulePage
-                title="AvaliaÃ§Ãµes"
-                description="Consulte as avaliaÃ§Ãµes recebidas dos clientes."
+                title="Avaliações"
+                description="Consulte as avaliações recebidas dos clientes."
               />
             }
           />
@@ -326,7 +312,7 @@ export default function App() {
             element={
               <ModulePage
                 title="Ranking de Fornecedores"
-                description="Consulte sua posiÃ§Ã£o e histÃ³rico de avaliaÃ§Ãµes."
+                description="Consulte sua posição e histórico de avaliações."
               />
             }
           />
@@ -335,8 +321,8 @@ export default function App() {
             path="arquivos-tecnicos"
             element={
               <ModulePage
-                title="Arquivos TÃ©cnicos"
-                description="Consulte os arquivos tÃ©cnicos disponibilizados pelos clientes."
+                title="Arquivos Técnicos"
+                description="Consulte os arquivos técnicos disponibilizados pelos clientes."
               />
             }
           />
