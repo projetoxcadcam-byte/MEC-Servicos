@@ -1,0 +1,79 @@
+MEC-Serviços D66 — Tutorial por perfil
+REVISION=MEC-SERVICOS-V0.1-D66-TUTORIAL-POR-PERFIL-2026-10-14
+
+O QUE ESTA ETAPA ENTREGA
+Menu Ajuda e tutorial logo abaixo do Dashboard de Cliente, Fornecedor e Administração.
+Cada perfil abre seu próprio guia com etapas, passos, resultado esperado, dicas,
+busca, dúvidas frequentes e links para as telas reais do sistema.
+O cliente tem 10 etapas, o fornecedor 11 e a administração 16.
+O progresso representa leitura do tutorial. Para executar um procedimento,
+abra a tela, confira o serviço e registre a operação no formulário correspondente.
+As marcações de leitura ficam no navegador, separadas por usuário, perfil e empresa.
+Usar outro computador ou limpar os dados do navegador pode remover as marcações.
+O tutorial continua utilizável se o navegador impedir o salvamento da leitura.
+O guia usa a sessão existente e não permite escolher outro perfil na própria ajuda.
+
+INSTALAÇÃO
+Requisito: D65 concluída com RESULTADO=OK.
+1. Pare o frontend com Ctrl+C no terminal em que npm run dev está rodando.
+2. Salve MEC_SERVICOS_V0_1_D66_TUTORIAL_POR_PERFIL.py na pasta MEC-Servicos.
+3. Execute, uma linha de cada vez:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D66_TUTORIAL_POR_PERFIL.py
+
+Aguarde RESULTADO=OK. A compilação do frontend aparece ao vivo no terminal.
+O instalador faz backup das fontes alteradas e do build anterior.
+Em falha de compilação, restaura os arquivos que ele aplicou e o build anterior.
+Alterações posteriores de outra origem são preservadas e informadas no relatório.
+Esta etapa não instala bibliotecas, não executa operações de negócio e não acessa
+os bancos. Backend, contas, pagamentos, históricos e permissões permanecem com
+seus mecanismos atuais. A validação desta atualização é a integração e o build
+do frontend; a suíte de negócio não precisa ser reexecutada para esta etapa.
+
+ATIVAÇÃO
+O backend pode permanecer rodando. Se precisar iniciá-lo, use outra janela:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Na janela do frontend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+ONDE ENCONTRAR
+Logo abaixo do Dashboard no menu lateral: Ajuda e tutorial.
+Administração: http://localhost:5173/admin/ajuda
+Cliente: http://localhost:5173/cliente/ajuda
+Fornecedor: http://localhost:5173/fornecedor/ajuda
+O acesso depende da sessão do respectivo perfil.
+
+TESTE RÁPIDO
+1. Entre como ADM e abra Ajuda e tutorial logo abaixo do Dashboard no menu.
+2. Confira Guia do perfil · Administração e a sequência de 16 etapas.
+3. Busque preço e abra Prepare e publique o preço para o cliente.
+4. Leia as instruções e clique Abrir esta tela: deve abrir Cotações.
+5. Retorne a Ajuda e tutorial. A etapa selecionada deve continuar disponível.
+6. Clique Concluir leitura desta etapa. O contador deve aumentar uma unidade.
+7. Atualize a página: a leitura deve continuar marcada neste navegador.
+8. Use Etapa anterior e Próxima etapa e confira a mudança do passo a passo.
+9. Busque um texto inexistente e use Limpar busca para rever o índice.
+10. Abra Reiniciar leitura. Confira a pergunta e escolha Continuar como está.
+    As marcações devem continuar. Se confirmar o reinício, zera só a leitura.
+11. Entre como Cliente e abra sua ajuda: devem aparecer 10 etapas do cliente.
+    As marcações do ADM não devem aparecer nesta conta.
+12. Entre como Fornecedor e confira suas 11 etapas, com produção, coleta e notas.
+    As marcações das outras contas não devem aparecer neste perfil.
+13. Abra uma dúvida frequente de cada perfil para conferir a explicação.
+
+INFORMAÇÕES DO GUIA
+Fornecedor envia cotação à administração. ADM prepara o preço e publica para
+o cliente analisar. A contratação e a OS são formalizadas pela administração.
+Os documentos precisam passar pela revisão e liberação administrativa.
+Fornecedor atualiza produção; ADM controla material, coleta, conferência e entrega.
+O controle financeiro registra os movimentos; não realiza transferência bancária.
+Ranking, comparação, custos reservados e resultado administrativo continuam
+restritos à administração pelos mecanismos existentes.

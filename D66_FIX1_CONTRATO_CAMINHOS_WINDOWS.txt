@@ -1,0 +1,47 @@
+MEC-Serviços D66 FIX1 — Caminhos do instalador no Windows
+REVISION=MEC-SERVICOS-V0.1-D66-FIX1-CAMINHOS-WINDOWS-2026-10-15
+
+MOTIVO DA CORREÇÃO
+A compilação da D66 terminou corretamente, mas a conferência de preservação
+comparava nomes de arquivos do Windows com barras invertidas aos caminhos
+do pacote com barras normais. Assim, identificava frontend/src/App.tsx como
+uma alteração externa e restaurava a instalação.
+A FIX1 normaliza os caminhos para a comparação. A verificação de alterações
+externas reais continua ativa. Os cinco arquivos do tutorial têm o mesmo
+conteúdo da D66 original, cuja compilação já foi conferida.
+
+BASE E INSTALAÇÃO
+Requer D65 concluída. Pode ser executada após a D66 ter sido restaurada.
+A FIX1 contém os arquivos necessários para instalar o tutorial completo.
+Pare o frontend com Ctrl+C e execute na pasta MEC-Servicos:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D66_FIX1_CAMINHOS_WINDOWS.py
+
+Aguarde CONFERENCIA_CAMINHOS_WINDOWS=True e RESULTADO=OK.
+O instalador faz backup antes da aplicação e compila o frontend.
+Backend, bancos e registros de negócio não são alterados.
+
+ATIVAÇÃO DO FRONTEND
+Com o backend funcionando, execute na janela do frontend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Se precisar iniciar o backend, use outra janela PowerShell:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+TESTE
+1. Abra http://localhost:5173 e atualize com Ctrl+F5.
+2. Entre como ADM e abra Ajuda e tutorial, logo abaixo de Dashboard.
+3. Busque preço e abra Prepare e publique o preço para o cliente.
+4. Clique Abrir esta tela: deve abrir Cotações.
+5. Retorne ao tutorial, conclua a leitura da etapa e atualize a página.
+   A marcação deve continuar salva para essa conta neste navegador.
+6. Confira o guia de Cliente e o de Fornecedor. Cada um abre o conteúdo
+   e o progresso de leitura próprios do perfil e da conta.
+
+O roteiro completo das funções do tutorial permanece em
+D66_CONTRATO_TUTORIAL_POR_PERFIL.txt.

@@ -1,3 +1,4 @@
+import TutorialPage from "./pages/tutorial/TutorialEntrada";
 import PortalSemRanking from "./auth/PortalSemRanking";
 import AvaliacoesPage from "./pages/avaliacoes/AvaliacoesPage";
 import RankingAvaliacoesPage from "./pages/avaliacoes/RankingAvaliacoesPage";
@@ -64,6 +65,7 @@ export default function App() {
           }
         >
           <Route index element={<PainelAdministrativoPage />} />
+          <Route path="ajuda" element={<TutorialPage perfil="admin" />} />
           <Route path="empresas" element={<EmpresasOperacoesPage />} />
 
           <Route path="solicitacoes" element={<AdminComercialPage modo="solicitacoes" />} />
@@ -115,6 +117,7 @@ export default function App() {
           }
         >
           <Route index element={<PainelPortalPage perfil="cliente" />} />
+          <Route path="ajuda" element={<TutorialPage perfil="cliente" />} />
 
                     <Route path="solicitacoes" element={<ClientSolicitacoesPage />} />
 
@@ -165,6 +168,7 @@ export default function App() {
           }
         >
           <Route index element={<PainelPortalPage perfil="fornecedor" />} />
+          <Route path="ajuda" element={<TutorialPage perfil="fornecedor" />} />
 
           <Route
             path="solicitacoes"

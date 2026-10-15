@@ -1,0 +1,83 @@
+MEC-Serviços — Teste completo com os três perfis
+
+OBJETIVO
+Conferir um novo pedido da solicitação ao encerramento, usando dados fictícios.
+O tutorial já foi validado pelo usuário. Este roteiro confere o fluxo de negócio.
+O script de checkpoint não executa as ações abaixo nem altera bancos de dados.
+
+PREPARAÇÃO
+1. Mantenha backend e frontend iniciados e abra http://localhost:5173.
+2. Use contas de teste de Cliente, Fornecedor e Administração. Alterne pelo
+   seletor de contas disponível no modo de teste local, conferindo o perfil.
+3. Identifique o novo pedido como TESTE COMPLETO D66. Anote os números gerados
+   da solicitação, cotação, contratação e OS; não use números de pedidos antigos.
+4. A empresa fornecedora deve ter operações, materiais e capacidade compatíveis
+   com o pedido. Use um arquivo técnico de teste válido e valores fictícios.
+
+ETAPA 1 — CLIENTE CRIA A SOLICITAÇÃO
+Crie uma solicitação com descrição, operação, material, quantidade, dimensões
+e prazo. Anexe o documento técnico de teste e envie para análise.
+Conferir: a solicitação fica registrada para o cliente e pode ser vista pelo ADM.
+Uma nova oportunidade não deve ser liberada sem documentação aprovada.
+
+ETAPA 2 — ADM REVISA E LIBERA A DOCUMENTAÇÃO
+Em Arquivos Técnicos, localize a solicitação, baixe e revise o documento.
+Se usar a preparação do PDF com a logo, confira medidas, escala e informações
+relevantes antes da liberação. Registre a liberação pelo fluxo da tela.
+Conferir: o fornecedor compatível passa a visualizar a oportunidade e os
+arquivos liberados; a versão original permanece disponível à administração.
+
+ETAPA 3 — FORNECEDOR ENVIA A COTAÇÃO
+Abra a oportunidade, confira o documento liberado e envie preço, prazo e
+observações da proposta para análise administrativa.
+Conferir: a proposta aparece para o ADM antes de ser publicada ao cliente.
+
+ETAPA 4 — ADM PREPARA O PREÇO PARA O CLIENTE
+Em Cotações, abra a proposta e use Preparar preço para o cliente. Confira
+o custo do fornecedor, aplique percentual ou valor fixo e publique o preço.
+Exemplo fictício para conferir a conta: custo R$ 1.000,00 mais acréscimo de
+20% sobre o custo resulta em R$ 1.200,00 para o cliente e R$ 200,00 de acréscimo.
+Conferir: o cliente vê o preço publicado; custo, acréscimo e resultado da ADM
+permanecem restritos à administração. Esse acréscimo não é o lucro líquido.
+
+ETAPA 5 — CLIENTE ANALISA; ADM FORMALIZA
+Como cliente, analise e aprove o orçamento publicado. Como ADM, confira
+a decisão e formalize a contratação e a ordem de serviço pelo fluxo da tela.
+Conferir: contratação e OS vinculadas à solicitação correta, sem duplicidade.
+
+ETAPA 6 — MATERIAL E INÍCIO DA PRODUÇÃO
+Como ADM, registre as etapas aplicáveis de disponibilização e entrega de
+material. Como fornecedor, confira a OS e registre o início da produção.
+Conferir: o cliente visualiza a atualização e recebe a notificação relevante.
+
+ETAPA 7 — PRODUÇÃO, COLETA E INSPEÇÃO
+Como fornecedor, atualize o andamento e registre a conclusão ou disponibilidade
+para coleta conforme as ações da tela. Como ADM, registre o recolhimento e
+a conferência. Registre retrabalho apenas se aplicável a este ensaio.
+Conferir: histórico coerente, situação atual correta e notificação ao cliente
+quando a administração registrar o recolhimento das peças.
+
+ETAPA 8 — ENTREGA E ACEITE
+Como ADM, registre a entrega final pelo fluxo da OS. Como cliente, confira
+a entrega e registre o aceite quando a ação estiver disponível.
+Conferir: a OS termina na situação esperada e o histórico mostra as etapas.
+
+ETAPA 9 — FINANCEIRO E RESULTADO ADMINISTRATIVO
+Como ADM, use os registros fictícios deste pedido para conferir recebimentos,
+repasses ao fornecedor e despesas aplicáveis. Compare com o preço publicado.
+Conferir: saldos do pedido e resultado administrativo coerentes, sem registrar
+o mesmo movimento duas vezes. O sistema registra o controle; não executa
+transferências bancárias. O lucro depende também das despesas registradas.
+
+ETAPA 10 — AVALIAÇÃO, PRIVACIDADE E RELATÓRIOS
+Como cliente, faça a avaliação quando o fluxo permitir. Como fornecedor,
+confira somente a nota própria disponibilizada. Como ADM, confira avaliação,
+gráfico de ranking e relatórios da contratação, inclusive CSV e impressão.
+Conferir: ranking e comparação entre empresas exclusivos da administração;
+cliente e fornecedor não devem acessar o ranking nem o resultado da ADM.
+
+CONFERÊNCIA FINAL
+Para cada etapa, registre OK ou a mensagem exata do erro, junto com o perfil
+e os números da solicitação/OS. Se uma etapa bloquear, mantenha o registro
+para análise antes de repetir a operação. O teste completo só fica aprovado
+depois de todas as etapas aplicáveis serem conferidas pelo usuário.

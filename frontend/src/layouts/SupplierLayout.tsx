@@ -26,6 +26,7 @@ type MenuItem = {
 
 const menu: MenuItem[] = [
   { label: "Dashboard", path: "/fornecedor", icon: Gauge },
+  { label: "Ajuda e tutorial", path: "/fornecedor/ajuda", icon: FileText },
   { label: "Solicitações Disponíveis", path: "/fornecedor/solicitacoes", icon: ClipboardList },
   { label: "Minhas Cotações", path: "/fornecedor/cotacoes", icon: FileText },
   { label: "Contratações", path: "/fornecedor/contratacoes", icon: Handshake },
