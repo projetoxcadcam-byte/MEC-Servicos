@@ -1,0 +1,54 @@
+MEC-Serviços D54 — Gráfico de avaliações na comparação de cotações
+
+PRÉ-REQUISITO
+D53 concluída com RESULTADO=OK. Feche o teste local antes de instalar.
+
+FUNCIONAMENTO
+Administração > Cotações > abrir uma solicitação > Comparar propostas.
+O gráfico aparece junto da comparação de preço, prazo e avaliações.
+Cada cotação mostra fornecedor, código, valor total, prazo de execução e duas
+barras: Clientes e ADM. Cada barra apresenta sua média e quantidade de avaliações.
+Escala fixa de 0 a 5; as duas origens permanecem separadas, sem criar nota combinada.
+Sem avaliações significa Sem notas, sem atribuir nota zero.
+O gráfico e a tabela usam a mesma consulta, ordenação, escopo e página.
+São exibidas até 20 cotações por página. Use Anterior e Próxima para consultar todas.
+Ordenar por permite menor valor, menor prazo, maior nota de clientes ou maior nota do ADM.
+Todas, incluindo histórico permite consultar propostas expiradas, recusadas e aceitas;
+essas propostas continuam sem entrar nos mínimos disponíveis quando não são elegíveis.
+O gráfico mostra apenas as propostas da página atual, sem representar ranking global.
+Consultar ranking completo abre o gráfico D53 e a classificação geral dos fornecedores.
+Conferir cotação destaca a proposta original. O aceite exige a confirmação existente.
+O gráfico não realiza escolha automática, não aceita cotações e não cria contratações.
+
+PRIVACIDADE
+Comparação visual, médias comparativas e ranking exclusivos do ADM.
+Cliente e fornecedor não recebem dados do gráfico nem acessam a API administrativa.
+O fornecedor mantém a consulta das notas dos seus próprios serviços, sem ranking.
+Consultas anteriores são retiradas ao atualizar, mudar filtro, fechar o painel ou conta.
+Respostas com perfil ou solicitação divergente são recusadas; respostas tardias
+não substituem o resultado atual. Propostas com versão divergente impedem Conferir.
+
+ATIVAÇÃO NO POWERSHELL
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D54_GRAFICO_COMPARACAO_COTACOES.py
+Após RESULTADO=OK:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Atualize com Ctrl+F5 e entre como administrador.
+
+TESTE MANUAL
+1. Abra Administração > Cotações e abra uma solicitação que tenha cotações.
+2. Clique Comparar propostas. Confira o gráfico de Clientes e ADM junto da tabela.
+3. Compare as médias e quantidades de avaliações do gráfico com a tabela.
+4. Alterne Ordenar por. Gráfico e tabela devem mostrar a mesma sequência de cotações.
+5. Se houver mais de 20 propostas, use Próxima e Anterior para conferir todas.
+6. Selecione Todas, incluindo histórico. As propostas não elegíveis são somente consulta.
+7. Clique Conferir cotação. A proposta correta deve ser destacada; o clique não aceita.
+8. Consulte o ranking completo: o gráfico D53 continua disponível somente ao ADM.
+9. Entre como cliente e fornecedor: gráfico comparativo e ranking não devem aparecer.
+
+PRESERVAÇÃO
+Sem mudanças no banco, modelos, dependências ou regras de classificação.
+Notas, cotações, decisões, ranking D53, materiais, operações, capacidades, PDFs,
+históricos, notificações, contas e senhas permanecem preservados.
+O instalador exige a base D53 conhecida, cria backup e executa testes seletivos
+de comparação, decisões comerciais, ranking privado e autenticação, com saída ao vivo.

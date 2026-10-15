@@ -1,0 +1,43 @@
+MEC-Serviços D43 — Solicitações e cotações administrativas
+
+BASE: D42 FIX2 concluído e documentação para cotação validada.
+Instale com o backend parado. O instalador confere a origem MEC, as fontes,
+o relatório D42, os dois bancos e o backup. Executa pytest com saída ao vivo
+e o build. Ao final cria uma tabela vazia para os novos eventos de decisão.
+Não executa aceite, recusa, contratação, alteração de senha ou liberação.
+
+No perfil Administrador, os menus Solicitações e Cotações passam a consultar
+os registros reais. Há pesquisa exata por solicitação e cotação, situação e
+paginação. Abrir a solicitação mostra cliente, requisitos, observações,
+documentos, propostas, vínculo com contratação e histórico de decisões.
+O cliente e o fornecedor continuam usando códigos e suas rotas permitidas.
+
+DECISÃO PELA ADMINISTRAÇÃO
+Aceitar ou recusar abre uma confirmação visível com o fornecedor, valor total
+e prazo. Informe o registro interno e confirme. O aceite recusa as outras
+propostas pendentes ainda válidas da mesma solicitação, conforme a regra
+comercial anterior. Propostas vencidas são classificadas como expiradas.
+O evento registra o administrador real, motivo interno, momento e propostas
+afetadas. A decisão e o evento são gravados na mesma transação.
+Uma análise antiga, proposta vencida, solicitação fechada ou já contratada
+não recebe nova decisão. Uma repetição do mesmo envio retorna o evento
+existente. Duas decisões concorrentes produzem um único aceite.
+As rotas antigas usam a mesma trava de escrita; suas regras e registros
+anteriores permanecem preservados. O D43 não inventa o autor de decisões
+anteriores. Contratar e criar OS continuam sendo etapas posteriores.
+
+CONFERÊNCIA LOCAL
+1. Reinicie o backend em modo de teste local, mantenha o frontend aberto e
+   pressione Ctrl+F5. Troque para Administrador.
+2. Solicitações > informe 9 > Consultar > Abrir solicitação.
+3. Confira cliente, requisitos, documento liberado e cotação #8 de R$1.500,00,
+   com 7 dias de execução e situação Aguardando decisão.
+4. Cotações > informe solicitação 9 e cotação 8 > Consultar > Analisar cotação.
+5. Confira o documento e os dados. Para o teste de aceite da proposta #8,
+   clique Aceitar cotação, informe a conferência no registro interno e confirme.
+   Essa ação altera a proposta real de teste uma única vez.
+6. Confira Aceita e o administrador no histórico. Atualize o fornecedor e o
+   cliente para verificar a situação da cotação. Os motivos internos ficam
+   disponíveis somente para a administração.
+7. Confira contratação #1 / OS #3 no Dashboard e Pagamentos, mantendo o
+   histórico e os saldos financeiros já encerrados.

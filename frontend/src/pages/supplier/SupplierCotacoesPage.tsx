@@ -1,5 +1,6 @@
+import { identificador } from "../painel/painelPortal";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, ClipboardList, Download, FileText, RefreshCw, Send, X, XCircle } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
 import { api } from "../../services/api";
@@ -26,6 +27,8 @@ const LIMITE = 20;
 export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?: Modo }) {
   const { user } = useAuth();
   const empresaId = user?.role === "fornecedor" ? user.id : 0;
+  const [parametrosUrl] = useSearchParams();
+  const solicitacaoDireta = identificador(parametrosUrl.get("solicitacao"));
   const [deslocamento, setDeslocamento] = useState(0);
   const [atualizacao, setAtualizacao] = useState(0);
   const [grupo, setGrupo] = useState<Grupo | null>(null);
@@ -49,7 +52,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
   const download = useRef<AbortController | null>(null);
   const montada = useRef(true);
   const urls = useRef(new Set<string>());
-  const paginaChave = `${empresaId}:${modo}:${deslocamento}:${atualizacao}`;
+  const paginaChave = `${empresaId}:${modo}:${solicitacaoDireta}:${deslocamento}:${atualizacao}`;
   const grupoAtual = grupo?.chave === paginaChave ? grupo : null;
   const linhas = useMemo(() => grupoAtual?.itens ?? [], [grupoAtual]);
   const linha = linhas.find((item) => (item.cotacao?.id ?? item.solicitacao.id) === selecionadoId) ?? linhas[0];
@@ -63,6 +66,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
   const arquivosAtuais = arquivos?.chave === selecaoChave ? arquivos.itens : [];
   const total = grupoAtual?.total ?? 0;
   const bloquear = carregando || enviando || !grupoAtual;
+  const documentacaoPronta = arquivos?.chave === selecaoChave && arquivosAtuais.length > 0 && !erroArquivos && !carregandoArquivos;
 
   useEffect(() => {
     montada.current = true;
@@ -83,7 +87,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
     setErroEnvio("");
     setRevisao(null);
     envio.current?.abort();
-  }, [empresaId, modo]);
+  }, [empresaId, modo, solicitacaoDireta]);
 
   useEffect(() => {
     const controlador = new AbortController();
@@ -97,7 +101,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
     }
     async function carregar() {
       try {
-        const config = { params: { empresa_fornecedora_id: empresaId, deslocamento, limite: LIMITE }, signal: controlador.signal, timeout: 20_000 };
+        const config = { params: { empresa_fornecedora_id: empresaId, ...(solicitacaoDireta ? { solicitacao_id: solicitacaoDireta } : {}), deslocamento, limite: LIMITE }, signal: controlador.signal, timeout: 20_000 };
         let itens: Linha[];
         let quantidade: number;
         if (modo === "oportunidades") {
@@ -123,7 +127,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
     }
     void carregar();
     return () => { vigente = false; controlador.abort(); };
-  }, [empresaId, modo, deslocamento, paginaChave]);
+  }, [empresaId, modo, solicitacaoDireta, deslocamento, paginaChave]);
 
   useEffect(() => {
     setErroEnvio("");
@@ -134,26 +138,18 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
   }, [selecaoChave]);
 
   useEffect(() => {
-    const controlador = new AbortController();
-    let vigente = true;
-    setCarregandoArquivos(Boolean(solicitacao));
-    setErroArquivos("");
-    if (!solicitacao) return () => { vigente = false; controlador.abort(); };
-    async function carregarArquivos() {
-      try {
-        const { data } = await api.get<ArquivoFornecedor[]>(`/portal-fornecedor/solicitacoes/${solicitacao!.id}/arquivos`, {
-          params: { empresa_fornecedora_id: empresaId }, signal: controlador.signal, timeout: 20_000,
-        });
-        if (vigente && contexto.current.selecaoChave === selecaoChave) setArquivos({ chave: selecaoChave, itens: data.filter((item) => item.ativo && item.solicitacao_id === solicitacao!.id) });
-      } catch (erro) {
-        if (vigente && !controlador.signal.aborted && contexto.current.selecaoChave === selecaoChave) setErroArquivos(mensagemErroFornecedor(erro));
-      } finally {
-        if (vigente && contexto.current.selecaoChave === selecaoChave) setCarregandoArquivos(false);
-      }
-    }
-    void carregarArquivos();
+    const controlador = new AbortController(); let vigente = true;
+    setArquivos(null); setErroArquivos(""); setCarregandoArquivos(Boolean(solicitacao));
+    if (solicitacao) void api.get<ArquivoFornecedor[]>(`/portal-fornecedor/solicitacoes/${solicitacao.id}/arquivos`, {
+      params: { empresa_fornecedora_id: empresaId }, signal: controlador.signal, timeout: 20_000,
+    }).then(({ data }) => {
+      if (vigente && contexto.current.selecaoChave === selecaoChave) setArquivos({ chave: selecaoChave, itens: data });
+    }).catch(e => {
+      if (vigente && !controlador.signal.aborted && contexto.current.selecaoChave === selecaoChave) setErroArquivos(mensagemErroFornecedor(e));
+    }).finally(() => { if (vigente && contexto.current.selecaoChave === selecaoChave) setCarregandoArquivos(false); });
     return () => { vigente = false; controlador.abort(); };
   }, [empresaId, selecaoChave, solicitacao?.id, atualizacaoArquivos]);
+
 
   useEffect(() => {
     const elemento = dialogo.current;
@@ -169,14 +165,14 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
 
   function revisar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
-    if (!solicitacao || bloquear || modo !== "oportunidades" || travaEnvio.current) return;
+    if (!solicitacao || bloquear || !documentacaoPronta || modo !== "oportunidades" || travaEnvio.current) return;
     const resultado = validarProposta(campos);
     setErroEnvio(resultado.erro);
     if (resultado.dados) setRevisao({ chave: selecaoChave, empresaId, solicitacao, dados: resultado.dados });
   }
 
   async function confirmarEnvio() {
-    if (!modalAtual || travaEnvio.current || bloquear) return;
+    if (!modalAtual || travaEnvio.current || bloquear || !documentacaoPronta) return;
     const confirmado = modalAtual;
     const chavePaginaEnvio = paginaChave;
     const controlador = new AbortController();
@@ -241,6 +237,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
       <header className="c23-header">
         <div><span className="c23-eyebrow"><ClipboardList size={15} /> PORTAL DO FORNECEDOR</span>
           <h1>{modo === "oportunidades" ? "Solicitações Compatíveis" : "Minhas Cotações"}</h1>
+          {modo === "oportunidades" && <p>As oportunidades exigem arquivo técnico ativo, revisado e liberado pela administração.</p>}
           <p>{modo === "oportunidades" ? "Consulte os requisitos e envie sua proposta ao cliente." : "Acompanhe suas propostas, prazos e decisões do cliente."}</p></div>
         <button className="c23-button" disabled={carregando || enviando} onClick={() => setAtualizacao((valor) => valor + 1)}><RefreshCw size={15} className={carregando ? "c23-spin" : ""} /> Atualizar</button>
       </header>
@@ -250,7 +247,8 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
       </nav>
       {sucesso?.empresaId === empresaId && <div className="c23-alert c23-alert-success" role="status"><CheckCircle2 size={18} /><span>{sucesso.texto} <Link to="/fornecedor/cotacoes">Ver minhas cotações</Link></span></div>}
       {erroEnvio && <div className="c23-alert c23-alert-error" role="alert"><XCircle size={18} /><span>{erroEnvio} <Link to="/fornecedor/cotacoes">Minhas Cotações</Link></span></div>}
-      {erroLista && <div className="c23-alert c23-alert-error" role="alert"><XCircle size={18} />{erroLista}</div>}
+      {solicitacaoDireta > 0 && <p className="cot23-readonly">Consulta da Solicitação #{solicitacaoDireta}. <Link to={modo === "cotacoes" ? "/fornecedor/cotacoes" : "/fornecedor/solicitacoes"}>Mostrar todas</Link></p>}
+    {erroLista && <div className="c23-alert c23-alert-error" role="alert"><XCircle size={18} />{erroLista}</div>}
       <section className="c23-panel">
         <div className="c23-toolbar"><div><h2>{modo === "oportunidades" ? "Oportunidades para sua empresa" : "Propostas enviadas"}</h2><p>{grupoAtual ? `${total} ${modo === "oportunidades" ? "solicitações disponíveis" : "cotações da sua empresa"}` : "Consultando suas informações"}</p></div>
           <span className="c23-footnote">{modo === "oportunidades" ? "Processo · material · dimensões · tolerância" : "As decisões são atualizadas ao consultar a lista."}</span></div>
@@ -283,14 +281,15 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
           <div className="c23-observacoes"><span>Observações do cliente</span><p>{solicitacao.observacoes || "Sem observações."}</p></div>
           <div className="f24-section-head f24-files-head"><h3>Arquivos técnicos</h3><button className="c23-button c23-small" disabled={carregandoArquivos || baixando !== null} onClick={() => setAtualizacaoArquivos((valor) => valor + 1)} aria-label="Atualizar arquivos técnicos"><RefreshCw size={14} /></button></div>
           {erroArquivos && <p className="c23-alert c23-alert-error" role="alert">{erroArquivos}</p>}
-          {carregandoArquivos ? <p className="c23-footnote" role="status">Carregando arquivos...</p> : !erroArquivos && (arquivosAtuais.length ? <ul className="f24-files">{arquivosAtuais.map((arquivo) => <li key={arquivo.id}><FileText size={19} /><span><strong>{arquivo.nome_original}</strong><small>{arquivo.extensao.replace(".", "").toUpperCase()} · {formatarTamanhoArquivo(arquivo.tamanho_bytes)}</small></span><button className="c23-button c23-small" disabled={baixando !== null} onClick={() => void baixarArquivo(arquivo)} aria-label={`Baixar ${arquivo.nome_original}`}><Download size={15} />{baixando === arquivo.id ? "Baixando..." : "Baixar"}</button></li>)}</ul> : <p className="c23-footnote">O cliente ainda não vinculou arquivos a esta solicitação.</p>)}
+          {carregandoArquivos ? <p className="c23-footnote" role="status">Carregando arquivos...</p> : !erroArquivos && (arquivosAtuais.length ? <ul className="f24-files">{arquivosAtuais.map((arquivo) => <li key={arquivo.id}><FileText size={19} /><span><strong>{arquivo.nome_original}</strong><small>{arquivo.extensao.replace(".", "").toUpperCase()} · {formatarTamanhoArquivo(arquivo.tamanho_bytes)}</small></span><button className="c23-button c23-small" disabled={baixando !== null} onClick={() => void baixarArquivo(arquivo)} aria-label={`Baixar ${arquivo.nome_original}`}><Download size={15} />{baixando === arquivo.id ? "Baixando..." : "Baixar"}</button></li>)}</ul> : <p className="c23-footnote">Nenhum arquivo técnico liberado está disponível para esta solicitação.</p>)}
         </section>
         {modo === "oportunidades" ? <section className="c23-panel f24-form-panel"><div className="f24-section-head"><h2>Sua proposta</h2><Send size={20} /></div><p className="c23-footnote">Informe o valor total para as {solicitacao.quantidade} unidades solicitadas.</p>
-          <form onSubmit={revisar} className="f24-form"><fieldset disabled={bloquear}>
+          <form onSubmit={revisar} className="f24-form"><fieldset disabled={bloquear || !documentacaoPronta}>
             <label htmlFor="f24-valor">Valor total (R$)</label><input id="f24-valor" inputMode="decimal" autoComplete="off" maxLength={24} placeholder="Ex.: 1.250,50" value={campos.valor} onChange={(evento) => alterarCampo("valor", evento.target.value)} required />
             <div className="f24-form-grid"><div><label htmlFor="f24-prazo">Prazo de execução (dias)</label><input id="f24-prazo" type="number" min={1} max={3650} step={1} value={campos.prazo} onChange={(evento) => alterarCampo("prazo", evento.target.value)} required /></div><div><label htmlFor="f24-validade">Validade da proposta (dias)</label><input id="f24-validade" type="number" min={1} max={3650} step={1} value={campos.validade} onChange={(evento) => alterarCampo("validade", evento.target.value)} required /></div></div>
             <label htmlFor="f24-observacoes">Observações da proposta</label><textarea id="f24-observacoes" maxLength={5000} rows={5} placeholder="Condições, itens inclusos e informações para o cliente." value={campos.observacoes} onChange={(evento) => alterarCampo("observacoes", evento.target.value)} /><small className="c23-footnote">{campos.observacoes.length}/5000 caracteres</small>
             <p className="c23-footnote">Após o envio, a proposta fica registrada para esta solicitação. A validade começa no envio.</p>
+            {!documentacaoPronta && <p className="c23-alert" role="status">A proposta aguarda arquivo técnico disponível e liberado pela administração.</p>}
             <button className="c23-button c23-primary f24-submit" type="submit"><Send size={16} />{enviando ? "Enviando..." : "Revisar e enviar proposta"}</button>
           </fieldset></form></section>
           : cotacao && <section className="c23-panel f24-detail"><div className="f24-section-head"><h2>Cotação #{cotacao.id}</h2><FileText size={20} /></div><div className="c23-detail-grid"><div><span>Valor total</span><strong>{formatarValorCotacao(cotacao.valor_total)}</strong></div><div><span>Situação</span><strong>{rotuloStatusCotacao(statusCotacao(cotacao, agora))}</strong></div><div><span>Prazo de execução</span><strong>{cotacao.prazo_dias} dias</strong></div><div><span>Validade</span><strong>{cotacao.validade_dias} dias</strong></div></div>
@@ -299,7 +298,7 @@ export default function SupplierCotacoesPage({ modo = "oportunidades" }: { modo?
       <dialog ref={dialogo} className="c23-dialog" aria-labelledby="f24-confirmacao" onCancel={(evento) => { evento.preventDefault(); if (!travaEnvio.current) setRevisao(null); }}>
         {modalAtual && <><div className="c23-dialog-head"><div><span className="c23-eyebrow">REVISÃO DA PROPOSTA</span><h2 id="f24-confirmacao">Enviar cotação ao cliente?</h2></div><button className="c23-icon-button" disabled={enviando} aria-label="Fechar revisão" onClick={() => setRevisao(null)}><X size={22} /></button></div>
           <p className="c23-footnote">Solicitação #{modalAtual.solicitacao.id} · {modalAtual.solicitacao.cliente_razao_social} · {modalAtual.solicitacao.quantidade} unidades</p><div className="c23-detail-grid f24-review"><div><span>Valor total</span><strong>{formatarValorCotacao(modalAtual.dados.valor_total)}</strong></div><div><span>Prazo de execução</span><strong>{modalAtual.dados.prazo_dias} dias</strong></div><div><span>Validade após o envio</span><strong>{modalAtual.dados.validade_dias} dias</strong></div><div><span>Processo / material</span><strong>{modalAtual.solicitacao.processo_nome} · {modalAtual.solicitacao.material_nome}</strong></div></div>
-          <div className="c23-observacoes"><span>Observações que o cliente receberá</span><p>{modalAtual.dados.observacoes || "Sem observações."}</p></div><p className="c23-footnote f24-review">Ao confirmar, sua proposta será registrada e o cliente poderá aceitá-la ou recusá-la.</p><div className="c23-dialog-actions"><button className="c23-button" disabled={enviando} autoFocus onClick={() => setRevisao(null)}>Voltar ao formulário</button><button className="c23-button c23-primary" disabled={enviando || bloquear} onClick={() => void confirmarEnvio()}><Send size={16} />{enviando ? "Enviando..." : "Confirmar envio"}</button></div></>}
+          <div className="c23-observacoes"><span>Observações que o cliente receberá</span><p>{modalAtual.dados.observacoes || "Sem observações."}</p></div><p className="c23-footnote f24-review">Ao confirmar, sua proposta será registrada e o cliente poderá aceitá-la ou recusá-la.</p><div className="c23-dialog-actions"><button className="c23-button" disabled={enviando} autoFocus onClick={() => setRevisao(null)}>Voltar ao formulário</button><button className="c23-button c23-primary" disabled={enviando || bloquear || !documentacaoPronta} onClick={() => void confirmarEnvio()}><Send size={16} />{enviando ? "Enviando..." : "Confirmar envio"}</button></div></>}
       </dialog>
     </div>
   );

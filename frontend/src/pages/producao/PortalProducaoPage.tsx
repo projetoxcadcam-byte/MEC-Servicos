@@ -1,3 +1,5 @@
+import { useSearchParams } from "react-router-dom";
+import { identificador } from "../painel/painelPortal";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ClipboardList, Clock3, Factory, History, RefreshCw, Wrench, X } from "lucide-react";
@@ -24,7 +26,9 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
   const [deslocamento, setDeslocamento] = useState(0);
   const [atualizacao, setAtualizacao] = useState(0);
   const [lista, setLista] = useState<{ chave: string; pagina: PaginaContratacoes<OrdemProducao> } | null>(null);
-  const [selecionadoId, setSelecionadoId] = useState(0);
+  const [parametrosSelecao, setParametrosSelecao] = useSearchParams();
+  const selecionadoId = identificador(parametrosSelecao.get("ordem"));
+  function setSelecionadoId(id: number) { setParametrosSelecao(id ? { ordem: String(id) } : {}, { replace: true }); }
   const [carregando, setCarregando] = useState(true);
   const [erroLista, setErroLista] = useState("");
   const [detalhe, setDetalhe] = useState<{ chave: string; dados: AcompanhamentoProducao } | null>(null);
@@ -39,8 +43,9 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
   const [revalidar, setRevalidar] = useState("");
   const chaveLista = `${dono}:${deslocamento}:${atualizacao}`;
   const pagina = lista?.chave === chaveLista ? lista.pagina : null;
-  const selecionada = pagina?.itens.find((o) => o.id === selecionadoId) ?? pagina?.itens[0];
-  const chaveSelecao = `${dono}:${selecionada?.id ?? 0}`;
+  const selecionada = selecionadoId ? pagina?.itens.find((o) => o.id === selecionadoId) : pagina?.itens[0];
+  const ordemDiretaId = selecionadoId || selecionada?.id || 0;
+  const chaveSelecao = `${dono}:${ordemDiretaId}`;
   const chaveDetalhe = `${chaveLista}:${chaveSelecao}:${atualizacaoDetalhe}`;
   const dados = detalhe?.chave === chaveDetalhe ? detalhe.dados : null;
   const ordem = dados?.ordem ?? selecionada;
@@ -62,7 +67,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
     return () => { montada.current = false; envio.current?.abort(); };
   }, []);
 
-  useEffect(() => { setDeslocamento(0); setSelecionadoId(0); setRevisao(null); envio.current?.abort(); }, [perfil, empresaId]);
+  useEffect(() => { setDeslocamento(0); setRevisao(null); envio.current?.abort(); }, [perfil, empresaId]);
 
   useEffect(() => {
     const controlador = new AbortController(); let vigente = true;
@@ -92,9 +97,9 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
 
   useEffect(() => {
     const controlador = new AbortController(); let vigente = true;
-    setCarregandoDetalhe(Boolean(selecionada)); setErroDetalhe(""); setRevisao(null);
-    if (!selecionada) return () => { vigente = false; controlador.abort(); };
-    const ordemId = selecionada.id;
+    setCarregandoDetalhe(Boolean(ordemDiretaId)); setErroDetalhe(""); setRevisao(null);
+    if (!ordemDiretaId || !empresaId) return () => { vigente = false; controlador.abort(); };
+    const ordemId = ordemDiretaId;
     async function carregar() {
       try {
         const { data } = await api.get<AcompanhamentoProducao>(`${base}/${ordemId}`, {
@@ -111,7 +116,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
     void carregar();
     return () => { vigente = false; controlador.abort(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [base, perfil, empresaId, selecionada?.id, chaveDetalhe]);
+  }, [base, perfil, empresaId, ordemDiretaId, chaveDetalhe]);
 
   useEffect(() => {
     const elemento = dialogo.current;
@@ -158,6 +163,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
   }
 
   return <main className="p27-page">
+    <p className="p27-readonly">A administração coordena o material e a coleta. Ao terminar a produção, informe Pronto para coleta; a avaliação das peças e a entrega final serão realizadas pela administração.</p>
     <header className="p27-header"><div><p className="p27-eyebrow"><Factory size={16} /> PORTAL DO {perfil === "cliente" ? "CLIENTE" : "FORNECEDOR"}</p>
       <h1>Acompanhamento de Produção</h1><p>{perfil === "cliente" ? "Consulte a etapa atual e o histórico dos seus serviços." : "Registre as etapas e mantenha seus clientes informados sobre a produção."}</p></div>
       <button className="p27-button" disabled={enviando || carregando} onClick={() => { setAviso(null); setAtualizacao((v) => v + 1); }}><RefreshCw size={16} /> Atualizar</button></header>
@@ -183,7 +189,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
         <button className="p27-button" disabled={enviando || carregando || deslocamento === 0} onClick={() => { setSelecionadoId(0); setDeslocamento((v) => Math.max(0, v - 20)); }}>Anterior</button>
         <button className="p27-button" disabled={enviando || carregando || deslocamento + 20 >= pagina.total} onClick={() => { setSelecionadoId(0); setDeslocamento((v) => v + 20); }}>Próxima</button></div></div>}
     </section>
-    {selecionada && <section className="p27-panel p27-detail" aria-busy={carregandoDetalhe}><div className="p27-section-head"><h2><History size={20} /> Histórico da OS #{selecionada.id}</h2><button className="p27-button" disabled={enviando || carregandoDetalhe} onClick={() => { setAviso(null); setAtualizacaoDetalhe((v) => v + 1); }}>Atualizar histórico</button></div>
+    {ordemDiretaId > 0 && <section className="p27-panel p27-detail" aria-busy={carregandoDetalhe}><div className="p27-section-head"><h2><History size={20} /> Histórico da OS #{ordemDiretaId}</h2><button className="p27-button" disabled={enviando || carregandoDetalhe} onClick={() => { setAviso(null); setAtualizacaoDetalhe((v) => v + 1); }}>Atualizar histórico</button></div>
       {carregandoDetalhe ? <p role="status">Carregando histórico…</p> : erroDetalhe ? <p className="p27-alert p27-error" role="alert">{erroDetalhe}</p> : dados && <>
         <div className="p27-columns"><div><dl className="p27-fields"><div><dt>Cliente</dt><dd>{dados.ordem.cliente_razao_social}</dd></div><div><dt>Fornecedor</dt><dd>{dados.ordem.fornecedor_razao_social}</dd></div>
           <div><dt>Valor total</dt><dd>{formatarValorCotacao(dados.ordem.valor_total)}</dd></div><div><dt>Prazo de execução</dt><dd>{dados.ordem.prazo_dias} dias</dd></div>
@@ -193,7 +199,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
           <h3>Etapa atual</h3><p className="p27-current"><Factory size={18} /> {rotuloEtapa(dados.etapa_atual)}</p>
           {perfil === "fornecedor" && (podeRegistrar ? <form className="p27-form" onSubmit={revisar}><fieldset disabled={bloquear}>
             <label htmlFor="p27-etapa">Etapa de produção</label><select id="p27-etapa" required value={rascunhoAtual.etapa} onChange={(e) => setRascunho({ chave: chaveSelecao, etapa: e.target.value, observacoes: rascunhoAtual.observacoes })}><option value="">Selecione a etapa atual</option>{ETAPAS_PRODUCAO.map((e) => <option key={e.valor} value={e.valor}>{e.rotulo}</option>)}</select>
-            <label htmlFor="p27-observacoes">Observações da atualização (opcional)</label><textarea id="p27-observacoes" maxLength={5000} rows={4} value={rascunhoAtual.observacoes} onChange={(e) => setRascunho({ chave: chaveSelecao, etapa: rascunhoAtual.etapa, observacoes: e.target.value })} placeholder="Informe o andamento, uma previsão ou um detalhe relevante para o cliente." />
+            <label htmlFor="p27-observacoes">Observações da atualização (opcional)</label><textarea id="p27-observacoes" maxLength={5000} rows={4} value={rascunhoAtual.observacoes} onChange={(e) => setRascunho({ chave: chaveSelecao, etapa: rascunhoAtual.etapa, observacoes: e.target.value })} placeholder="Informe o andamento, uma previsão ou um detalhe relevante para a administração." />
             <p>Escolha a etapa que representa a situação atual. Cada registro será acrescentado ao histórico.</p><button type="submit" className="p27-button p27-primary" disabled={bloquear || !etapaValida(rascunhoAtual.etapa)}><ClipboardList size={16} /> Revisar atualização</button>
           </fieldset></form> : <p className="p27-readonly">{dados.ordem.contratacao_status !== "ativa" ? "A contratação está finalizada. O histórico continua disponível para consulta." : "Esta ordem está concluída ou cancelada. O histórico continua disponível para consulta."}</p>)}
           {perfil === "cliente" && <p className="p27-readonly">As etapas são registradas pelo fornecedor responsável. Use Atualizar histórico para conferir novos registros.</p>}
@@ -204,7 +210,7 @@ export default function PortalProducaoPage({ perfil }: { perfil: PerfilOrdens })
     </section>}
     <dialog ref={dialogo} className="p27-dialog" aria-labelledby="p27-dialog-title" onCancel={(e) => { if (trava.current) e.preventDefault(); else setRevisao(null); }} onClose={() => { if (!trava.current) setRevisao(null); }}>
       {modalAtual && <><div className="p27-section-head"><h2 id="p27-dialog-title">Confirmar atualização de produção</h2><button className="p27-button" aria-label="Fechar revisão" disabled={enviando} onClick={() => setRevisao(null)}><X size={18} /></button></div>
-        <p>Confira a etapa e as observações que o cliente poderá consultar.</p><dl className="p27-fields"><div><dt>Ordem de serviço</dt><dd>#{modalAtual.ordem.id}</dd></div><div><dt>Solicitação</dt><dd>#{modalAtual.ordem.solicitacao_id}</dd></div><div className="p27-wide"><dt>Nova etapa</dt><dd>{rotuloEtapa(modalAtual.etapa)}</dd></div></dl>
+        <p>Confira a etapa e as observações que serão encaminhadas à administração.</p><dl className="p27-fields"><div><dt>Ordem de serviço</dt><dd>#{modalAtual.ordem.id}</dd></div><div><dt>Solicitação</dt><dd>#{modalAtual.ordem.solicitacao_id}</dd></div><div className="p27-wide"><dt>Nova etapa</dt><dd>{rotuloEtapa(modalAtual.etapa)}</dd></div></dl>
         <h3>Observações da atualização</h3><p className="p27-observacoes">{modalAtual.observacoes || "Sem observações."}</p><p>Este registro será acrescentado ao histórico da ordem.</p>
         <div className="p27-dialog-actions"><button className="p27-button" disabled={enviando} onClick={() => setRevisao(null)}>Voltar</button><button className="p27-button p27-primary" disabled={enviando} onClick={() => void confirmar()}>{enviando ? "Registrando…" : "Confirmar atualização"}</button></div>
       </>}

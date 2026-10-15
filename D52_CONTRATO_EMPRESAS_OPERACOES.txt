@@ -1,0 +1,61 @@
+MEC-Serviços D52 - Cadastro administrativo de empresas e operações
+
+Exige a D51 concluída. A tela registra o que cada empresa fornecedora executa,
+aproveitando os processos e as capacidades técnicas existentes.
+
+INSTALAÇÃO
+1. Aplique a D51 e confira RESULTADO=OK antes da D52.
+2. Pare o backend e o frontend com Ctrl+C.
+3. Salve MEC_SERVICOS_V0_1_D52_EMPRESAS_OPERACOES.py na raiz MEC-Servicos.
+4. No PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D52_EMPRESAS_OPERACOES.py
+5. Aguarde RESULTADO=OK. O instalador faz backup dos dois bancos, das fontes e
+   do build, mostra testes ao vivo e cria uma tabela vazia somente após validar.
+   Em caso de falha, restaura fontes/build; a migração é transacional.
+6. Reinicie:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+   Em outro PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+7. Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE NA TELA
+- Entre como administrador. No Dashboard clique em Empresas e operações.
+  Endereço direto: http://localhost:5173/admin/empresas
+- Pesquise uma empresa existente por nome, CPF/CNPJ ou ID.
+- Clique Editar empresa. Confira operações, materiais e limites anteriores.
+- Marque os serviços que ela executa: usinagem, dobra, solda, pintura etc.
+  Salve operações, feche e reabra para conferir a persistência.
+- A operação que já possui capacidade técnica permanece no cadastro. A tela
+  não apaga nem substitui os limites anteriores.
+- Para uma empresa nova, clique Cadastrar empresa, informe razão social,
+  CPF/CNPJ e tipo Fornecedor ou Cliente e fornecedor, e marque os serviços.
+  Novos fornecedores precisam de ao menos uma operação escolhida.
+- Empresa Cliente é cadastrada sem operações de fornecimento. Use Cliente e
+  fornecedor quando a empresa também oferecer serviços.
+- A empresa pode ter várias operações; o limite de 8 da legenda PDF não se
+  aplica ao cadastro de empresas. A seleção suporta até 200 códigos distintos.
+- Se necessário, clique Completar capacidade de uma operação. Informe os
+  limites reais X/Y/Z e a tolerância mínima atendida, em milímetros. Vírgula
+  decimal é aceita. O sistema não preenche limites automaticamente.
+- Use Adicionar material aceito para escolher entre os materiais do catálogo
+  de negócios. Os materiais já vinculados permanecem preservados.
+- Operações declaradas ainda sem limites/materiais ficam no cadastro. Para
+  aparecer nas oportunidades, continuam valendo os requisitos técnicos e a
+  documentação liberada da solicitação. Não há escolha automática do fornecedor.
+- Para criar o acesso, use o ID da empresa em Minha conta > Criar acesso.
+- Se outra tela alterar o cadastro, o sistema recusa a versão antiga. Reabra
+  a empresa, confira as informações atuais e salve sua seleção novamente.
+
+PRESERVAÇÃO E ACESSO
+O instalador cria somente operacoes_empresa, vazia, com índices e vínculos.
+Não marca serviços para empresas existentes, não muda nomes/códigos de processos,
+não insere materiais, não altera máquinas, capacidades, contas ou senhas.
+Novos processos do catálogo pronto só são cadastrados quando o administrador
+seleciona a operação e salva a empresa. Processos antigos mantêm seus códigos.
+Cadastro da empresa e suas operações são gravados juntos ou inteiramente desfeitos.
+Originais e versões de PDF, liberações, histórico de negócios e financeiro,
+avaliações, notificações e ranking permanecem preservados.
+Cliente e fornecedor não acessam esta tela nem o cadastro de outras empresas.
+O contato entre cliente e fornecedor continua intermediado pela administração.

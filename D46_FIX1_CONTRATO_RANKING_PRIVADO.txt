@@ -1,0 +1,34 @@
+MEC-Serviços D46 FIX1 — Ranking exclusivo da administração
+REVISION=MEC-SERVICOS-V0.1-D46-FIX1-RANKING-PRIVADO-2026-10-08
+
+REGRAS
+Somente o administrador consulta ranking, posições, médias e comparações entre fornecedores.
+Cliente e fornecedor não têm acesso a ranking, nem à posição ou média do próprio fornecedor.
+O fornecedor consulta as notas recebidas em cada contratação, sem comentários, autores ou contatos.
+O cliente continua registrando e consultando a avaliação da sua contratação.
+As avaliações da administração e do cliente continuam independentes.
+Notas, comentários, históricos e notificações já registrados são preservados.
+
+INSTALAÇÃO
+Exige D46 concluída. Pare o backend com Ctrl+C e execute na raiz do MEC-Servicos:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D46_FIX1_RANKING_PRIVADO.py
+Espere RESULTADO=OK. Há backup, testes integrais em até dois processos e build do frontend local.
+Não cria tabelas, avaliações, notificações ou alterações de dados de negócio.
+
+ATIVAR
+Backend, na raiz do MEC-Servicos:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Frontend, em outro terminal e na pasta frontend:
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE
+1. Fornecedor: o item Ranking de Fornecedores não aparece no menu.
+2. Fornecedor > Avaliações: as notas anteriores continuam disponíveis; não aparecem médias ou posições.
+3. Abrir /fornecedor/ranking deve encaminhar para /fornecedor/avaliacoes, sem consulta de ranking.
+4. Cliente: não aparece acesso a ranking. Abrir /cliente/ranking encaminha para /cliente/avaliacoes.
+5. Administração > Ranking: posições e médias continuam disponíveis, separadas por origem.
+6. Clientes e fornecedores não obtêm ranking ou reputação chamando a API diretamente.
+7. Confira notas, pagamentos e notificações existentes: devem continuar como estavam.
+
+Os layouts locais são preservados. As avaliações não são refeitas e nenhum histórico é apagado.

@@ -1,0 +1,84 @@
+MEC-Serviços D40 — Extrato de movimentações financeiras
+
+BASE: D39 concluído. Pare o backend e execute o instalador na raiz do MEC.
+Confere origin MEC, relatório D39, fontes conhecidos e schema D31/D32.
+Faz backup dos fontes, build e bancos de negócio/acesso. Executa pytest e
+build com saída ao vivo, aviso a cada 30 segundos sem saída, limite de 30
+minutos para pytest e 10 minutos para build. Falhas/Ctrl+C encerram a etapa
+antes da restauração dos fontes. Preserva registros externos nos bancos.
+Não cria tabelas, movimentos, eventos, contas ou contratações. Preserva
+senhas, histórico, modo local e relatórios D33 a D39, incluindo Ver mês.
+
+ACESSO: Administração > Dashboard > Extrato financeiro.
+Há também link no Financeiro para todo o histórico da contratação selecionada.
+A consulta JSON/CSV é administrativa e requer sessão autorizada.
+
+CRITÉRIOS:
+- Datas de cada movimento em UTC, com os dias inicial/final incluídos.
+  Recebimento usa paga_em, repasse usa registrado_em. O estorno usa sua
+  própria data cancelada_em/estornado_em, sem inventar evento retroativo.
+- O original permanece no extrato mesmo se estornado posteriormente.
+  O estorno é outra linha vinculada ao mesmo ID do recebimento/repasse.
+  ID 1 de recebimento e ID 1 de repasse são movimentos distintos.
+- Recebimento: efeito positivo; repasse: efeito negativo.
+  Estorno de recebimento: negativo; estorno de repasse: positivo.
+  Valor é sempre positivo; Efeito no resultado carrega o sinal.
+- Recebimentos líquidos = recebimentos brutos menos estornos de recebimentos.
+  Repasses líquidos = repasses brutos menos estornos de repasses.
+  Entradas = recebimentos + estornos de repasses.
+  Saídas = repasses + estornos de recebimentos.
+  Resultado = entradas menos saídas. Valores podem ser negativos em um
+  período que contenha somente o estorno de movimento de um mês anterior.
+- Totais abrangem somente os filtros aplicados e todas as páginas. Não são
+  saldo bancário, lucro nem previsão. Não registram cobrança/transferência.
+  Saldos atuais e condições para novos registros continuam no D32.
+- Datas vazias deixam início/fim sem limite. Padrão: mês UTC atual completo.
+  Todo o histórico remove apenas os limites de datas dos filtros aplicados.
+  Limpar filtros restaura o mês atual, todos os tipos e nenhuma seleção.
+- Recebimentos inclui seus estornos; Repasses inclui seus estornos;
+  Somente estornos reúne as duas espécies. Todos reúne as quatro.
+- Busca por nomes sem distinguir acentos/maiúsculas, Contratação #ID ou
+  OS #ID exatos. Seleção contratacao_id restringe ao ID real, inclusive
+  nas páginas seguintes e CSV. Não usa a data de criação da contratação.
+- Informações de empresas/controle/situação do movimento são atuais.
+  Sem controle administrativo: recebimentos legados também são exibidos.
+  Financeiros encerrados continuam disponíveis para consulta.
+- Um SELECT em lote produz originais/estornos, totais e página na mesma
+  fotografia. Dinheiro calculado em centavos inteiros, sem produto cruzado.
+- Datas/valores/situações inconsistentes produzem aviso de conferência;
+  nenhuma consulta inventa data de estorno ou corrige o registro de origem.
+- Movimentos ordenados por data UTC decrescente, com desempate estável.
+  Página de 20 movimentos, links Financeiro e Relatório na primeira coluna
+  fixa, preservando o ID da contratação em cada navegação.
+- Filtros guardados na URL. Rascunhos só alteram os dados após Consultar.
+  Respostas/exportações atrasadas são canceladas quando a seleção muda.
+- CSV MEC_SERVICOS_EXTRATO_FINANCEIRO.csv: UTF-8 BOM, ponto e vírgula,
+  decimais com vírgula, filtros, Total e todos os Movimentos de todas as
+  páginas. Valores negativos permanecem numéricos; nomes/busca protegidos
+  contra fórmulas de planilha. Não somar linhas Total e Movimento entre si.
+
+VALIDAÇÃO LOCAL:
+1. Após RESULTADO=OK, reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e Ctrl+F5.
+2. Abra Extrato financeiro, busque OS #3 e clique Consultar. Se os pagamentos
+   forem de outro período, use Todo o histórico mantendo a busca OS #3.
+3. Para a contratação #1 / OS #3, com recebimento errado de R$ 1.250,00
+   estornado e recebimento corrigido de R$ 12.500,00:
+   - recebimentos brutos: R$ 13.750,00;
+   - estornos de recebimentos: R$ 1.250,00;
+   - recebimentos líquidos: R$ 12.500,00;
+   - repasse de R$ 12.500,00, sem outros estornos: líquido R$ 12.500,00;
+   - resultado de todos esses movimentos: R$ 0,00.
+   Os valores dependem dos registros efetivamente existentes na sua base.
+4. Confira a linha original de R$ 1.250,00 e a linha do estorno. Confira datas,
+   sinais, links para contratação #1, seleção Somente estornos e CSV.
+5. No Financeiro da contratação #1, abra Extrato financeiro da contratação #1:
+   deve consultar todas as datas somente desse contrato. Nada é gravado.
+
+AVANÇO DA PRIMEIRA VERSÃO:
+Aproximadamente 80% da versão funcional local é uma estimativa de planejamento,
+não medição por testes ou contagem de Dn. Fluxo principal, portais, financeiro
+manual e relatórios estão implementados. Antes de considerar a versão pronta
+para uso em produção, consolidar homologação com vários cenários/empresas,
+recuperação de backup, configuração/publicação e acompanhamento operacional.
+Integração bancária automática não faz parte do D40 nem está incluída nessa
+estimativa. MEC e CGX continuam totalmente independentes.

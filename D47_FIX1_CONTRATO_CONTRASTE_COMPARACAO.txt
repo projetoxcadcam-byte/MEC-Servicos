@@ -1,0 +1,42 @@
+MEC-Serviços D47 FIX1 — Contraste da comparação administrativa
+REVISION=MEC-SERVICOS-V0.1-D47-FIX1-CONTRASTE-COMPARACAO-2026-10-08
+
+CORREÇÃO
+A comparação usa a mesma paleta escura da análise comercial.
+Preço, prazo, validade, notas, quantidades e paginação ficam legíveis.
+O fundo das linhas ao passar o mouse conserva o contraste dos textos.
+Também ajusta títulos, filtros, resumos, mensagens e horário da consulta.
+Altera apenas o CSS da comparação e este roteiro. Não altera lógica, permissões,
+ordenação, notas, ranking, cotações, histórico, contas ou bancos.
+
+INSTALAR
+Exige D47 concluída. Pare backend e frontend com Ctrl+C.
+Salve na raiz C:\Users\Omega\Desktop\MEC-Servicos e execute:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D47_FIX1_CONTRASTE_COMPARACAO.py
+
+Cria backup, confere a base e executa o build do frontend.
+Como o backend permanece idêntico ao da D47 aprovada, a validação do backend
+é reutilizada. Esta correção visual não reexecuta a suíte de backend.
+Confere a preservação dos dois bancos. Não cria tabelas nem registros.
+Em falha restaura os arquivos e o build anterior, preservando mudanças externas nos bancos.
+Aguarde RESULTADO=OK.
+
+ATIVAR
+Terminal do backend:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Outro terminal, frontend:
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Abra http://localhost:5173 e pressione Ctrl+F5.
+
+TESTE
+ADM > Cotações > abra a mesma solicitação > Comparar propostas.
+Se já foi aceita, selecione Todas, incluindo histórico.
+Confira a cotação #8: R$ 1.500,00; execução de 7 dias; nota cliente 5,00;
+nota da administração 4,00. Os dados devem continuar iguais aos da imagem enviada.
+Confira a leitura de todas as colunas e passe o mouse sobre a linha.
+Conferir cotação continua destacando a proposta correspondente na análise.

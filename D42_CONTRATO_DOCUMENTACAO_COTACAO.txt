@@ -1,0 +1,64 @@
+MEC-Serviços D42 — Documentação obrigatória para cotação
+
+BASE: consolidação D41 concluída. Pare o backend e execute o instalador
+na raiz do MEC. Confere origin MEC, relatório D41 e fontes conhecidos.
+Faz backup dos bancos e fontes; executa pytest e build com saída ao vivo.
+Cria duas tabelas vazias para liberação e histórico de revisão dos arquivos.
+Não altera contas, senhas, modo de teste, solicitações, cotações, OS,
+pagamentos, repasses nem libera automaticamente documentos anteriores.
+Falhas nos testes/build restauram os fontes e build anteriores. Registros
+externos nos bancos são preservados. Não há restauração automática de banco.
+
+REGRA:
+- A oportunidade exige pelo menos um arquivo ativo, com conteúdo físico
+  íntegro e liberação administrativa correspondente ao hash atual.
+- Somente compatibilidade de fabricação e upload do cliente não publicam
+  a oportunidade. A cotação também é bloqueada no servidor, inclusive na
+  rota administrativa antiga, se não houver documentação liberada.
+- A remoção/bloqueio do último arquivo liberado ou conteúdo ausente,
+  vazio/divergente retira a solicitação das oportunidades e impede novo envio.
+- Não verifica sozinho se a documentação é suficiente para fabricar a peça.
+  O administrador precisa baixar, revisar o conteúdo e confirmar que não
+  contém contatos ou identificação do cliente antes de liberar.
+- Se o documento identificar o cliente, peça uma versão neutra ao cliente
+  e revise o novo arquivo. A liberação pertence a cada arquivo, não ao nome.
+- O fornecedor recebe apenas arquivos liberados de solicitação compatível
+  ou de sua cotação existente. Nome do arquivo e download são neutros.
+  Registros internos de revisão e nome real do cliente não são enviados.
+- A liberação é exclusiva do administrador, com versão, chave de operação
+  para repetição segura e histórico. Cliente/fornecedor não podem liberar.
+- Cotações anteriores permanecem no histórico e conservam seu estado.
+  Nenhuma cotação anterior é cancelada ou reenviada pelo instalador.
+
+CONFERÊNCIA DA SOLICITAÇÃO #8:
+1. Após RESULTADO=OK, reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e Ctrl+F5.
+2. Entre como administrador. Abra Administração > Arquivos Técnicos.
+3. Consulte Solicitação #8. Use Baixar para revisar e abra o arquivo.
+4. Se estiver adequado e neutro, clique Liberar para cotação, marque a
+   confirmação de revisão, informe o registro interno e Confirme registro.
+5. No fornecedor, abra Minhas Cotações e a cotação #7 / solicitação #8.
+   A cotação anterior deve continuar disponível e o arquivo liberado deve
+   permitir download. Solicitação #8 NÃO reaparece nas oportunidades desse
+   mesmo fornecedor porque ele já enviou uma proposta.
+
+TESTE DA REGRA COM NOVA SOLICITAÇÃO:
+1. Crie uma solicitação nova compatível com o fornecedor, sem anexar arquivo.
+   Ela não deve aparecer em Solicitações Compatíveis do fornecedor.
+2. Como cliente, envie um arquivo técnico neutro e válido. Antes da revisão,
+   a solicitação deve continuar fora das oportunidades do fornecedor.
+3. Como administrador, revise e libere o arquivo. Como fornecedor, atualize
+   Solicitações Compatíveis: a solicitação deve aparecer com download.
+4. Deixe o formulário de proposta aberto. Como administrador, bloqueie a
+   liberação. A tentativa de confirmar a proposta deve ser recusada e,
+   ao atualizar, a oportunidade deve desaparecer.
+5. Libere novamente e, como cliente, desvincule o último arquivo liberado.
+   A solicitação deve desaparecer novamente; nenhuma nova cotação é criada.
+6. Para concluir o fluxo, envie/revise/libere um novo arquivo e envie uma
+   proposta como fornecedor. Ela deverá aparecer uma vez em Minhas Cotações.
+7. Confira a contratação #1 / OS #3 e os relatórios financeiros anteriores:
+   permanecem com seus registros e valores originais.
+
+O backup D41 existente continua guardado. Ele recupera o estado anterior
+ao D42; a conferência de fontes D40 da criação de um novo pacote D41 não
+é compatível com os fontes atualizados D42. O instalador D42 também cria
+um backup próprio antes de aplicar a alteração.

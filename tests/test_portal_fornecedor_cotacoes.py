@@ -25,6 +25,9 @@ from backend.app.models.solicitacao import SolicitacaoServico
 from backend.app.repositories.compatibilidade import RepositorioCompatibilidade
 from backend.app.services.arquivo_tecnico import ServicoArquivoTecnico
 
+from apoio_documentacao_d42 import preparar_documentacao_qa, liberar_arquivo_qa
+from backend.app.models.arquivo_tecnico import ArquivoTecnico
+
 BASE = "/api/v1/portal-fornecedor"
 
 
@@ -63,6 +66,7 @@ def ambiente(tmp_path, monkeypatch):
             dimensao_z_maxima_mm=Decimal("450"), tolerancia_requerida_mm=Decimal("0.0200"),
             quantidade=10, observacoes="Peça de teste."))
         banco.commit()
+        preparar_documentacao_qa(banco, 1)
 
     def banco_teste():
         with sessoes() as banco:
@@ -208,6 +212,7 @@ def test_paginacao_nao_repete_itens_e_valida_limites(ambiente):
         )}
         banco.add_all([SolicitacaoServico(**dados), SolicitacaoServico(**dados)])
         banco.commit()
+        for sid in (2, 3): preparar_documentacao_qa(banco, sid)
     paginas = [listar(cliente, deslocamento=n, limite=1).json() for n in range(3)]
     assert all(pagina["total"] == 3 for pagina in paginas)
     assert [p["itens"][0]["id"] for p in paginas] == [3, 2, 1]
@@ -219,9 +224,13 @@ def test_paginacao_nao_repete_itens_e_valida_limites(ambiente):
 @pytest.mark.parametrize("extensao,conteudo", [("ZIP", b"PK\x03\x04arquivo zip"), ("rar", b"Rar!\x1a\x07\x00arquivo rar")])
 def test_arquivos_zip_rar_acesso_download_e_desvinculo(ambiente, extensao, conteudo):
     cliente, sessoes = ambiente
+    with sessoes() as banco:
+        for a in banco.scalars(select(ArquivoTecnico)).all(): a.ativo = False
+        banco.commit()
     upload = cliente.post("/api/v1/solicitacoes-servico/1/arquivos-tecnicos", files={"file": ("pecas." + extensao, conteudo, "application/octet-stream")})
     assert upload.status_code == 201
     arquivo = upload.json()
+    with sessoes() as banco: liberar_arquivo_qa(banco, arquivo["id"])
     caminho = BASE + "/solicitacoes/1/arquivos"
     assert cliente.get(caminho, params={"empresa_fornecedora_id": 4}).status_code == 403
     itens = cliente.get(caminho, params={"empresa_fornecedora_id": 2}).json()

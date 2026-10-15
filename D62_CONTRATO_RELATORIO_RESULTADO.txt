@@ -1,0 +1,52 @@
+MEC-Serviços D62 — Relatório do resultado da administração
+REVISION=MEC-SERVICOS-V0.1-D62-RELATORIO-RESULTADO-2026-10-14
+
+Acesso: somente Administração > Pagamentos > Resultado da administração.
+Consulte o período e clique em Abrir relatório do resultado. A consulta carrega
+todas as contratações elegíveis, independentemente da página da tela anterior.
+O relatório mostra formação do preço, despesas previstas, despesas realmente
+pagas, resultado após gastos e resultado dos serviços liquidados. A lista de
+despesas conserva registros estornados, suas referências e motivos internos.
+Os estornados não entram na soma dos gastos confirmados.
+
+Período: criação da contratação em UTC, nas duas datas inclusive. Os gastos
+vinculados aos serviços selecionados entram em todas as datas de pagamento,
+inclusive os registrados depois do período. Não se trata de fluxo de caixa
+filtrado pela data do pagamento. A consulta permite até dez anos.
+
+Entram somente contratações ativas ou encerradas com formação do preço D60.
+Pedidos sem contratação, histórico anterior e canceladas não são convertidos
+nem passam a compor o resultado. Continuam nas suas consultas anteriores.
+Liquidação exige entrega concluída, recebimento integral, repasse integral do
+custo ao fornecedor e ausência de divergência. Despesas previstas não são
+gastos pagos. O resultado não inclui custos ainda não registrados nem substitui
+a apuração contábil. Novos gastos e estornos podem alterar o resultado.
+
+CSV: todas as contratações e despesas do relatório, com uma linha de resumo.
+Use Tipo de registro para separar totais, contratações e despesas; somar todos
+esses tipos juntos duplica os valores. Arquivo UTF-8 com BOM, separador ponto
+e vírgula e valores monetários em reais com vírgula. Campos livres protegem
+contra fórmulas de planilha. Resultados negativos continuam valores numéricos.
+Se os dados mudarem após a consulta, o CSV é recusado: Atualizar relatório.
+
+Impressão: clique Imprimir / salvar PDF e escolha impressora ou Salvar como PDF.
+Imprime somente o relatório completo conferido, em A4 horizontal, com data da
+consulta em UTC; botões, formulários, navegação e demais painéis ficam fora.
+Dados internos e documentos exportados são de uso exclusivo do ADM.
+
+Homologação local:
+1. Entre como ADM e use a contratação gerada para a solicitação #12; confira o
+   número real no sistema. Consulte um período que inclua sua criação.
+2. Confira no relatório o preço de venda R$ 14.380,75, se este ainda for o valor
+   daquela contratação, e os valores de custo e gastos registrados na tela.
+3. Compare previsão e despesa paga: uma despesa de teste só deve ser confirmada
+   no cenário local de testes. Atualize o relatório após qualquer alteração.
+4. Confira o total após gastos, a lista de despesas e os estornos existentes.
+5. Baixe CSV e confira as linhas Resumo do período, Contratação e Despesa.
+6. Imprima/salve PDF: confira todos os serviços e gastos, sem menus ou botões.
+7. Cliente e fornecedor não devem ter esta opção nem acesso ao relatório/CSV.
+
+Aplicação: exige D61 FIX1 concluída. Sem novas dependências ou tabelas.
+O instalador confere fontes conhecidas, cria backup, executa testes seletivos
+isolados e compila o frontend. Verifica preservação dos dois bancos, contas,
+despesas, preços e documentos. A D62 não altera valores nem decisões.

@@ -1,0 +1,83 @@
+MEC-Serviços V0.1 D35 — Relatório administrativo por período
+REVISION=MEC-SERVICOS-V0.1-D35-RELATORIO-POR-PERIODO-2026-10-06
+
+Objetivo
+Selecionar contratações pela data de criação e comparar seus totais e os
+acumulados financeiros atuais, com agrupamento mensal e exportação CSV.
+
+Acesso
+- Somente conta administrativa com sessão válida.
+- Dashboard > Relatório por período.
+- Endereço: /admin/relatorios-periodo
+- JSON: GET /api/v1/administracao/relatorios/periodo
+- CSV: GET /api/v1/administracao/relatorios/periodo/csv
+- Parâmetros: data_inicial e data_final em AAAA-MM-DD, filtro e busca.
+- JSON tem deslocamento e limite (1 a 100, padrão 20).
+- CSV inclui todas as correspondências, independente da página da tela.
+
+Critérios
+- O período considera a criação da contratação em UTC, incluindo os dois
+  dias inteiros. Datas vazias não limitam início/fim. Datas inválidas,
+  intervalo invertido e parâmetros de filtro repetidos são recusados.
+- A busca aceita OS #3, contratação #1, número ou nome de empresa.
+- Situações e pendências seguem as regras do painel administrativo D33.
+- Totais e agrupamentos mensais refletem TODOS os filtros aplicados e não
+  mudam com a página. O agrupamento é pelo mês de criação, em UTC.
+- Valor contratado inclui todas as contratações selecionadas, inclusive
+  histórico encerrado e cancelado, quando o filtro os inclui.
+- Recebimentos e repasses são os ACUMULADOS ATUAIS confirmados das
+  contratações selecionadas. A data do movimento não define o período.
+- Movimentos estornados não entram nos totais; permanecem no D34.
+- Saldos a receber/repassar consideram somente controles abertos, conforme
+  D33. Histórico antigo sem controle não se torna nova pendência.
+- Disponível para repasse segue entrega, cobertura e situação do D33.
+- Uma consulta em lote deriva os totais, meses e página do mesmo estado.
+- Campos monetários são calculados em centavos inteiros.
+- O link Relatório em cada linha abre o D34 da mesma contratação; o link
+  Financeiro mantém esse identificador.
+
+CSV
+- UTF-8 com BOM, ponto e vírgula, casas monetárias fixas e vírgula decimal.
+- Seções Tipo de registro: Filtro, Total, Indicador, Mês e Contratação.
+- Use a linha Total para os acumulados da seleção, ou some somente as
+  linhas Contratação. Não some seções agregadas com linhas individuais.
+- Saldos de uma contratação sem controle aberto ficam vazios no CSV.
+- Campos livres com aparência de fórmula recebem apóstrofo de proteção
+  apenas na exportação; os dados e a tela preservam o texto original.
+- O download consulta dados atuais usando os filtros efetivamente
+  aplicados. Edições ainda não consultadas do formulário não mudam o CSV.
+
+Impressão D34
+- Ajusta as larguras mínimas do relatório e de seus contêineres no modo
+  de impressão para acomodar os quadros nas margens da página A4.
+- O relatório individual, seu histórico e seu CSV continuam disponíveis.
+
+Instalação
+- Exige D34 concluído, relatório OK e fontes da base conhecida.
+- Pare o backend com Ctrl+C antes de executar.
+- Confere origin do MEC-Servicos e mantém CGX independente.
+- Faz backup de fontes, build, banco de negócio e banco de acesso.
+- Executa pytest em bancos temporários e o build real do frontend.
+- Não cria tabelas nem altera contas, senhas, eventos ou movimentos.
+- Confere preservação dos bancos; falhas restauram fontes/build tocados,
+  preservando eventuais registros externos durante a instalação.
+
+Validação manual
+1. Na raiz do projeto, execute:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D35_RELATORIO_POR_PERIODO.py
+2. Depois de RESULTADO=OK, inicie o backend:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+3. No outro PowerShell, na pasta frontend, inicie se necessário:
+   npm.cmd run dev -- --port 5173 --strictPort
+4. Atualize o navegador e entre como Administrador.
+5. Dashboard > Relatório por período. Informe 02/10/2026 nos dois campos,
+   Exibir: Concluídas e Busca: OS #3. Clique Consultar.
+6. Confira contratação #1 / OS #3, 1 contratação, valor R$ 12.500,00,
+   recebido/repassado R$ 12.500,00, saldos R$ 0,00 e mês 10/2026.
+7. Exporte o CSV. Confira filtros, Total, Mês e a linha Contratação #1.
+8. Abra Relatório #1. Confira os 16 eventos e o recebimento de R$ 1.250,00
+   estornado. Imprima/salve PDF e confira os quadros completos à direita.
+9. Volte ao relatório por período e limpe filtros. Totais e meses devem
+   abranger todo o histórico. Caso haja várias páginas, mudar de página
+   mantém os totais da seleção, e o CSV inclui todas elas.
+10. Consulte OS #999999: seleção vazia e totais zerados, sem dados antigos.

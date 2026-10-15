@@ -11,6 +11,7 @@ from backend.app.models.solicitacao import SolicitacaoServico
 from backend.app.repositories.contratacao import RepositorioContratacao
 from backend.app.schemas.contratacao import ContratacaoCriacao
 
+from backend.app.services.documentacao_cotacao import travar_documentacao
 
 class ContratacaoSolicitacaoNaoEncontrada(LookupError):
     pass
@@ -58,6 +59,10 @@ class ServicoContratacao:
         solicitacao_id: int,
         dados: ContratacaoCriacao,
     ) -> ContratacaoServico:
+        from backend.app.services.precos_portais import ativa
+        from fastapi import HTTPException
+        if ativa(self.banco):raise HTTPException(409,detail='contratacao_utilize_fluxo_administrativo')
+        travar_documentacao(self.banco)
         solicitacao = self.banco.get(SolicitacaoServico, solicitacao_id)
         if solicitacao is None:
             raise ContratacaoSolicitacaoNaoEncontrada(solicitacao_id)

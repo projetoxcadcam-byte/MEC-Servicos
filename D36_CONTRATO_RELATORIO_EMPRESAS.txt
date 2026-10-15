@@ -1,0 +1,51 @@
+MEC-Serviços D36 — Relatório por cliente e fornecedor
+
+BASE: D35 concluído. Execute o instalador na raiz do MEC-Servicos, com o backend parado.
+O instalador confirma o origin MEC, a base conhecida e o relatório D35; faz backup
+dos fontes, do build e dos dois bancos; executa pytest e o build do frontend.
+A saída e o nome dos testes aparecem durante a execução. Uma etapa sem saída
+mostra um aviso a cada 30 segundos. Limites: pytest 30 minutos, build 10 minutos.
+Os logs de cada etapa ficam ao lado da execução e são informados no JSON/TXT.
+Ctrl+C interrompe a etapa antes da restauração dos arquivos.
+Não cria tabelas nem movimentos.
+Preserva históricos D31–D35, financeiro, contas, senhas e a configuração de teste local.
+Uma falha restaura os arquivos e o build anteriores. Registros externos no banco
+são preservados e sinalizados no relatório.
+
+ACESSO: Administração > Dashboard > Por cliente e fornecedor.
+Também existe atalho na tela Relatório por período. Requer acesso administrativo.
+
+CRITÉRIOS:
+- Agrupar por Clientes ou Fornecedores. Cada papel usa seu ID empresarial real.
+- Empresas de mesmo nome permanecem separadas; empresa de tipo ambos não mistura papéis.
+- Período pela criação da contratação em UTC, incluindo os dois dias escolhidos.
+- Situação e busca seguem o painel D33: empresa, Contratação #1 ou OS #3.
+- Valores recebidos e repassados são acumulados atuais; estornos são excluídos.
+- Saldos e disponibilidade somam somente os controles financeiros abertos.
+- Pendências contam contratações por categoria; categorias podem se sobrepor.
+- Ordenação pelo valor contratado decrescente, com desempate por nome e ID.
+- Totais consideram todas as páginas. A lista de empresas tem 20 por página.
+- Ver contratações aplica o ID da empresa junto aos filtros atuais e mostra 20
+  contratações por página, com acesso ao relatório D34 e ao financeiro D32.
+- Todas as empresas remove a seleção por ID e mantém os demais filtros.
+- Consultar aplica os campos do formulário e remove a seleção por ID.
+- Exportar CSV usa os filtros aplicados; inclui todos os grupos e contratações
+  selecionados, independentemente da página. O arquivo tem UTF-8 BOM, separador
+  ponto e vírgula e valores decimais com vírgula. Consulte dados atuais ao exportar.
+
+VALIDAÇÃO LOCAL DO USUÁRIO:
+1. Reinicie o sistema com MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e atualize com Ctrl+F5.
+2. Abra Por cliente e fornecedor. Datas 02/10/2026 a 02/10/2026, Concluídas, OS #3.
+3. Em Clientes: Cliente Mecânico D5, empresa #2, 1 contratação, valor contratado,
+   recebido e repassado R$ 12.500,00 cada; saldos R$ 0,00, sem pendências.
+4. Clique Ver contratações e confira contratação #1 / OS #3, concluída e
+   financeiro encerrado. Relatório #1 e Financeiro abrem os registros corretos.
+5. Use Todas as empresas; escolha Fornecedores e clique Consultar.
+6. Confira oficina mecanica, empresa #1, os mesmos valores e saldos.
+7. Exporte MEC_SERVICOS_RELATORIO_EMPRESAS.csv e confira filtros, Total, Empresa
+   e Contratação, em ambos os agrupamentos. O estorno de R$ 1.250,00 não soma.
+
+LIMITES: relatório administrativo de consulta; não representa extrato bancário
+nem compara movimentos ocorridos no período. Não altera cadastro, histórico ou
+regras de recebimento, repasse e encerramento. A impressão do D34 continua no
+relatório individual; este módulo exporta CSV.

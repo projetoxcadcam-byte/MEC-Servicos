@@ -11,6 +11,7 @@ from backend.app.models.solicitacao import SolicitacaoServico
 from backend.app.repositories.cotacao import RepositorioCotacao
 from backend.app.schemas.cotacao import CotacaoCriacao
 from backend.app.services.compatibilidade import ServicoCompatibilidade
+from backend.app.services.documentacao_cotacao import ServicoDocumentacaoCotacao, travar_documentacao
 
 
 class CotacaoSolicitacaoNaoEncontrada(LookupError):
@@ -68,7 +69,7 @@ class ServicoCotacao:
             return data
         return data.astimezone(timezone.utc).replace(tzinfo=None)
 
-    def _atualizar_expiradas(self, solicitacao_id: int) -> None:
+    def _atualizar_expiradas(self, solicitacao_id: int, *, confirmar: bool = True) -> None:
         agora = self._agora_utc_sem_fuso()
         alterou = False
 
@@ -81,7 +82,7 @@ class ServicoCotacao:
                 cotacao.decidida_por_empresa_id = None
                 alterou = True
 
-        if alterou:
+        if alterou and confirmar:
             self.banco.commit()
 
     def criar(
@@ -93,7 +94,8 @@ class ServicoCotacao:
         if solicitacao is None:
             raise CotacaoSolicitacaoNaoEncontrada(solicitacao_id)
 
-        self._atualizar_expiradas(solicitacao_id)
+        travar_documentacao(self.banco)
+        self._atualizar_expiradas(solicitacao_id, confirmar=False)
 
         if self.repositorio.listar_aceitas(solicitacao_id):
             raise SolicitacaoJaPossuiCotacaoAceita(solicitacao_id)
@@ -122,6 +124,8 @@ class ServicoCotacao:
             raise CotacaoFornecedorIncompativel(
                 dados.empresa_fornecedora_id
             )
+
+        ServicoDocumentacaoCotacao(self.banco).exigir_para_cotacao(solicitacao_id)
 
         cotacao = CotacaoFornecedor(
             solicitacao_id=solicitacao_id,
@@ -166,6 +170,10 @@ class ServicoCotacao:
         cotacao_id: int,
         empresa_cliente_id: int,
     ) -> CotacaoFornecedor:
+        from backend.app.services.precos_portais import ativa
+        from fastapi import HTTPException
+        if ativa(self.banco):raise HTTPException(409,detail='decisao_utilize_comercial_administrativo')
+        travar_documentacao(self.banco)
         solicitacao = self.banco.get(SolicitacaoServico, solicitacao_id)
         if solicitacao is None:
             raise CotacaoSolicitacaoNaoEncontrada(solicitacao_id)
@@ -212,6 +220,10 @@ class ServicoCotacao:
         cotacao_id: int,
         empresa_cliente_id: int,
     ) -> CotacaoFornecedor:
+        from backend.app.services.precos_portais import ativa
+        from fastapi import HTTPException
+        if ativa(self.banco):raise HTTPException(409,detail='decisao_utilize_comercial_administrativo')
+        travar_documentacao(self.banco)
         solicitacao = self.banco.get(SolicitacaoServico, solicitacao_id)
         if solicitacao is None:
             raise CotacaoSolicitacaoNaoEncontrada(solicitacao_id)

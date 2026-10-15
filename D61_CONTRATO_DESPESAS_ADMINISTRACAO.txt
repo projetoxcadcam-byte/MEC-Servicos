@@ -1,0 +1,103 @@
+MEC-Serviços D61 - Despesas reais da administração
+Revision: MEC-SERVICOS-V0.1-D61-DESPESAS-REAIS-ADMINISTRACAO-2026-10-13
+
+FINALIDADE
+Registrar gastos já pagos por contratação: coleta, transporte, frete,
+embalagem, inspeção ou outros. A previsão D60 fica separada dos gastos reais.
+Somente o ADM consulta e registra despesas, comprovantes e histórico interno.
+
+APLICAR - PowerShell, uma linha por vez
+Pare backend e frontend com Ctrl+C. Coloque o instalador na raiz do projeto.
+A D60 deve estar concluída com RESULTADO=OK.
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D61_DESPESAS_ADMINISTRACAO.py
+
+Aguarde RESULTADO=OK. Há conferência dos fontes, backup dos dois bancos,
+testes seletivos ao vivo e build. A ativação cria três tabelas em transação
+após a validação. Nenhuma despesa ou pagamento real é criado na instalação.
+Fontes divergentes são preservados. Não execute registros de negócio durante
+a aplicação; alterações externas são preservadas e impedem a conclusão.
+
+ATIVAR AS DUAS JANELAS
+Backend, primeiro PowerShell:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Frontend, outro PowerShell:
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Mantenha ambos abertos. Acesse http://localhost:5173 e pressione Ctrl+F5.
+
+LOCAL DA JANELA
+Administração > Pagamentos > Resultado da administração.
+Consulte o período de criação da contratação em UTC.
+Na linha, clique Registrar / consultar despesas #número.
+O painel abre abaixo da lista com foco e rolagem.
+Também pode informar o número em Abrir despesas por contratação.
+URL no teste local: /admin/resultado-administracao?contratacao=ID
+Não confunda o número da contratação com o número da OS.
+
+REGISTRO DE DESPESA
+Exige uma contratação com preço formado na D60, ativa ou encerrada.
+1. Confira cliente, fornecedor, previsão e gastos já registrados.
+2. Informe categoria, descrição, valor positivo e data do pagamento.
+3. Preencha referência do comprovante e registro interno (mínimo 3 caracteres).
+4. Use Conferir despesa. Confira contratação, descrição, valor e referência.
+5. Use Confirmar despesa. Só esta confirmação grava.
+6. Confira a despesa confirmada, seu histórico e o resultado atualizado.
+A referência é a identificação do comprovante; este módulo não faz upload.
+Valores aceitam até duas casas decimais. Não há registro com data futura.
+Despesa posterior ao encerramento pode ser registrada sem reabrir o financeiro.
+
+CORREÇÃO
+Não há edição ou exclusão do original. Use Estornar despesa #número,
+informe motivo/referência, confira e confirme o estorno. O original permanece
+com situação Estornada e sai do total de gastos confirmados. Depois registre
+o valor correto, se for um gasto efetivamente pago. Repetir a mesma confirmação
+não duplica o registro. Versão antiga exige atualização e nova conferência.
+Nova despesa é recusada em contratação cancelada; despesas anteriores dessa
+contratação permanecem consultáveis por ID e podem ser estornadas.
+
+RESULTADO
+- Despesas previstas: orçamento interno D60, permanece intacto.
+- Despesas pagas confirmadas: soma de registros que não foram estornados.
+- Resultado após despesas pagas: venda menos custo do fornecedor menos
+  despesas confirmadas, inclusive quando negativo. Não desconta a previsão
+  de novo, para não contar o mesmo gasto duas vezes.
+- Resultado dos serviços liquidados após despesas: considera somente
+  contratações com entrega concluída, recebimento integral do cliente e repasse
+  integral ao fornecedor. Ainda pode mudar com gastos novos e estornos.
+Esses valores não substituem apuração contábil nem incluem gastos não registrados.
+Registrar na janela não efetua Pix, transferência ou pagamento bancário.
+Os relatórios anteriores e o Extrato financeiro D40 continuam com seus critérios;
+o extrato de recebimentos/repasses não recebe as despesas como transferências.
+Período desta análise continua sendo a criação da contratação, não a data do gasto.
+Totais abrangem toda a seleção, independentemente das páginas. Contratações
+anteriores sem formação do preço e contratações canceladas ficam fora dos totais
+de resultado D60/D61. Seus históricos anteriores não são recalculados.
+
+TESTE LOCAL COM UMA CONTRATAÇÃO NOVA PRECIFICADA
+Use a contratação D60 do seu teste e anote seu ID, sem alterar serviços antigos.
+1. ADM: abra seu resultado e as despesas; confirme a lista inicialmente vazia.
+2. Use um gasto fictício autorizado do teste: categoria Coleta, valor 50,00,
+   data de hoje e referência TESTE-D61-001. Confira e confirme.
+3. Exemplo: venda 1.800,00, custo 1.500,00, ganho bruto 300,00 e gasto 50,00
+   produzem resultado após despesas de 250,00. A previsão continua separada.
+4. Antes de a contratação estar entregue e integralmente liquidada, o resultado
+   dos serviços liquidados não inclui esse contrato.
+5. Estorne a despesa do teste: o gasto confirmado volta a zero e o original
+   aparece Estornada. O resultado após despesas volta a 300,00 no exemplo.
+6. Cliente e fornecedor: confira seus portais. Despesas e registros internos
+   não aparecem. Valores e saldos de recebimentos/repasses permanecem iguais.
+7. Confira os históricos de OS, PDFs, avaliações, ranking e notificações.
+
+PRESERVAÇÃO
+Contas, senhas, sessões, proposta/custo, preço final, aprovações, contratação,
+OS, entrega, pagamentos, repasses, PDFs, liberações, avaliações, operações e
+notificações são preservados. Despesas internas não enviam avisos aos portais.
+Ativação, rollback, reaplicação, esquema parcial, autoria, CSRF, concorrência,
+repetição, valores negativos no resultado e privacidade são conferidos.
+Os manuais anteriores documentam a base até D60; este roteiro complementa
+o manual administrativo com o módulo D61. O teste em rede permanece adiado.

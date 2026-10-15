@@ -1,0 +1,36 @@
+.periodo35 { color: #17324f; display: grid; gap: 20px; min-width: 0; }
+.periodo35 * { box-sizing: border-box; }
+.periodo35-cabecalho, .periodo35-card { background: #fff; border: 1px solid #dce5ef; border-radius: 14px; padding: 24px; min-width: 0; }
+.periodo35-cabecalho { display: flex; justify-content: space-between; align-items: flex-start; gap: 22px; }
+.periodo35 h1 { font-size: 26px; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; color: #123050; }
+.periodo35 h2 { font-size: 21px; margin: 0 0 16px; color: #123050; }
+.periodo35 p { line-height: 1.6; margin: 10px 0; }
+.periodo35 small { display: block; color: #526b87; font-size: 13px; margin-top: 6px; line-height: 1.6; }
+.periodo35 nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.periodo35 a { color: #175c9f; text-decoration: underline; text-underline-offset: 3px; }
+.periodo35 button, .periodo35-cabecalho nav a { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #17324f; border: 1px solid #becfe2; border-radius: 9px; padding: 11px 14px; font: inherit; text-decoration: none; cursor: pointer; }
+.periodo35 button:hover:enabled, .periodo35-cabecalho nav a:hover { background: #edf4fb; }
+.periodo35 button:disabled { opacity: .5; cursor: default; }
+.periodo35 button:focus-visible, .periodo35 a:focus-visible, .periodo35 input:focus-visible, .periodo35 select:focus-visible { outline: 3px solid #2b78c6; outline-offset: 3px; }
+.periodo35-filtros { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; }
+.periodo35-filtros label { display: grid; gap: 8px; flex: 1 1 180px; min-width: 0; }
+.periodo35-filtros .periodo35-busca { flex: 2 1 290px; }
+.periodo35 input, .periodo35 select { min-width: 0; width: 100%; padding: 11px 12px; background: white; color: #17324f; border: 1px solid #becfe2; border-radius: 8px; font: inherit; }
+.periodo35-nota, .periodo35-aplicados { color: #526b87; font-size: 14px; overflow-wrap: anywhere; }
+.periodo35-contagens { display: flex; flex-wrap: wrap; gap: 12px 22px; padding: 8px 0 22px; }
+.periodo35-contagens strong { color: #123050; }
+.periodo35-valores { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+.periodo35-valores > div { background: #f6f8fc; border: 1px solid #dfe7f0; border-radius: 10px; padding: 16px; min-width: 0; }
+.periodo35-valores span { color: #526b87; font-size: 14px; }
+.periodo35-valores strong { display: block; font-size: 22px; margin-top: 8px; overflow-wrap: anywhere; }
+.periodo35-scroll { overflow-x: auto; }
+.periodo35 table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.periodo35 th, .periodo35 td { text-align: left; vertical-align: top; padding: 13px 14px; border-bottom: 1px solid #dce5ef; }
+.periodo35 th { color: #294f78; background: #f3f7fc; white-space: nowrap; }
+.periodo35 td a, .periodo35 td strong, .periodo35 td time { white-space: nowrap; }
+.periodo35 .periodo35-paginacao { justify-content: flex-end; margin-top: 20px; }
+.periodo35-paginacao span { margin-right: auto; }
+.periodo35-erro, .periodo35-aviso { background: white; border: 1px solid #d68a8a; color: #9b2525; border-radius: 10px; padding: 16px; }
+.periodo35-aviso { color: #17324f; border-color: #becfe2; }
+@media (max-width: 1100px) { .periodo35-cabecalho { flex-direction: column; } .periodo35-valores { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 620px) { .periodo35-valores { grid-template-columns: 1fr; } .periodo35-card, .periodo35-cabecalho { padding: 18px; } .periodo35-filtros label { flex-basis: 100%; } }

@@ -1,0 +1,23 @@
+{
+  "tests/test_acompanhamento_producao.py": "d64d63b6318d39939deb9743c6509b8095463546dd06c3118377707048e3d3a5",
+  "tests/test_arquivos_tecnicos.py": "c3becff5a9f83bae1108b038541e4586286948e5f95c174e37edb82f71815ee4",
+  "tests/test_avaliacoes.py": "1212fee62f011c920d631eed8d78264260a9f521ca689eef72658cc2698fb92c",
+  "tests/test_banco_dados.py": "a3c73d8f22483993efaba3a3e1803e5c28ef5f6d94e484368a5082fad33199d2",
+  "tests/test_capacidade_tecnica.py": "096492868933fa0b9899c265bbe31937de6f82fe8edc581cc3d92f85e5de470b",
+  "tests/test_compatibilidade_fornecedores.py": "521f5543d8114e04e71742d777d9d5e9d85811d855ebe003ee07c30a0e6df688",
+  "tests/test_contratacoes.py": "cd6098fb59663d86bb505155f3ca5aeb46262a1734d28dcdce526266e2ab6923",
+  "tests/test_cotacoes.py": "a716b81c44d813d2c571686afca8e242159887c5cb7be320db8ce337510c0153",
+  "tests/test_empresas_api.py": "ead6248db13f010d8a528aec745c614779d77786261fb3a1529cd8fb4cf70365",
+  "tests/test_entregas.py": "59ae2bd8e4714eb29da8bcd44f37e9953bf230078488b570733eb999eea3059b",
+  "tests/test_integracao_pagamentos.py": "5cbdc16ecc54008a1014848758cb9fc24ee268bc39f901267037eac4f6365101",
+  "tests/test_ordens_servico.py": "77f59dd856d2595408a9d06c240fa6221ec144e8a72698db3c064f275534f87a",
+  "tests/test_pagamentos.py": "5565856bd0e761ee94485c5e9d932f0f518c76e280363788e22b8af6165b1749",
+  "tests/test_portal_cliente_solicitacoes.py": "3391809de9fd769db1adc2761358856cd4e06b39f51aa30d92b21b22ec81ee44",
+  "tests/test_portal_contratacoes.py": "7dd51d710792666e79137855a8c83aa72cb8aeacfa6628ecbe15b7a3a843857a",
+  "tests/test_portal_entregas.py": "82b228846444017585b2201e7d65c0559c6f90e18d819f7d3e9c10c7fbc6cafe",
+  "tests/test_portal_fornecedor_cotacoes.py": "f6b7976a14174ed72ea9ceb36f418c805a224856e90ab9080653bc3dbf5dcb32",
+  "tests/test_portal_ordens_servico.py": "5b6df6c5b03a6d2c63308ea3ce22b78e79138543cff2fe4fac010150d41c406e",
+  "tests/test_portal_producao.py": "e6540adb66199089fab6c39aaa00dacc47d464787c2adf54a3b341f7796d504a",
+  "tests/test_ranking_fornecedores.py": "dee7a377a1d40bad8b191238e9b7fa81aaf7942a5679f64b0edfcc2bb48c25f7",
+  "tests/test_saude.py": "b301583b26b6d3d5ebec124594e02dcc9ca6a9ea675e78563f32bddd5a02afa5"
+}

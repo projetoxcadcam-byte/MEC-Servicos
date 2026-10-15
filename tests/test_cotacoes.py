@@ -12,7 +12,9 @@ from backend.app.principal import app
 
 
 @pytest.fixture()
-def cliente() -> Generator[TestClient, None, None]:
+def cliente(tmp_path, monkeypatch) -> Generator[TestClient, None, None]:
+    from backend.app.services.arquivo_tecnico import ServicoArquivoTecnico
+    monkeypatch.setattr(ServicoArquivoTecnico, "STORAGE_ROOT", tmp_path)
     engine = create_engine(
         "sqlite://",
         connect_args={"check_same_thread": False},
@@ -176,6 +178,12 @@ def preparar_cenario(cliente: TestClient) -> tuple[int, int, int, int, int]:
         },
     )
     assert solicitacao.status_code == 201
+
+    from apoio_documentacao_d42 import preparar_documentacao_qa
+    dependencia = cliente.app.dependency_overrides[obter_banco]()
+    banco = next(dependencia)
+    try: preparar_documentacao_qa(banco, solicitacao.json()["id"])
+    finally: dependencia.close()
 
     return (
         solicitacao.json()["id"],

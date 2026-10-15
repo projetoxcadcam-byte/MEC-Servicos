@@ -1,0 +1,89 @@
+MEC-Serviços D64 — Metas mensais do resultado da administração
+REVISION=MEC-SERVICOS-V0.1-D64-METAS-RESULTADO-2026-10-14
+
+BASE E PRESERVAÇÃO
+Exige D63 concluída com RESULTADO=OK. Pare backend e frontend com Ctrl+C.
+O instalador confere a origem MEC e fontes conhecidas, faz backup de fontes,
+build e dos dois bancos, executa testes seletivos com bancos temporários e
+compila o frontend. Acrescenta três tabelas de configuração, metas e histórico.
+Nenhuma meta é preenchida automaticamente. O histórico financeiro, contas,
+senhas, sessões, documentos, avaliações e notificações permanecem preservados.
+Falha restaura fontes e build. Dados escritos por outro processo são preservados.
+
+INSTALAÇÃO — PowerShell na pasta MEC-Servicos
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D64_METAS_RESULTADO.py
+Aguarde RESULTADO=OK. Os testes mostram saída ao vivo e aviso de atividade.
+
+ATIVAÇÃO — primeira janela, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+ATIVAÇÃO — segunda janela, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173, atualize com Ctrl+F5 e entre como ADM.
+
+ONDE ENCONTRAR
+Administração > Pagamentos > Resultado da administração > Abrir metas mensais
+ou http://localhost:5173/admin/resultado-administracao
+A consulta das metas considera o ano inteiro, de janeiro a dezembro.
+O ano inicial acompanha o ano final do período da tela de resultado.
+Relatório PDF da D62 FIX2 e análise agrupada D63 permanecem acessíveis pelos
+botões próprios. Cada área abre junto à tela com rolagem e foco automáticos.
+
+TESTE MANUAL
+1. Abra metas mensais e consulte o ano 2026. Os doze meses devem aparecer.
+   Inicialmente todos ficam Sem meta. Meta não definida não significa meta zero.
+2. Em outubro de 2026, clique Definir meta 10/2026. Informe 2000,00 e motivo
+   Teste de planejamento mensal. Clique Conferir meta. Confira mês, valor e
+   motivo; só Confirmar meta efetiva a gravação.
+3. Confira meta R$ 2.000,00. No cenário da contratação #5 / OS #5, ainda sem
+   liquidação, o resultado liquidado é R$ 0,00, diferença -R$ 2.000,00 e
+   atingimento 0,00%. Resultado após despesas pagas R$ 1.875,75 e previsto
+   R$ 1.775,75 aparecem separados, se os valores do serviço não mudaram.
+4. A referência do mês é a criação da contratação em UTC, em 13/10/2026
+   nesse serviço. O resultado liquidado só muda quando entrega, recebimento
+   e repasse integrais estiverem conferidos, ou quando houver gasto/estorno.
+   Não faça pagamentos apenas para preencher o gráfico.
+5. Edite a meta para 2500,00 com novo motivo, confira e confirme. O histórico
+   deve manter R$ 2.000,00 → R$ 2.500,00, administrador, data e motivo.
+6. Se foi apenas um teste, informe o motivo Encerrar teste de meta e clique
+   Conferir retirada da meta e Confirmar retirada da meta. A meta volta a
+   Sem meta, mantendo todos os registros no histórico.
+7. Confira a diferença entre meta zero e sem meta: zero é uma meta registrada
+   explicitamente e não tem percentual, evitando divisão por zero.
+8. Baixe CSV das metas. Ele deve conter resumo e doze meses. Meta e percentual
+   sem definição ficam em branco. Os valores negativos mantêm seu sinal.
+9. Atingimento anual considera somente os meses com meta ativa. O resultado
+   liquidado de todos os serviços do ano aparece separado no resumo.
+10. Cliente e fornecedor não devem acessar metas, histórico ou CSV. Os gráficos
+    e CSV D63 e o PDF horizontal D62 FIX2 devem continuar funcionando.
+
+CRITÉRIOS
+Metas são internas à administração e compartilhadas por seus administradores.
+Planejamento por mês de criação da contratação em UTC, com o resultado
+liquidado dos serviços desse mês atualizado até a consulta. Não é um relatório
+de caixa nem um fechamento contábil do mês. Despesas posteriores e estornos
+continuam vinculados ao serviço e podem alterar o resultado do mês de origem.
+Somente contratações ativas ou encerradas com preço formado pelo ADM entram
+no resultado. Liquidação exige entrega, recebimento e repasse integrais, sem
+divergência. Meta não realiza ou altera essas operações.
+O atingimento é resultado liquidado dividido pela meta, multiplicado por 100,
+com duas casas decimais e arredondamento decimal. Pode superar 100% ou ficar
+negativo. Sem meta e meta zero não calculam percentual.
+Diferença = resultado liquidado menos meta; pode ser negativa.
+Atingimento anual soma resultado e meta apenas nos meses com meta ativa.
+Mês anterior, em andamento e futuro são identificados pela data UTC da consulta.
+Definição, alteração e retirada exigem motivo, sessão ADM, CSRF, contexto,
+versão vigente e chave de operação. Histórico paginado e imutável pela interface.
+Gravação duplicada com mesma chave e mesmo pedido não repete alteração.
+CSV recusa consulta antiga após alteração de meta ou dos valores financeiros.
+
+ROTAS RESERVADAS
+GET /administracao/despesas/metas?ano=2026
+GET /administracao/despesas/metas/csv?ano=2026&versao=...
+GET /administracao/despesas/metas/2026-10
+POST /administracao/despesas/metas/2026-10
+Anos permitidos: 1900 a 9998. Metas não negativas, com até duas casas decimais.
+Nenhuma dependência adicional. Nenhuma meta, despesa ou notificação automática.

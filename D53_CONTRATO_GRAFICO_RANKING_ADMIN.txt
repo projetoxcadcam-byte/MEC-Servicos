@@ -1,0 +1,47 @@
+MEC-Serviços D53 — Gráfico do ranking administrativo
+
+REQUISITO
+D52 FIX1 concluída com RESULTADO=OK. Feche o teste local antes da instalação.
+
+O QUE FOI ADICIONADO
+Gráfico de barras horizontais em Administração > Avaliações > Ver reputação e ranking.
+Também pode ser aberto pelo endereço /admin/ranking no mesmo site do teste local.
+Cada empresa fornecedora (incluindo empresas de tipo ambos) aparece com nome,
+código, posição, nota média e quantidade de avaliações.
+Escala fixa de 0 a 5; notas de clientes e da administração ficam em consultas
+separadas. Empresas sem notas aparecem sem posição e sem barra numérica.
+São exibidas até 20 empresas por página. Anterior/Próxima permitem consultar todas.
+Ver tabela de notas e posições abre os valores da página em formato de tabela.
+Atualizar consulta novamente as notas. Dados antigos são retirados ao trocar
+origem, página ou conta, enquanto a consulta atual estiver pendente.
+
+PRIVACIDADE
+Ranking, médias comparativas, posições e gráfico são exclusivos do administrador.
+Cliente e fornecedor continuam sem ranking, inclusive pelo endereço direto e API.
+O fornecedor continua podendo consultar somente as notas dos seus próprios serviços.
+As regras existentes de cálculo e desempate não foram alteradas.
+
+ATIVAÇÃO NO POWERSHELL
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D53_GRAFICO_RANKING_ADMIN.py
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Atualize a página com Ctrl+F5 e entre com o perfil administrador.
+
+TESTE
+1. Abra Administração > Avaliações > Ver reputação e ranking.
+2. Confira no gráfico nome, posição, média / 5 e quantidade de avaliações.
+3. Abra Ver tabela de notas e posições: os números devem ser os mesmos.
+4. Alterne Notas de clientes e Notas da administração. As origens não se misturam.
+5. Se houver mais de 20 fornecedores, use Próxima e Anterior. As posições continuam
+   a classificação geral e todas as empresas são acessíveis pelas páginas.
+6. Empresas sem avaliações devem mostrar Sem notas / Sem posição, nunca nota zero.
+7. Entre como cliente e como fornecedor. O gráfico e o ranking não devem aparecer.
+   Tentar /admin/ranking deve ser recusado pelo controle de perfil.
+8. Confira que o fornecedor continua consultando suas notas em Avaliações.
+
+PRESERVAÇÃO
+Nenhuma tabela nova, avaliação criada ou cálculo de nota modificado.
+Notas, operações, materiais, capacidades, PDFs, históricos, contas e senhas
+permanecem preservados. Fontes diferentes da base conhecida são recusadas.
+O instalador cria backup e executa testes seletivos de avaliações, ranking privado
+e autenticação, além da compilação do frontend, com saída ao vivo.

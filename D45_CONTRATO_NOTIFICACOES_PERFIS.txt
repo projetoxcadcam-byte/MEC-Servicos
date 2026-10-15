@@ -1,0 +1,97 @@
+MEC-Serviços D45 — Notificações por perfil
+REVISION=MEC-SERVICOS-V0.1-D45-NOTIFICACOES-POR-PERFIL-2026-10-07
+
+OBJETIVO
+Avisar o perfil interessado quando outro perfil registra uma atualização relevante.
+O sino aparece junto de Minha conta nos portais administrativo, cliente e fornecedor.
+Avisos ficam salvos mesmo quando o destinatário está desconectado.
+A leitura pertence à conta: outra conta da mesma empresa pode ter avisos não lidos.
+A lista é atualizada automaticamente a cada 15 segundos enquanto a aba estiver visível,
+e também ao voltar à aba, recuperar a conexão ou clicar em Atualizar.
+
+EVENTOS E DESTINATÁRIOS
+- Cliente registra solicitação ou envia documento: administração.
+- Administração libera documento: cliente; fornecedores com proposta enviada/aceita.
+- Documento liberado em solicitação aberta e sem proposta aceita: fornecedores
+  compatíveis com processo, material, dimensões e tolerância, sem proposta anterior.
+- Fornecedor envia cotação: cliente e administração.
+- Administração aceita/recusa cotação: cliente e fornecedor daquela proposta.
+  Propostas concorrentes recusadas pelo aceite também avisam seus fornecedores.
+- Administração abre OS: cliente e fornecedor vinculados.
+- Fornecedor inicia serviço: cliente e administração.
+- Fornecedor registra etapa de produção: cliente e administração.
+- Administração recebe/encaminha material, solicita coleta, recebe peças, inicia
+  avaliação, aprova, solicita/encaminha retrabalho, entrega ou cancela: cliente e
+  fornecedor daquela OS.
+- Administração registra/estorna recebimento: cliente.
+- Administração registra/estorna repasse: fornecedor.
+- Administração encerra/reabre financeiro e contratação: cliente e fornecedor.
+O perfil que registra a própria ação não recebe o aviso dessa ação.
+
+LEITURA E PRIVACIDADE
+O contador indica avisos não lidos. Abrir um aviso ou clicar em Marcar como lida
+registra a leitura. Abrir somente o sino não marca os avisos como lidos.
+Marcar todas como lidas considera os avisos existentes na consulta carregada;
+avisos que chegam depois continuam não lidos.
+As mensagens contêm o evento e os números da solicitação, contratação e OS.
+Não contêm nomes ou contatos da contraparte, textos livres, registros internos,
+pareceres, nomes de arquivos ou referências de comprovantes.
+Cliente e fornecedor permanecem sem contato direto; a administração coordena o fluxo.
+A listagem e as leituras usam a conta, o perfil e a empresa da sessão do servidor.
+Troca de acesso em outra aba bloqueia consultas e leituras da tela com o acesso antigo.
+Atualize a página ou entre novamente para carregar o acesso atual.
+
+INSTALAÇÃO
+1. Salve MEC_SERVICOS_V0_1_D45_NOTIFICACOES_POR_PERFIL.py na raiz do MEC-Servicos.
+2. Pare o backend (Ctrl+C no terminal que o executa).
+3. PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D45_NOTIFICACOES_POR_PERFIL.py
+4. Aguarde os testes e o build ao vivo até RESULTADO=OK.
+   A suíte completa pode levar vários minutos no computador local.
+   O instalador mostra cada teste e informa andamento durante a execução.
+5. Inicie o backend em um terminal:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+6. Inicie o frontend em outro terminal:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+7. Abra http://localhost:5173 e pressione Ctrl+F5.
+
+ROTEIRO DE TESTE
+Use uma OS ativa, com material encaminhado. A Contratação #4 / OS #4 já encerrada
+continua preservada, mas não recebe novas etapas de produção.
+Se necessário, siga o fluxo D43/D44 para criar uma nova contratação e OS, anotando
+os números mostrados. Faça somente registros do seu teste local.
+
+1. Cliente: confira o sino no topo. Na instalação não há avisos retroativos.
+2. Fornecedor: na OS do teste, inicie o serviço, se estiver aberta. Em Produção,
+   selecione Em usinagem e use Revisar atualização > Confirmar atualização.
+3. Cliente: em até 15 segundos, confira o contador. Abra o sino e confira o aviso
+   Em usinagem com o número da OS. Abra o aviso: deve mostrar a mesma OS em Produção.
+   Volte ao sino: o aviso estará lido e o contador terá diminuído.
+4. Administração: confira o aviso da produção da mesma OS. Abrir deve mostrar o ciclo.
+5. Cliente: marque todas como lidas. Fornecedor: registre Pronto para coleta na OS
+   do teste. Cliente: esse novo aviso deve aparecer como não lido.
+6. Administração: solicite a coleta e registre o recebimento das peças com a quantidade
+   total e uma referência do teste. Confira os dados antes de confirmar.
+7. Cliente e fornecedor: confira Coleta solicitada e Peças recolhidas e recebidas.
+   Abrir deve mostrar Entregas e o ciclo da OS do teste, sem registros internos.
+8. Troque para uma empresa diferente: avisos de outras empresas não aparecem.
+9. Saia e entre novamente: o histórico e as leituras da mesma conta devem permanecer.
+
+Para comparar perfis ao mesmo tempo, use navegadores diferentes ou uma janela
+normal e outra anônima. Abas do mesmo navegador compartilham a sessão de acesso.
+
+PRESERVAÇÃO
+Instalação cria somente duas tabelas vazias: notificacoes_perfis e leituras_notificacoes.
+Não reproduz eventos anteriores, não cria dados de demonstração nem altera cotações,
+OS, material, entregas, financeiro, contas, senhas ou sessões.
+Backups dos dois bancos e dos arquivos alterados são gravados antes da aplicação.
+Os avisos são inseridos na transação do evento: rollback não deixa aviso parcial.
+Reexecutar o instalador conserva notificações e leituras existentes.
+
+ESCOPO DESTA ETAPA
+Notificações dentro do sistema. Ao entrar novamente, a conta vê os avisos salvos.
+Envio por e-mail, WhatsApp e avisos do navegador com o sistema fechado são etapas
+separadas; não há integrações externas nem permissões de navegador nesta versão.

@@ -1,0 +1,62 @@
+MEC-Serviços D44 — Contratação administrativa e abertura da OS
+
+BASE: D43 concluído. Instale na raiz do MEC com o backend parado.
+O instalador confere a origem, as fontes, o relatório D43, a estrutura dos
+bancos e seus vínculos. Faz backup dos dois bancos e das fontes alteradas,
+executa os testes em bancos isolados e compila o frontend. Ao final cria uma
+tabela vazia para os novos eventos administrativos de contratação.
+Não cria contratação, OS, ciclo, pagamento, repasse ou conta na instalação.
+O registro de modelos, a página de arquivos do cliente e o registro local
+dos testes legados permanecem preservados.
+
+Os menus Contratações e Ordens de Serviço passam a consultar registros reais,
+com pesquisa exata, situação e paginação. Nas Solicitações/Cotações do D43,
+uma proposta aceita recebe acesso direto à conferência da contratação.
+
+CONFIRMAÇÃO ADMINISTRATIVA
+Informe a solicitação e consulte. Confira cliente, fornecedor, proposta aceita,
+valor total, prazo, lote, requisitos e documentos. Ao menos um documento
+técnico ativo, íntegro e liberado deve estar disponível para esta confirmação.
+Preencha o registro interno. As instruções de execução opcionais são campos
+separados, visíveis nos portais; o registro interno fica na administração.
+Revisar contratação e OS abre uma confirmação com os dados conferidos.
+Confirmar cria a contratação ativa, encerra a solicitação, abre uma única OS
+e inicia a intermediação em Aguardando material. A transação inclui os dois
+eventos com o administrador real. Uma falha desfaz a confirmação inteira.
+O valor e o prazo são copiados da proposta aceita; lote, processo e material
+são copiados da solicitação. Não há edição desses valores na confirmação.
+Repetir o mesmo envio retorna o registro existente. Uma análise antiga é
+recusada. As rotas de criação anteriores usam a mesma trava de escrita.
+
+CONTRATAÇÃO ANTERIOR SEM OS
+Uma contratação ativa sem ordem pode abrir sua OS pela mesma conferência.
+Seu contrato e suas instruções permanecem intactos. Ordens e contratos
+anteriores não são recriados nem recebem autoria administrativa inventada.
+
+MATERIAL E EXECUÇÃO
+A nova OS fica aberta, com intermediação Aguardando material. O fornecedor
+acompanha a OS em seu portal. A produção permanece bloqueada até a
+administração registrar Receber material e Encaminhar material no módulo
+de Intermediação/Entregas. O D44 não registra essas movimentações físicas.
+Cliente e fornecedor continuam vendo as contrapartes por códigos e sem os
+motivos internos da administração.
+
+CONFERÊNCIA LOCAL
+1. Depois de RESULTADO=OK, inicie o backend e o frontend em terminais
+   separados. Atualize o navegador com Ctrl+F5 e entre como Administrador.
+2. Solicitações > solicitação 9 > Preparar contratação e abertura da OS;
+   ou Contratações > solicitação 9 > Consultar.
+3. Confira a cotação #8 aceita, oficina mecanica, R$1.500,00 no total,
+   10 unidades e 7 dias de execução, com o desenho técnico liberado.
+4. Registre a conferência interna e, se necessário, instruções de execução.
+   Clique Revisar contratação e OS. Confira a confirmação e confirme.
+   Essa ação cria os registros reais do cenário de teste uma única vez.
+5. Anote os números reais da contratação e da OS exibidos. Confira
+   contratação Ativa, solicitação Encerrada, OS Aberta e Aguardando material.
+   O histórico deve mostrar o administrador e o registro da conferência.
+6. Abra Ordens de Serviço e consulte a nova OS. Clique Acompanhar material
+   e entregas para abrir seu ciclo administrativo.
+7. Atualize Cliente > Contratações e Fornecedor > Contratações/Ordens de
+   Serviço. A OS deve estar disponível, sem o registro interno da conferência.
+8. Confira contratação #1 / OS #3 e os saldos antigos no Dashboard/Pagamentos.
+   O histórico anterior e o financeiro encerrado permanecem preservados.

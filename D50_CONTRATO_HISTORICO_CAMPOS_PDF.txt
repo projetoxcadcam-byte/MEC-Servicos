@@ -1,0 +1,62 @@
+MEC-Serviços D50 — Setinhas e histórico dos campos do PDF
+
+COMO FUNCIONA
+Cada campo da legenda tem uma setinha à direita. Clique para abrir os valores
+já utilizados naquele campo. A busca da lista ajuda a localizar uma opção.
+Depois de selecionar, o campo continua editável. Também é possível digitar
+um valor novo, que será guardado ao sair do campo.
+
+O histórico inclui descrição, código técnico neutro, material, quantidade,
+dureza, tratamento térmico, revestimento, escala, unidade, revisão,
+tolerâncias gerais, sobremetal e observações do serviço.
+O escopo da usinagem continua com suas opções da D49.
+Somente o campo escolhido recebe o valor selecionado; não há preenchimento
+automático de outras informações da peça.
+
+PERSISTÊNCIA
+Cada ADM tem seu próprio histórico, disponível em outra sessão ou navegador.
+Valores dos PDFs que esse mesmo ADM já preparou aparecem nas sugestões,
+incluindo versões anteriores à D50. Essa leitura não altera os documentos.
+Um valor reutilizado não cria duplicatas por diferença de maiúsculas ou espaços.
+Os valores válidos continuam disponíveis; não são descartados por antiguidade.
+Campos vazios, dados inválidos, coordenadas e registro interno não são guardados
+como sugestões. Cliente e fornecedor não acessam o histórico administrativo.
+
+INSTALAÇÃO
+Exige D49 concluída, com relatório RESULTADO=OK.
+1. Salve MEC_SERVICOS_V0_1_D50_HISTORICO_CAMPOS_PDF.py na raiz do projeto.
+2. Pare backend e frontend com Ctrl+C em seus terminais.
+3. Execute cada comando em sua própria linha no PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D50_HISTORICO_CAMPOS_PDF.py
+4. Aguarde RESULTADO=OK. A saída mostra os testes e o build ao vivo.
+O instalador cria backup dos arquivos alterados, do build e dos dois bancos.
+A nova tabela do histórico é criada em transação somente após os testes,
+o build e a conferência de preservação dos registros existentes.
+
+ATIVAÇÃO
+Backend, na raiz:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Frontend, em outro PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE MANUAL
+1. Entre como ADM em Administração > Arquivos Técnicos.
+2. Abra Preparar PDF com nossa logo e inclua a legenda da página.
+3. Clique na setinha do Material: os materiais já usados nos seus PDFs
+   devem aparecer. Busque e selecione um deles; confira o valor no campo.
+4. Digite outro valor válido e clique no próximo campo. Aguarde a indicação
+   “Valores guardados no histórico”. Não é preciso gerar PDF para guardar.
+5. Feche e abra a preparação de outro PDF. Clique na setinha do Material:
+   o valor digitado deve estar disponível, sem alterar os demais campos.
+6. Repita com dureza, tratamento, escala ou observações, quando aplicáveis.
+7. Confirme que o histórico permanece após sair e entrar novamente como ADM.
+8. A geração, revisão e liberação da cópia continuam seguindo o fluxo da D49.
+   Selecionar um valor do histórico não gera PDF nem libera documentação.
+
+Se aparecer falha ao carregar ou guardar o histórico, os campos continuam
+editáveis. Use Tentar histórico novamente para repetir a operação.
+Originais, PDFs preparados, liberações, contas, senhas e históricos de negócio
+são preservados pela atualização. Os testes usam bancos isolados.

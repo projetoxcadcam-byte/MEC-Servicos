@@ -1,0 +1,61 @@
+MEC-Serviços D39 — Comparativo gerencial entre períodos
+
+BASE: D38 FIX1 concluído. Pare o backend e execute o instalador na raiz do MEC.
+Confere origin MEC, relatório D38 FIX1, fontes conhecidos e schema D31/D32.
+Faz backup dos fontes, build e dois bancos. Executa pytest e build com saída
+ao vivo, aviso a cada 30 segundos sem saída, limite de 30 minutos para pytest
+e 10 minutos para build. Falhas/Ctrl+C encerram a etapa antes da restauração.
+Preserva históricos, financeiro, contas, senhas e modo de teste local. Não
+cria tabelas, movimentos ou contratações. Registros externos são preservados.
+
+ACESSO: Administração > Dashboard > Comparativo entre períodos.
+Há também atalho no Resumo gerencial mensal; Ver mês do D38 FIX1 permanece.
+
+CRITÉRIOS:
+- Dois períodos completos A e B, cada um com início e fim incluídos, em UTC.
+- Padrão: A = mês anterior; B = mês atual, ambos completos no calendário UTC.
+- Datas de criação das contratações definem os grupos. Os valores, situações,
+  saldos e pendências são atuais, conforme D33/D36/D38. Recebimentos/repasses
+  são acumulados dessas contratações. Datas dos movimentos não definem o grupo.
+- Mesmo filtro e busca aplicados a A e B. Sessão administrativa obrigatória.
+- Um SELECT por consulta fornece os dois grupos na mesma fotografia.
+- Totais exatos em centavos; movimentos estornados excluídos. Saldos e
+  disponibilidade consideram controles abertos. Conferência é categoria própria.
+- Diferença = B menos A. Variação = diferença dividida por A vezes 100,
+  arredondada a duas casas (meio para cima). A = B = 0 produz 0,00%.
+  A = 0 e B diferente de zero produz Sem base, sem percentual inventado.
+- O sinal indica aumento/redução; não atribui avaliação de bom/ruim.
+- Sobreposição é permitida e explicitada, com quantidade de contratos em ambos.
+  Cada contrato conta uma vez em cada grupo. Compare A e B separadamente.
+- Ver contratações de A/B fica junto ao respectivo período. Detalhes têm
+  20 registros por página, em ordem de criação/ID decrescente. As páginas
+  não limitam resumos, diferenças ou CSV. Não há detalhe até escolher A/B.
+- Relatório de A/B abre D35 e Pendências de A/B abre D37 com as datas, situação
+  e busca aplicadas. O D35 passa a aplicar e guardar seus filtros na URL.
+  Cada contrato tem relatório D34 e financeiro exatos.
+- Inverter A e B troca os grupos aplicados e fecha o detalhe. A diferença passa
+  a ter sinal contrário; o percentual usa a nova base A. Não grava operações.
+- Consultar aplica o formulário e fecha o detalhe. Limpar restaura o padrão.
+  Filtros e detalhe ficam na URL. Rascunhos não alteram o CSV até Consultar.
+- CSV MEC_SERVICOS_COMPARATIVO_GERENCIAL.csv: UTF-8 BOM, ponto e vírgula,
+  decimais com vírgula, filtros, 17 indicadores, total A, total B e todas as
+  contratações de ambos os grupos. O detalhe escolhido não limita o CSV.
+  Em sobreposição o mesmo ID aparece em A e B, com a coluna Período identificando
+  cada grupo. Não somar tipos Indicador, Total e Contratação entre si.
+- Textos livres são protegidos contra fórmulas de planilha; diferenças e
+  percentuais negativos permanecem números. Nenhuma exportação muda o banco.
+
+VALIDAÇÃO LOCAL:
+1. Após RESULTADO=OK, reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e Ctrl+F5.
+2. Abra Comparativo entre períodos. A: 01/09/2026 a 30/09/2026;
+   B: 01/10/2026 a 31/10/2026. Busca OS #3. Clique Consultar.
+3. Esperado para a OS #3 existente: A vazio; B com 1 contratação concluída,
+   financeiro encerrado, contratado/recebido/repassado R$ 12.500,00 e nenhuma
+   pendência ou saldo. Diferença de valor +R$ 12.500,00; variação Sem base.
+4. Clique Ver contratações de B: contratação #1 / OS #3. Confira seus links.
+5. Pendências de B abre Outubro, OS #3 e fila vazia. Relatório de B abre D35.
+6. Exporte CSV e confira os dois totais, diferenças e contrato do grupo B.
+7. Inverter A e B: A passa a conter a OS #3, B vazio, diferença de valor
+   -R$ 12.500,00 e variação -100,00%. Consultar/exportar não grava movimentos.
+8. Períodos iguais: diferenças zero; aviso de sobreposição e 1 contrato em ambos.
+9. Retorne ao Resumo gerencial mensal e confira Ver mês na primeira coluna.

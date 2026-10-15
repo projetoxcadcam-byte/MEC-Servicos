@@ -91,6 +91,12 @@ class ServicoPortalContratacoes:
             raise HTTPException(404, detail="contratacao_nao_encontrada")
         return self._contratacao(linha)
 
+    def _preco_cliente(self,q):
+        from decimal import Decimal
+        from backend.app.models.formacao_preco import FormacaoPreco
+        p=self.banco.get(FormacaoPreco,q.id)
+        return (Decimal(p.preco_cliente_centavos)/100).quantize(Decimal("0.01")) if p else q.valor_total
+
     def listar_cotacoes_para_contratar(self, empresa_id: int, deslocamento: int, limite: int) -> CotacoesParaContratarPagina:
         self.validar_empresa(empresa_id, "cliente")
         cliente, fornecedor = aliased(Empresa), aliased(Empresa)
@@ -109,10 +115,12 @@ class ServicoPortalContratacoes:
                    SolicitacaoServico.status == "aberta", CotacaoFornecedor.status == "aceita",
                    CotacaoFornecedor.decidida_por_empresa_id == empresa_id, ~existe)
         )
+        from backend.app.services.precos_portais import ativa, visibilidade_cliente
+        if ativa(self.banco):consulta=consulta.where(visibilidade_cliente())
         total = self.banco.scalar(select(func.count()).select_from(consulta.subquery())) or 0
         linhas = self.banco.execute(consulta.order_by(CotacaoFornecedor.id.desc()).offset(deslocamento).limit(limite)).all()
         itens = [CotacaoParaContratarLeitura(
-            **CotacaoLeitura.model_validate(cotacao).model_dump(), fornecedor_razao_social=fornecedor_nome,
+            **{**CotacaoLeitura.model_validate(cotacao).model_dump(), 'valor_total':self._preco_cliente(cotacao)}, fornecedor_razao_social=fornecedor_nome,
             solicitacao=self._solicitacao(solicitacao, cliente_nome, processo, material),
         ) for cotacao, solicitacao, cliente_nome, fornecedor_nome, processo, material in linhas]
         return CotacoesParaContratarPagina(itens=itens, total=total, deslocamento=deslocamento, limite=limite)

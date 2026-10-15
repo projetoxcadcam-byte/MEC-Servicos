@@ -1,0 +1,101 @@
+MEC-Serviços D60 — Formação do preço e resultado da intermediação
+Revision: MEC-SERVICOS-V0.1-D60-FORMACAO-PRECO-2026-10-13
+
+FLUXO
+Fornecedor envia orçamento → ADM confere custo, acrescenta percentual ou reais
+→ ADM publica preço final → cliente aprova, pede revisão ou recusa
+→ ADM aceita a proposta e confirma contratação / OS.
+A aprovação do cliente não contrata nem escolhe automaticamente um fornecedor.
+
+ACRÉSCIMO
+- Percentual sobre o custo: fornecedor R$ 1.500,00 + 20% = cliente R$ 1.800,00.
+- Valor fixo: fornecedor R$ 1.500,00 + R$ 300,00 = cliente R$ 1.800,00.
+- O percentual é acréscimo sobre o custo, não margem sobre o preço de venda.
+- Cálculo exato em centavos; percentual até 4 casas e arredondamento comercial.
+- Despesas previstas opcionais: com R$ 50,00, resultado previsto = R$ 250,00.
+  São um orçamento interno, não registro de despesas efetivamente pagas.
+- Apenas uma proposta válida publicada por solicitação. Para trocar a proposta,
+  retire a anterior ou aguarde seu vencimento. Salvar alterações retira a oferta
+  da consulta do cliente; publicar exige uma nova aprovação do preço atualizado.
+
+APLICAR (PowerShell, uma linha por vez)
+Pare backend e frontend com Ctrl+C nas duas janelas. Coloque o instalador na
+raiz do projeto. A D59 deve estar concluída.
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D60_FORMACAO_PRECO.py
+
+Aguarde RESULTADO=OK. O pacote confere fontes, faz backup dos dois bancos e das
+fontes, executa testes seletivos com saída ao vivo e compila o frontend.
+A ativação das 3 tabelas ocorre em transação somente após a validação.
+Se houver fonte divergente, ela é preservada e o relatório informa o arquivo.
+Nenhuma proposta anterior é publicada e nenhum acréscimo retroativo é aplicado.
+
+ATIVAR AS DUAS JANELAS
+Primeira janela — backend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Segunda janela — frontend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Mantenha ambas abertas, acesse http://localhost:5173 e atualize com Ctrl+F5.
+O teste em três computadores continua para uma etapa futura.
+
+TESTE MANUAL
+1. Use uma nova solicitação ou cotação ainda pendente. Contratações concluídas
+   e cotações já aceitas permanecem preservadas e não recebem novo acréscimo.
+2. Cliente: envie a solicitação e o documento técnico.
+3. ADM: revise e libere o documento em Administração > Arquivos Técnicos.
+4. Fornecedor: envie seu orçamento em Oportunidades. O ADM recebe a notificação;
+   o cliente ainda não vê a proposta bruta nem o custo do fornecedor.
+5. ADM: abra Cotações, busque a solicitação e clique Preparar preço para o cliente.
+   Escolha Percentual sobre o custo, digite 20 e, opcionalmente, despesas previstas.
+   Clique Conferir preço. Confira custo, acréscimo, preço final e resultado previsto.
+6. Informe Registro interno e clique Salvar rascunho. Cliente: confirme que o
+   orçamento ainda não aparece em Cotações. Nenhuma contratação foi criada.
+7. ADM: confira novamente, preencha o registro e clique Publicar ao cliente.
+8. Cliente: abra a notificação ou Cotações > Ver detalhes. Confira o preço final,
+   prazo, validade, material e quantidade. Clique Pedir revisão, informe o motivo
+   e confirme. O ADM recebe o aviso e vê a análise no Histórico do preço.
+9. ADM: mude para Valor fixo em reais, informe o acréscimo, confira e publique.
+   Cliente: confira a proposta atualizada e confirme Aprovar orçamento.
+10. ADM: atualize a solicitação, confirme Aceitar cotação e depois use Preparar
+    contratação e abertura da OS na janela Contratações. A aprovação do cliente
+    habilita esta decisão administrativa; ela não substitui a confirmação do ADM.
+11. Financeiro: o valor contratado cobrado ao cliente é o preço final. O valor
+    devido ao fornecedor é seu custo original. O repasse exige entrega concluída
+    e recebimentos que cubram o repasse, e nunca supera esse custo.
+12. ADM: em Pagamentos clique Resultado da administração, ou use o atalho do
+    Resumo gerencial. Consulte o período da criação da contratação em UTC.
+    Confira venda, custo, ganho bruto previsto, despesas e resultado previsto.
+    Ganho bruto confirmado exige entrega concluída e liquidação integral dos
+    recebimentos e repasses. Estornos retiram essa confirmação até nova liquidação.
+13. Confira os três perfis: cliente vê preço final; fornecedor vê apenas seu custo
+    e valores a receber; somente ADM vê acréscimo, despesas, resultado e ranking.
+
+PRESERVAÇÃO E VALIDAÇÃO
+- Fontes/backend/frontend, documentos originais e preparados, contas, senhas,
+  sessões e todo o histórico de negócio e financeiro são preservados.
+- Cotações pendentes anteriores à D60 passam por publicação do ADM para o cliente.
+  Decisões históricas anteriores à ativação continuam na consulta de histórico.
+- Contratações anteriores não são recalculadas nem entram na análise de ganho D60.
+- Contratações canceladas ficam fora da análise de resultado previsto D60.
+- Antes da contratação, um preço D60 já aceito pode voltar à análise do cliente
+  se documentos ou condições mudarem. O orçamento original do fornecedor e a
+  seleção administrativa são preservados; a contratação aguarda nova aprovação.
+- Consultar, conferir preço e filtrar não gravam negócios nem notificações.
+- Revisões, publicação, análise do cliente e contratação têm auditoria, versão,
+  idempotência e controle de concorrência. Revisões dos documentos também exigem
+  nova conferência e aprovação. A versão do preço não revela o custo.
+- A nova precificação exige sessão real, CSRF, perfil e empresa autorizados.
+  Rotas comerciais antigas não permitem pular a análise e a contratação do ADM.
+- O painel do preço consulta a API apenas quando aberto, sem carregar cada
+  cotação individualmente durante a abertura da listagem.
+- Backup, rollback, reaplicação, esquema do banco e fontes divergentes são testados.
+- Não há nova dependência nem envio de pagamento, e-mail ou WhatsApp real.
+
+Relatórios: MEC_SERVICOS_V0_1_D60_FORMACAO_PRECO_RELATORIO.json e .txt.

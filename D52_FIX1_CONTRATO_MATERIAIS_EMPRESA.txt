@@ -1,0 +1,50 @@
+MEC-Serviços D52 FIX1 - Materiais aceitos pela empresa
+
+Exige D52 concluída. Disponibiliza os materiais prontos também no cadastro da
+empresa e permite cadastrar um material próprio pelo nome.
+
+INSTALAÇÃO
+1. Pare backend e frontend com Ctrl+C nos respectivos terminais.
+2. Salve MEC_SERVICOS_V0_1_D52_FIX1_MATERIAIS_EMPRESA.py na raiz MEC-Servicos.
+3. No PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D52_FIX1_MATERIAIS_EMPRESA.py
+4. Aguarde RESULTADO=OK. O instalador faz backup de fontes/build e dos dois bancos.
+   Mostra testes seletivos ao vivo e restaura fontes/build se houver falha.
+   Não cria tabelas nem cadastra materiais durante a instalação.
+5. Reinicie o backend:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+6. Em outro PowerShell, reinicie o frontend:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+7. Abra http://localhost:5173/admin/empresas e atualize com Ctrl+F5.
+
+TESTE
+- Entre como administrador, pesquise a empresa fornecedora e clique Editar empresa.
+- Em Materiais aceitos pela empresa, confira que o Alumínio 6061 já vinculado
+  continua preservado. Ele não aparece como uma nova escolha para essa empresa.
+- Clique Adicionar material aceito. A lista reúne os materiais existentes e
+  50 opções prontas, reutilizando o cadastro quando o nome corresponde exatamente.
+- Use Buscar material: 1045, inox, alumínio, nylon ou bronze. A busca aceita
+  palavras sem acentos. Uma busca sem resultados é explicada na própria tela.
+- Selecione somente um material que a empresa realmente aceita e clique Vincular
+  material. A opção pronta é cadastrada e vinculada nesta confirmação; as demais
+  opções continuam sem cadastro automático.
+- Para outra especificação, clique Cadastrar outro material, informe o Nome do
+  novo material e clique Cadastrar e vincular material.
+- Feche e reabra a empresa. Confira materiais, operações e limites anteriores.
+- O material vinculado sai da lista de novas escolhas. Para outra empresa,
+  o mesmo cadastro fica disponível e pode ser vinculado sem duplicação.
+- Se outra tela alterar operações, capacidades ou materiais, reabra a empresa
+  para conferir a versão atual antes de gravar novamente.
+- As opções prontas não definem tratamento, dureza, tolerância ou condição de
+  fornecimento da peça. Não há associação automática entre ligas ou marcas.
+
+PRESERVAÇÃO
+Não altera o cadastro de materiais existentes, códigos, famílias, especificações,
+vínculos anteriores, capacidades técnicas, processos, máquinas ou contas.
+Cadastrar material e vincular à empresa ocorre em uma única transação.
+Cliente e fornecedor não acessam estas rotas administrativas.
+Mantém compatibilidade por material/processo e limites reais, documentação liberada,
+originais e versões do PDF, histórico D50/D51/D52, notificações, avaliações,
+histórico comercial/financeiro e ranking exclusivo da administração.

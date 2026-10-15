@@ -1,0 +1,9 @@
+
+
+D42 FIX1 — Compatibilidade do registro de modelos:
+O carregamento dos modelos D42 ocorre pela rota já incluída no backend.
+O instalador não confere por assinatura nem substitui models/__init__.py.
+Preserva o conteúdo desse registro, incluindo imports, comentários e ordem.
+As demais conferências de fontes, backup, testes, build e bancos continuam.
+Pode ser executado após a recusa do D42 na etapa conferir_base: a tentativa
+recusada não aplicou fontes, alterou bancos nem criou tabelas.

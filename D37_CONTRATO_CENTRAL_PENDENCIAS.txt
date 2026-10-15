@@ -1,0 +1,57 @@
+MEC-Serviços D37 — Central de pendências administrativas
+
+BASE: D36 concluído. Pare o backend e execute o instalador na raiz do MEC-Servicos.
+O instalador confere origin MEC, fontes conhecidos, relatório D36 e schema D31/D32;
+faz backup dos fontes, do build e dos dois bancos; executa pytest com progresso
+e o build completo no frontend instalado. Não cria tabelas ou movimentos.
+Preserva contas, senhas, modo de teste local e históricos D31–D36.
+Mantém o progresso do D36, avisos a cada 30 segundos sem saída, limite de 30
+minutos no pytest e 10 minutos no build. Os logs são informados no relatório.
+Falhas ou Ctrl+C encerram a etapa antes de restaurar fontes e build. Registros
+externos no banco são preservados e sinalizados, sem sobrescrever históricos.
+
+ACESSO: Administração > Dashboard > Central de pendências.
+Também há atalho no Relatório por cliente e fornecedor; suas contratações com
+pendências permitem abrir a central com busca exata pela contratação.
+
+CRITÉRIOS:
+- Requer sessão administrativa. As pendências são as mesmas calculadas pelo D33.
+- Filtros combináveis: área, ação, datas, situação, empresa, Contratação #1 ou OS #3.
+- A busca por empresa usa o nome, conforme o Dashboard, e pode encontrar mais
+  de uma empresa. Contratação # e OS # identificam o registro exato.
+- Datas usam a criação da contratação em UTC, incluindo os dois dias.
+- A fila mostra pendências atuais; não é um histórico de pendências no período.
+- Uma linha por ação, ordenada pela criação da contratação, ID, área e código.
+- Uma contratação pode ter várias linhas. Valores e indicadores financeiros
+  somam cada contratação uma única vez, incluindo todas as páginas.
+- Valores são os acumulados atuais, excluindo movimentos estornados. Saldos
+  e disponibilidade só consideram controles financeiros abertos.
+- Intermediação abre a OS ou a contratação correta; Financeiro abre o contrato;
+  divergências abrem o relatório individual para conferência. Os links não
+  executam ações de negócio. Decisões continuam nos módulos já existentes.
+- Repasse aguardando entrega aponta para a intermediação.
+- O formulário usa Consultar para aplicar mudanças; o CSV usa os filtros
+  aplicados. Trocar Área limpa a ação escolhida. Limpar filtros restaura a fila.
+- Filtros aplicados ficam na URL. A paginação mostra 20 ações por página.
+- CSV: MEC_SERVICOS_CENTRAL_PENDENCIAS.csv, UTF-8 BOM, ponto e vírgula,
+  decimais com vírgula; inclui todas as páginas e os filtros aplicados.
+- Tipos: Filtro, Total, Área, Pendência e Contratação. Linhas Pendência têm os
+  destinos e orientações, com campos financeiros vazios. Valores individuais
+  aparecem uma vez por contratação nas linhas Contratação. Não somar tipos
+  de registro diferentes, pois Total já resume as contratações selecionadas.
+- A consulta e a exportação não criam OS, não movimentam dinheiro e não
+  encerram contratos. Não acrescentam prazos, prioridades ou multas.
+
+VALIDAÇÃO LOCAL:
+1. Reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e atualize com Ctrl+F5.
+2. Abra Central de pendências. Datas 02/10/2026 a 02/10/2026, busca OS #3,
+   Todas as contratações, Todas as áreas e Todas as ações; clique Consultar.
+3. Esperado: zero pendências e zero contratações com pendências, pois a
+   contratação #1 / OS #3 já terminou. Os totais financeiros da fila são zero.
+   O valor de R$ 12.500,00 permanece nos relatórios D34–D36, não nesta fila vazia.
+4. Exporte o CSV: filtros corretos, Total e Área zerados, sem linhas Pendência
+   ou Contratação para a OS #3. Confirme que o histórico do D36 permanece igual.
+5. Limpar filtros mostra pendências atuais de outros contratos, caso existam.
+   Para cada linha, confira contratação, OS, orientação e destino antes de agir.
+6. Não criar dados de negócio apenas para preencher a fila. Uma base sem
+   pendências deve exibir o estado vazio e permitir o CSV com os filtros.

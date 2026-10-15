@@ -1,0 +1,26 @@
+MEC-Serviços D38 FIX1 — Botão Ver mês visível
+
+BASE: D38 concluído. Pare o backend e execute o instalador na raiz do MEC.
+Corrige a posição de Ver mês e Pendências do mês na tabela dos 12 meses.
+As ações ficam na primeira coluna, junto ao nome do mês. Essa coluna permanece
+visível ao rolar horizontalmente para consultar valores e situações.
+
+Instala dois fontes do frontend e este roteiro. Confere a base D38, faz backup
+dos fontes, do build e dos bancos; executa o build completo do frontend.
+A validação da correção concentra-se no frontend. Usa o executor ao vivo D38,
+com aviso a cada 30 segundos sem saída e limite de 10 minutos para o build.
+Preserva o backend, regras, filtros, valores, CSV, contas, senhas e históricos.
+Falhas/Ctrl+C encerram a etapa antes de restaurar fontes/build; registros
+externos no banco são preservados e sinalizados.
+
+VALIDAÇÃO:
+1. Após RESULTADO=OK, reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e Ctrl+F5.
+2. Abra Resumo gerencial mensal. Role até Os 12 meses de 2026.
+3. Na primeira coluna da linha Outubro, clique Ver mês, abaixo do nome do mês.
+4. Confira o detalhe de Outubro. Pendências do mês fica no mesmo local.
+5. Ao rolar horizontalmente a tabela, mês e ações continuam visíveis à esquerda.
+6. Para repetir a conferência da OS #3, digite OS #3 na busca e clique Consultar.
+   Esperado: contratação #1 / OS #3 em Outubro, concluída, financeiro encerrado,
+   contratado/recebido/repassado R$ 12.500,00, sem saldo ou pendência atual.
+7. Com a busca vazia, o resumo inclui todas as contratações do ano. Os valores
+   maiores do resumo geral não alteram os valores individuais da OS #3.

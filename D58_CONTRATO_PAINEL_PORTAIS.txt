@@ -1,0 +1,86 @@
+MEC-Serviços D58 — Dashboards do cliente e do fornecedor
+Revisão: MEC-SERVICOS-V0.1-D58-PAINEL-PORTAIS-2026-10-13
+
+BASE
+Exige D57 concluída com RESULTADO=OK e fontes conhecidas dessa versão.
+Os dois painéis passam a consultar registros reais da empresa da sessão.
+O Dashboard do ADM permanece no painel administrativo existente.
+
+APLICAÇÃO (PowerShell)
+1. Pare o backend e o frontend com Ctrl+C nas duas janelas.
+2. Coloque MEC_SERVICOS_V0_1_D58_PAINEL_PORTAIS.py na raiz MEC-Servicos.
+3. Na primeira janela, execute uma linha por vez:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D58_PAINEL_PORTAIS.py
+
+Aguarde RESULTADO=OK. O instalador cria backup, executa os testes seletivos
+com saída ao vivo e compila o frontend. O tempo depende do computador.
+
+ATIVAR AS DUAS JANELAS
+Primeira janela (backend):
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Segunda janela (frontend):
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Deixe ambas abertas. Acesse http://localhost:5173 e atualize com Ctrl+F5.
+O iniciador de teste local executa o backend; o frontend usa a segunda janela.
+
+TESTE DO CLIENTE
+1. Entre como cliente e abra Dashboard. O endereço é /cliente.
+2. Confira solicitações abertas, cotações em análise, contratações ativas,
+   OS abertas, em execução e concluídas, de acordo com a empresa deste acesso.
+3. Compare o total de OS no histórico com a lista de Ordens de Serviço,
+   percorrendo todas as páginas. A lista recente mostra no máximo cinco OS.
+4. Clique Acompanhar produção em uma OS recente. O histórico aberto deve
+   ser dessa mesma ordem. Datas são apresentadas no horário do navegador.
+5. Volte ao Dashboard e confira Arquivos técnicos, Entregas e Pagamentos.
+
+TESTE DO FORNECEDOR
+1. Entre como fornecedor e abra Dashboard. O endereço é /fornecedor.
+2. Compare Oportunidades liberadas com a janela Solicitações/Oportunidades.
+   Só entram solicitações abertas, compatíveis, sem proposta sua anterior
+   nem cotação aceita e com documento íntegro liberado pela administração.
+3. Confira suas cotações e ordens. Ver proposta abre a solicitação correta.
+4. Uma cotação vencida aparece como expirada; abrir o Dashboard não grava
+   vencimentos nem altera propostas. A janela de cotações existente continua
+   com as próprias regras de atualização.
+
+CONFERÊNCIA ENTRE PERFIS
+Em um serviço de teste ativo e autorizado, registre uma etapa de produção
+no perfil fornecedor usando a janela Produção existente. Entre como cliente
+da mesma contratação e clique Atualizar painel. Se a OS estiver entre as
+cinco mais recentes, a etapa deve aparecer no cartão dessa ordem; em qualquer
+caso, Acompanhar produção permite conferir o histórico na janela existente.
+A atualização do painel não registra nenhuma etapa por conta própria.
+Cada perfil vê sua empresa. O ranking continua exclusivo do ADM; o fornecedor
+continua vendo suas notas individuais na janela Avaliações existente.
+
+COMPORTAMENTO
+- Uma consulta do Dashboard reúne todos os totais, sem limitar à primeira
+  página e sem consultar separadamente o histórico de cada OS.
+- Registros recentes são ordenados pelo identificador mais novo (até cinco).
+- Cotações em análise são propostas enviadas dentro da validade em UTC.
+- OS concluída descreve a situação da ordem, sem presumir pagamento ou entrega.
+- Consulta manual em Atualizar painel e ao entrar na janela.
+- Durante carregamento ou erro aparecem traços, nunca zeros inventados.
+- Erro, saída ou mudança de perfil remove os dados da consulta anterior.
+- Nenhuma informação de contato, observação privada, média ou posição no
+  ranking é acrescentada aos painéis.
+- Não altera contas, senhas, sessões, decisões comerciais ou notificações.
+- Não cria tabelas, ordens, propostas, liberações nem seleções de fornecedor.
+- Preserva os arquivos antigos ClientDashboard e SupplierDashboard; a rota
+  protegida passa a usar o novo componente com o perfil correto.
+
+VALIDAÇÃO DO PACOTE
+Testes reais de autenticação e isolamento de empresa, totais com mais de uma
+página, vencimento UTC, etapas sem duplicação, documentos íntegros liberados,
+leitura coerente com gravação concorrente e privacidade do ranking.
+Verificação TypeScript e build. Fluxos de navegação, falha, recuperação,
+troca de sessão e respostas atrasadas exercitados com a API isolada.
+Relatórios: MEC_SERVICOS_V0_1_D58_PAINEL_PORTAIS_RELATORIO.json e .txt.

@@ -71,6 +71,8 @@ export function mensagemErroFornecedor(erro: unknown): string {
       cotacao_ja_cadastrada_para_este_fornecedor: "Sua empresa já enviou uma cotação para esta solicitação. Consulte Minhas Cotações.",
       solicitacao_ja_possui_cotacao_aceita: "O cliente já aceitou uma cotação para esta solicitação.",
       fornecedor_sem_acesso_a_solicitacao: "Sua empresa não possui acesso aos arquivos desta solicitação.",
+      solicitacao_sem_arquivo_liberado_para_cotacao: "A solicitação aguarda arquivo técnico disponível e liberado pela administração. Atualize as oportunidades.",
+      arquivo_aguarda_liberacao_administrativa: "O arquivo técnico aguarda revisão e liberação pela administração.",
       arquivo_tecnico_nao_encontrado: "O arquivo não está mais disponível. Atualize os arquivos.",
     };
     if (typeof detalhe === "string") return mensagens[detalhe] ?? "Não foi possível concluir a operação. Atualize a tela e tente novamente.";

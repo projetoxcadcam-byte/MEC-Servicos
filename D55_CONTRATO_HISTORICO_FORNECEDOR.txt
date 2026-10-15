@@ -1,0 +1,58 @@
+MEC-Serviços D55 — Busca e histórico de avaliações por fornecedor
+
+PRÉ-REQUISITO
+D54 concluída com RESULTADO=OK. Feche o teste local antes da instalação.
+
+BUSCA NO RANKING
+Administração > Avaliações > Ver reputação e ranking (/admin/ranking).
+Buscar empresa aceita nome, trecho do nome, código F-1 ou número da empresa.
+A busca ignora maiúsculas/minúsculas e acentos e consulta todos os fornecedores,
+inclusive os que estão fora da primeira página. Limpar busca restaura a lista.
+O gráfico e a tabela usam o mesmo filtro e a mesma origem.
+A posição corresponde à classificação geral, calculada antes do filtro de busca.
+A busca não cria uma nova classificação entre os resultados encontrados.
+Sem notas permanece sem posição e sem barra numérica; empresas mistas são incluídas.
+
+HISTÓRICO DO FORNECEDOR
+Cada empresa do gráfico tem o botão Ver histórico.
+O painel mostra nome e código da empresa, médias e quantidade de notas de cada
+origem, além das contratações com avaliação e sua OS, data, nota e comentário.
+Comentários e autores são mostrados apenas nesta consulta administrativa.
+Cliente e fornecedor continuam sem ranking, médias comparativas ou este histórico.
+As médias e quantidades consideram todas as avaliações da empresa, sem depender
+da página atual. O histórico inclui serviços com nota do cliente ou do ADM,
+sem duplicar a contratação quando existem as duas notas.
+A ordem é decrescente pelo número da contratação. Cada página contém até 20 serviços.
+Abrir avaliação da contratação abre a tela existente do serviço correto.
+Atualizar histórico refaz a consulta; Fechar histórico recolhe o painel.
+Trocar busca, origem ou página do ranking fecha o histórico anteriormente aberto.
+Nenhuma nota é registrada ou alterada ao buscar, abrir ou atualizar o histórico.
+
+ATIVAÇÃO NO POWERSHELL
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D55_HISTORICO_FORNECEDOR.py
+Após RESULTADO=OK:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Atualize com Ctrl+F5 e entre com o perfil administrador.
+
+TESTE MANUAL
+1. Abra Administração > Avaliações > Ver reputação e ranking.
+2. Busque o nome ou código de uma empresa, por exemplo F-1.
+3. Confira a posição: deve ser a mesma da classificação geral sem filtro.
+4. Clique Ver histórico. Confira as duas médias e as contratações/OS da empresa.
+5. Clique Abrir avaliação da contratação e confira o serviço correto.
+6. Volte ao ranking; teste Limpar busca, as duas origens e as páginas.
+7. Empresa sem notas deve ter histórico vazio, sem receber nota zero.
+8. Se houver mais de 20 serviços avaliados, confira as páginas do histórico;
+   as médias e quantidades do resumo devem continuar sendo os totais da empresa.
+9. Entre como cliente e fornecedor: busca do ranking e histórico administrativo
+   não devem aparecer, inclusive quando se força o endereço da administração.
+10. Confira que o fornecedor mantém a consulta das notas dos seus próprios serviços.
+
+PRESERVAÇÃO
+Sem tabelas novas ou mudanças nas avaliações, contratações, cotações e decisões.
+Gráfico comparativo D54, documentos, PDFs, materiais, operações, capacidades,
+históricos, notificações, contas e senhas permanecem preservados.
+O instalador exige a base D54 conhecida, cria backup dos dois bancos e dos arquivos,
+executa testes seletivos de busca/histórico e permissões, além do build do frontend.
+Testes usam bancos isolados e mostram a saída ao vivo.

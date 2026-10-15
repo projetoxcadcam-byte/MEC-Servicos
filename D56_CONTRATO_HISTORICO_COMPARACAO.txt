@@ -1,0 +1,60 @@
+MEC-Serviços D56 — Histórico do fornecedor na comparação de cotações
+
+PRÉ-REQUISITO
+D55 concluída com RESULTADO=OK. Pare o backend e o frontend antes de instalar.
+
+COMPARAÇÃO E HISTÓRICO
+Administração > Cotações. Abra uma solicitação e clique Comparar propostas.
+Cada proposta apresenta Ver histórico do fornecedor no gráfico e na tabela.
+O painel abre na própria página, com foco e rolagem automáticos.
+A identificação mostra fornecedor, cotação de origem e solicitação da análise.
+Notas de clientes e da administração, médias, quantidades, serviços, datas,
+comentários e autores usam a consulta administrativa já validada na D55.
+Todas as avaliações do fornecedor compõem as médias, independente da página
+do histórico e das demais propostas exibidas na comparação.
+Fornecedor sem avaliações permanece com histórico vazio e médias ausentes.
+
+Voltar à comparação ou Fechar histórico fecha o painel e devolve o foco ao
+botão da proposta que o abriu. Abrir novamente, inclusive para o mesmo
+fornecedor, refaz a consulta e volta à primeira página do histórico.
+Trocar ordenação, escopo ou página, fechar ou atualizar a comparação e trocar
+a solicitação ou seu estado comercial fecha o histórico anterior.
+Conferir cotação continua destacando a proposta no fluxo administrativo existente.
+Abrir avaliação da contratação navega para a consulta do serviço correto.
+
+O histórico é uma consulta atual ao abrir ou atualizar. Se novas avaliações
+forem registradas durante a análise, Atualizar comparação refaz as médias
+junto das propostas. Os botões do histórico são bloqueados quando a versão
+comercial diverge ou há uma operação em andamento.
+Consultar o histórico não aceita nem recusa cotação, não escolhe fornecedor
+e não grava notas, decisões ou contratações.
+Cliente e fornecedor não recebem esta comparação ou o histórico administrativo.
+As notas individuais dos próprios serviços permanecem disponíveis ao fornecedor.
+
+ATIVAÇÃO NO POWERSHELL
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D56_HISTORICO_COMPARACAO.py
+Após RESULTADO=OK:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Atualize com Ctrl+F5 e entre como administrador.
+
+TESTE MANUAL
+1. Abra Administração > Cotações e analise uma solicitação com propostas.
+2. Clique Comparar propostas.
+3. Clique Ver histórico do fornecedor no gráfico de uma proposta.
+4. Confira fornecedor, cotação, solicitação, as duas médias e as avaliações.
+5. Clique Voltar à comparação e confira o retorno ao botão da proposta.
+6. Abra o histórico pelo botão na tabela e confira que é o mesmo fornecedor.
+7. Teste outro fornecedor, as páginas do histórico e Fechar histórico.
+8. Troque a ordenação ou a página da comparação: o histórico anterior fecha.
+9. Conferir cotação deve continuar destacando a proposta para decisão manual.
+10. Clique Abrir avaliação da contratação para conferir o serviço correspondente.
+11. Empresa sem avaliações deve exibir histórico vazio, sem nota zero fictícia.
+12. Entre como cliente e fornecedor e confira que os novos botões não aparecem.
+
+PRESERVAÇÃO E VALIDAÇÃO
+Atualização de interface sem novas tabelas, dependências ou alterações de backend.
+Busca, ranking e histórico D55, comparação D54, avaliações, decisões comerciais,
+contratações, documentos, PDFs, notificações, contas e senhas são preservados.
+O instalador confere a base D55 e faz backup dos dois bancos e dos arquivos.
+Testes seletivos em bancos isolados e build exibem saída ao vivo.

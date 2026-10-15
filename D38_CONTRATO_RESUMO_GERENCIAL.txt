@@ -1,0 +1,58 @@
+MEC-Serviços D38 — Resumo gerencial mensal
+
+BASE: D37 concluído. Pare o backend e execute o instalador na raiz do MEC-Servicos.
+Confere origin MEC, fontes conhecidos, relatório D37 e schema D31/D32; faz backup
+dos fontes, do build e dos dois bancos. Executa pytest com saída ao vivo e o build
+completo do frontend instalado. Preserva contas, senhas, modo de teste e D31–D37.
+Não cria tabelas ou movimentos. Falhas/Ctrl+C encerram a etapa antes de restaurar
+fontes e build; registros externos no banco são preservados e sinalizados.
+Mantém o executor D36/D37: aviso a cada 30 segundos sem saída, limite de 30 minutos
+no pytest e 10 minutos no build. Os relatórios indicam os logs de cada etapa.
+
+ACESSO: Administração > Dashboard > Resumo gerencial mensal.
+Há atalhos também no D36 por empresa e na Central de pendências D37.
+
+CRITÉRIOS:
+- Sessão administrativa, ano UTC, situação e busca por nome, Contratação # ou OS #.
+- Ano padrão: ano atual em UTC. A consulta mostra os 12 meses, inclusive os vazios.
+- Mês: criação da contratação em UTC. Situações, valores e pendências são atuais.
+  Recebimentos e repasses são acumulados das contratações daquele mês, não os
+  movimentos bancários ocorridos no mês. O relatório não faz fechamento contábil.
+- Valores são exatos em centavos, somados uma vez por contratação, excluindo
+  estornos. Saldos e disponibilidade consideram somente controles abertos.
+- Em andamento, Concluídas, Canceladas e Para conferência são situações do painel.
+  Financeiros encerrados segue D33: controle encerrado e situação concluída.
+  Divergências financeiras continuam para conferência, sem correção automática.
+- Com pendências conta contratações únicas. Ações operacionais, financeiras e de
+  conferência contam as ações atuais, seguindo o D37. Um contrato pode ter várias.
+- Ver mês abre o detalhamento com os filtros aplicados. O resumo anual e os 12
+  meses permanecem completos. Contratações ordenadas por criação e ID decrescentes.
+- Detalhamento: 20 registros por página; totais incluem todas as páginas.
+- Pendências do mês abre D37 com as datas do mês, situação e busca aplicadas.
+  Cada contratação tem links para relatório D34, financeiro e, quando aplicável,
+  sua fila exata. Abrir links ou consultar/exportar não grava operações.
+- Consultar aplica o formulário e fecha o mês anterior. Limpar restaura o ano
+  atual, Todas e busca vazia. Filtros e mês detalhado ficam na URL.
+- CSV usa os filtros aplicados, mesmo se o formulário foi alterado sem Consultar.
+  Arquivo MEC_SERVICOS_RESUMO_GERENCIAL_MENSAL.csv: UTF-8 BOM, ponto e vírgula,
+  decimais com vírgula, tipos Filtro, Total anual, Mês e Contratação.
+- Sempre inclui o total anual e os 12 meses. Sem mês selecionado, Contratação
+  detalha todo o ano filtrado; com mês selecionado, detalha apenas esse mês,
+  incluindo todas as páginas. Não somar tipos diferentes: Total anual e Mês são
+  agregados. Linhas Contratação reconciliam o detalhamento, uma vez por ID.
+- Os relatórios D34–D37 permanecem disponíveis com seus critérios anteriores.
+
+VALIDAÇÃO LOCAL:
+1. Após RESULTADO=OK, reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e Ctrl+F5.
+2. Abra Resumo gerencial mensal. Ano 2026, Todas as contratações, busca OS #3.
+3. Esperado: 1 contratação, 1 concluída, 1 financeiro encerrado; contratado,
+   recebido e repassado R$ 12.500,00. Saldos e pendências zero.
+4. A linha Outubro tem esses valores; os outros 11 meses estão zerados.
+5. Clique Ver mês em Outubro. Confira contratação #1 / OS #3, Concluída e
+   Financeiro encerrado, links e CSV. O CSV tem 12 linhas Mês, um Total anual
+   e uma Contratação do detalhamento, com R$ 12.500,00 uma vez por contrato.
+6. Abra Pendências do mês: D37, 01/10/2026 a 31/10/2026, OS #3, fila vazia.
+7. Ver mês em Janeiro mantém o resumo anual e abre detalhe vazio. Seu CSV mantém
+   o ano e os 12 meses, mas sem linhas Contratação para Janeiro.
+8. Limpar filtros mostra todas as contratações do ano, caso existam. Não criar
+   registros de negócio apenas para preencher meses ou fila de teste.

@@ -1,0 +1,65 @@
+MEC-Serviços D57 — Produção administrativa e arquivos do fornecedor
+
+PRÉ-REQUISITO
+D56 concluída com RESULTADO=OK. Pare backend e frontend antes da instalação.
+
+PRODUÇÃO DO ADMINISTRADOR
+Administração > Produção (/admin/producao).
+A janela lista OS reais de todas as oficinas, com cliente, fornecedor, processo,
+material, quantidade e situação da OS. Filtre por OS, solicitação, contratação
+e situação. A paginação percorre todas as ordens, até 20 por página.
+Ver produção da OS abre a etapa atual, última atualização e histórico completo,
+com datas e observações. Sem etapa registrada permanece sem etapa.
+Atualizar histórico da produção refaz a consulta da ordem selecionada.
+Abrir ordem de serviço e Acompanhar entrega desta OS encaminham às telas existentes.
+A consulta não registra etapas ou movimentações. As ações de oficina e
+intermediação continuam nas suas telas próprias.
+
+ARQUIVOS TÉCNICOS DO FORNECEDOR
+Fornecedor > Arquivos Técnicos (/fornecedor/arquivos-tecnicos).
+Cotações e serviços apresenta as solicitações das próprias propostas, incluindo
+contratações e o histórico. Oportunidades liberadas apresenta as solicitações
+compatíveis com a empresa e documentação já liberada para cotação.
+Busque pelo número da solicitação e percorra as páginas de até 20 solicitações.
+Ver arquivos da solicitação abre somente os documentos atualmente disponíveis
+e liberados pela administração. Arquivos bloqueados, ausentes, divergentes ou
+desvinculados não são disponibilizados para download.
+Quando houver PDF preparado e publicado, o download utiliza a versão MEC.
+Nomes originais e contatos do cliente não aparecem na janela; downloads usam
+nomes neutros, identificados pelo código do arquivo.
+Atualizar arquivos liberados refaz a consulta. Abrir minha cotação ou Abrir
+oportunidade para cotar encaminha à solicitação correta na tela existente.
+A lista de cotações nesta janela usa modo somente leitura: vencimentos são
+exibidos sem modificar as propostas no banco. O fluxo anterior de cotações
+mantém seu comportamento quando esse modo não é solicitado.
+
+ACESSO E PRESERVAÇÃO
+Produção administrativa exige sessão de ADM. A janela de arquivos exige sessão
+de fornecedor vinculada à empresa. Filtros não permitem trocar empresa ou perfil.
+Trocar filtro, página, solicitação ou perfil descarta as consultas anteriores.
+Nenhuma cotação, liberação, nota, contratação, OS ou notificação é criada pela
+abertura das janelas. Ranking continua exclusivo da administração.
+Sem novas tabelas ou dependências. Modelos, página de arquivos do cliente,
+PDFs, operações, contas, senhas e históricos anteriores são preservados.
+
+ATIVAÇÃO NO POWERSHELL
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D57_ATIVACAO_JANELAS.py
+Após RESULTADO=OK:
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Atualize com Ctrl+F5.
+
+TESTE MANUAL
+1. Entre como ADM. Abra Produção, procure OS #3 e clique Ver produção.
+2. Confira situação, etapa atual e as datas do histórico. Teste os filtros e páginas.
+3. Clique Abrir ordem de serviço e confira a mesma OS na janela existente.
+4. Entre como fornecedor. Abra Arquivos Técnicos, na aba Cotações e serviços.
+5. Consulte uma solicitação da empresa, abra seus arquivos e teste o download.
+6. Teste Oportunidades liberadas, a busca por solicitação e Atualizar arquivos.
+7. Confira um PDF publicado: o arquivo baixado deve ser a versão liberada MEC.
+8. Solicitação sem documentação liberada deve mostrar aviso, sem liberar download.
+9. Cliente e fornecedor não acessam a janela de produção do ADM. Cliente não
+   acessa a janela de arquivos do fornecedor. Cada portal mantém seus próprios dados.
+
+O instalador confere a base D56, faz backup dos dois bancos e dos arquivos,
+executa testes seletivos com bancos isolados e compila o frontend com saída ao vivo.

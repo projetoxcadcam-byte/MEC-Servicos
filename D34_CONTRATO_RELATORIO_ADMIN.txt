@@ -1,0 +1,74 @@
+MEC-Serviços V0.1 D34 — Relatório consolidado da contratação
+REVISION=MEC-SERVICOS-V0.1-D34-RELATORIO-ADMINISTRATIVO-2026-10-05
+
+Objetivo
+Consultar uma contratação e seus registros de produção, intermediação e
+financeiro na mesma tela administrativa. Imprimir ou salvar PDF pelo
+navegador e exportar CSV para conferência.
+
+Acesso
+- Somente conta administrativa com sessão válida.
+- No Dashboard, pesquise a OS/contratação e clique em Relatório.
+- Endereço: /admin/relatorios?contratacao=1
+- A seleção usa o número da contratação, não o número da OS.
+- JSON: GET /api/v1/administracao/relatorios/contratacoes/1
+- CSV: GET /api/v1/administracao/relatorios/contratacoes/1/csv
+- Não há endpoints de gravação no relatório.
+
+Conteúdo
+- Identificadores da contratação, OS, solicitação e cotação.
+- Empresas, quantidade, prazo contratado, processo e material.
+- Situações atuais e próximos passos derivados do painel D33.
+- Datas cadastrais realmente disponíveis.
+- Recebimentos e repasses, incluindo os movimentos estornados.
+- Totais confirmados e saldos calculados pelas regras já existentes.
+- Linha do tempo com registros de produção, intermediação D31 e financeiro
+  D32 em ordem cronológica. Referências, pareceres, valores, quantidades
+  conferidas e responsáveis aparecem quando registrados na origem.
+- Não inventa eventos para contratos antigos nem recupera informações que
+  não foram armazenadas. A ausência de histórico é informada.
+- Contratos anteriores encerrados/cancelados sem controle D32 não ganham
+  novas pendências: diferenças são apresentadas como registros disponíveis.
+- Identificadores de eventos pertencem à origem; evento #1 da produção não
+  é o mesmo evento #1 da intermediação ou do financeiro.
+
+Exportação
+- CSV UTF-8 com BOM, separador ponto e vírgula, números monetários com duas
+  casas e vírgula decimal, campos entre aspas conforme necessário.
+- Seções identificadas na coluna Tipo de registro: resumo, resumo
+  financeiro, próximos passos, informações do histórico, movimentos e
+  eventos. Totais confirmados vêm das linhas Resumo financeiro; movimentos
+  e eventos não devem ser somados juntos.
+- Campos livres que poderiam ser interpretados como fórmula recebem
+  apóstrofo de proteção no CSV. O banco e a tela mantêm o texto original.
+- Datas do CSV são UTC. A tela e a impressão mostram o horário do computador.
+- Cada exportação consulta o estado atual. A data de consulta está no CSV.
+- O download usa a sessão administrativa, sem links públicos.
+- Imprimir / salvar PDF usa a impressão do navegador; menus, botões e
+  formulário de consulta são ocultados. Escolha Salvar como PDF no diálogo.
+
+Instalação e preservação
+- Exige D33 instalado com relatório OK e fontes da base conhecida.
+- Exige backend parado na porta 8000; mantém a separação do projeto CGX.
+- Backup de fontes, build e dos bancos de negócio e acesso.
+- Não cria tabelas, altera credenciais, registra eventos, reabre contratos,
+  movimenta dinheiro ou muda regras de intermediação/financeiro.
+- pytest em bancos temporários separados; build do frontend real.
+- Confere os bancos antes/depois. Falhas restauram as fontes/build tocados,
+  preservando registros externos que tenham ocorrido durante a instalação.
+
+Validação manual D34
+1. Pare o backend com Ctrl+C. Execute o instalador na raiz do MEC-Servicos.
+2. Inicie o backend:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+3. Em outro PowerShell, na pasta frontend:
+   npm.cmd run dev -- --port 5173 --strictPort
+4. Atualize o navegador, escolha Administrador e abra Dashboard.
+5. Pesquise OS #3 e clique em Relatório na contratação #1.
+6. Confira OS #3 concluída, contrato encerrado, financeiro encerrado,
+   recebido/repassado R$ 12.500,00 e saldos R$ 0,00.
+7. Confira os recebimentos: R$ 1.250,00 estornado e R$ 12.500,00 confirmado.
+8. Confira o histórico de produção, entrega, estorno, repasse e encerramento.
+9. Clique Exportar CSV e confira os identificadores e os totais.
+10. Clique Imprimir / salvar PDF e confira a prévia sem menus ou botões.
+11. Os links Financeiro e Intermediação devem abrir a mesma contratação/OS.

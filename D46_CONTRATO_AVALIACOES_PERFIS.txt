@@ -1,0 +1,78 @@
+MEC-Serviços D46 FIX1 — Avaliações por perfil; ranking privado
+REVISION=MEC-SERVICOS-V0.1-D46-FIX1-RANKING-PRIVADO-2026-10-08
+
+REGRAS
+1. Cliente e administração registram notas independentes de 1 a 5 para o fornecedor da contratação.
+2. Uma avaliação por origem e contratação. Não há alteração ou exclusão pela interface.
+3. A OS precisa estar concluída e o ciclo de intermediação em Entregue ao cliente.
+   No fluxo antigo sem ciclo, exige OS concluída e contratação encerrada.
+   O financeiro aberto não impede avaliar uma entrega já concluída no ciclo atual.
+4. O cliente avalia somente contratações de sua empresa. O fornecedor apenas consulta suas notas.
+5. Comentário opcional, até 2.000 caracteres, visível ao próprio usuário autor e à administração.
+   Outros usuários da mesma empresa consultam a nota, sem receber o comentário.
+   Avaliações antigas sem autoria registrada conservam seus dados; seus comentários são consultados pela administração.
+6. O fornecedor não recebe comentários, nomes de clientes ou autores, contatos ou registros internos.
+7. Somente a administração consulta médias, posições e ranking. Cliente e fornecedor consultam apenas notas por contratação.
+   As médias administrativas são separadas por origem e incluem todo o histórico daquela origem.
+   Ordenação por média exata decrescente, quantidade decrescente, nome e identificador.
+   A média exibida é arredondada para duas casas. Um fornecedor sem notas não tem posição.
+   A seleção do fornecedor continua sendo realizada pela administração.
+8. Registrar uma avaliação notifica os outros perfis vinculados, com um link para a contratação correta.
+   Notificação não inclui comentário nem contato. Repetir a mesma confirmação não duplica nota ou aviso.
+9. A avaliação técnica das peças na intermediação D31 permanece com a administração.
+
+INSTALAÇÃO
+Pare o backend com Ctrl+C. Salve o instalador na raiz C:\Users\Omega\Desktop\MEC-Servicos.
+PowerShell:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D46_FIX1_RANKING_PRIVADO.py
+Espere RESULTADO=OK. Os testes têm saída ao vivo e execução integral em até dois processos.
+O instalador exige D46 concluída e confere os arquivos e os bancos.
+Cria backup antes de aplicar os arquivos. Usa bancos isolados nos testes e executa o build real do frontend local.
+Preserva as duas tabelas D46 existentes; não gera avaliações, autoria antiga ou notificações retroativas.
+Históricos, pagamentos, contas, senhas, sessões, notificações e leituras existentes são preservados.
+Em falha antes da conclusão, restaura fontes e build anteriores, sem sobrescrever mudanças externas nos bancos.
+Não execute outra atualização de dados enquanto a validação local estiver em andamento.
+
+ATIVAR
+Terminal do backend:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Outro terminal, frontend:
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE MANUAL
+1. Escolha uma contratação da empresa cliente com entrega concluída e sem avaliação da origem.
+   A contratação #4 / OS #4 pode ser usada se já estiver entregue e ainda sem nota.
+   Se já existir uma avaliação antiga, confira o histórico e use outra contratação entregue para testar nova nota.
+2. Perfil cliente > Avaliações. Consulte pelo número da contratação ou da OS e abra Ver contratação.
+   Escolha nota 5 e um comentário. Clique Revisar avaliação e confira contratação, OS, nota e comentário.
+   Só Confirmar avaliação grava. Depois deve aparecer a nota 5, sem formulário para repetir.
+3. Troque para administração > Avaliações. Abra a mesma contratação.
+   Confira a nota e o comentário do cliente. Registre sua própria nota 4 e comentário interno.
+   Devem aparecer nota 5 do cliente e nota 4 da administração, em cartões separados.
+4. Troque para fornecedor > Avaliações. Abra a mesma contratação.
+   Confira as notas 5 e 4. Não deve haver formulário, comentários, nomes dos autores ou contatos.
+5. Administração > Ranking, ou Ver reputação e ranking. Alterne Notas de clientes e Notas da administração.
+   Se for a única avaliação de cada origem deste fornecedor, médias 5,00 e 4,00.
+   Se houver histórico, cada média deve considerar todas as notas daquela origem.
+6. Confira o sino: o admin recebe a avaliação do cliente; o cliente recebe a da administração;
+   o fornecedor recebe ambas. Abrir deve levar a Avaliações e à contratação correta.
+7. No cliente, consulte uma OS em execução: deve informar que aguarda conclusão e entrega, sem formulário.
+8. No cliente e no fornecedor, tente abrir uma contratação de outra empresa: não deve mostrar dados.
+9. Volte à contratação usada e atualize: as notas continuam registradas e os saldos/entregas continuam iguais.
+
+ENDEREÇOS
+Cliente: /cliente/avaliacoes
+Administração: /admin/avaliacoes e /admin/ranking
+Fornecedor: /fornecedor/avaliacoes. Ranking indisponível; /fornecedor/ranking encaminha para Avaliações.
+Cliente: /cliente/ranking encaminha para Avaliações, sem mostrar classificação.
+
+VALIDAÇÃO
+Novos testes com sessões reais cobrem entrega, versões, origem, CSRF, isolamento de empresas,
+privacidade por autor, médias, paginação, concorrência, repetição de confirmação e rollback dos avisos.
+Todos os testes MEC anteriores são executados, sem os testes do projeto independente CGX.

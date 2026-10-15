@@ -61,7 +61,10 @@ class ServicoAvaliacaoOficina:
                 detail="fornecedor_da_ordem_servico_inconsistente",
             )
 
-        if ordem.status != "concluida" and contratacao.status != "encerrada":
+        from backend.app.models.intermediacao import CicloIntermediacao
+        from backend.app.services.avaliacoes_perfis import motivo_elegibilidade
+        ciclo = self.banco.scalar(select(CicloIntermediacao).where(CicloIntermediacao.ordem_servico_id == ordem.id))
+        if motivo_elegibilidade(contratacao, ordem, ciclo) is not None:
             raise HTTPException(
                 status_code=409,
                 detail="servico_ainda_nao_foi_concluido_e_aceito",

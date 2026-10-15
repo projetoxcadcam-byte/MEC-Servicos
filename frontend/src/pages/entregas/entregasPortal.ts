@@ -13,7 +13,7 @@ export type EntregasDetalhe = { ordem: OrdemEntrega; historico: EntregaServico[]
 export type AcaoEntrega = "registrar" | "aceitar" | "recusar";
 
 export function rotuloEntrega(situacao: string | null): string {
-  return ({ entregue: "Aguardando aceite", aceita: "Aceita", recusada: "Recusada" } as Record<string, string>)[situacao ?? ""]
+  return ({ entregue: "Registro pendente no histórico", aceita: "Aceita", recusada: "Recusada" } as Record<string, string>)[situacao ?? ""]
     ?? (situacao ? "Situação indisponível" : "Sem entrega registrada");
 }
 
@@ -29,7 +29,7 @@ export function mensagemErroEntrega(erro: unknown): string {
       entrega_nao_encontrada: "A entrega não está disponível nesta ordem. Atualize o histórico.",
       contratacao_nao_esta_ativa: "A contratação precisa estar ativa. Atualize a tela.",
       ordem_servico_nao_pode_receber_entrega: "A ordem precisa estar em execução para registrar ou decidir a entrega. Atualize a tela.",
-      ordem_servico_nao_esta_pronta_para_entrega: "Registre Pronto para envio como etapa atual na página Produção antes de entregar.",
+      ordem_servico_nao_esta_pronta_para_entrega: "Registre Pronto para coleta como etapa atual na página Produção antes de entregar.",
       empresa_nao_e_fornecedora_da_ordem_servico: "Somente o fornecedor responsável pode registrar esta entrega.",
       empresa_nao_e_cliente_da_ordem_servico: "Somente o cliente responsável pode decidir esta entrega.",
       entrega_pendente_ja_existe: "Já existe uma entrega aguardando aceite nesta ordem. Atualize o histórico.",

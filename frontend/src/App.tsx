@@ -1,10 +1,22 @@
+import PortalSemRanking from "./auth/PortalSemRanking";
+import AvaliacoesPage from "./pages/avaliacoes/AvaliacoesPage";
+import RankingAvaliacoesPage from "./pages/avaliacoes/RankingAvaliacoesPage";
+import AdminContratacaoPage from "./pages/contratacao-admin/AdminContratacaoPage";
+import AdminComercialPage from "./pages/comercial/AdminComercialPage";
+import AdminDocumentacaoPage from "./pages/documentacao/AdminDocumentacaoPage";
+import ResultadoAdministracaoPage from "./pages/formacao-preco/ResultadoAdministracaoPage";
+import FinanceiroPage from "./pages/financeiro/FinanceiroPage";
+import AdminIntermediacaoPage from "./pages/intermediacao/AdminIntermediacaoPage";
 import PortalEntregasPage from "./pages/entregas/PortalEntregasPage";
 import PortalProducaoPage from "./pages/producao/PortalProducaoPage";
 import PortalOrdensServicoPage from "./pages/ordens/PortalOrdensServicoPage";
 import PortalContratacoesPage from "./pages/contratacoes/PortalContratacoesPage";
 import SupplierCotacoesPage from "./pages/supplier/SupplierCotacoesPage";
-import ClientCotacoesPage from "./pages/client/ClientCotacoesPage";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import CotacoesClientePage from "./pages/cotacoes-cliente/CotacoesClientePage";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import type { ReactNode } from "react";
+import { useAuth } from "./auth/AuthContext";
+import ContaAcessoPage from "./pages/auth/ContaAcessoPage";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 
@@ -12,18 +24,34 @@ import AdminLayout from "./layouts/AdminLayout";
 import ClientLayout from "./layouts/ClientLayout";
 import SupplierLayout from "./layouts/SupplierLayout";
 
-import Dashboard from "./pages/Dashboard";
-import ClientDashboard from "./pages/client/ClientDashboard";
+import ResumoGerencialPage from "./pages/gerencial/ResumoGerencialPage";
+import ComparativoGerencialPage from "./pages/comparativo/ComparativoGerencialPage";
+import ExtratoFinanceiroPage from "./pages/extrato/ExtratoFinanceiroPage";
+import CentralPendenciasPage from "./pages/pendencias/CentralPendenciasPage";
+import RelatorioEmpresasPage from "./pages/empresas/RelatorioEmpresasPage";
+import EmpresasOperacoesPage from "./pages/empresas/EmpresasOperacoesPage";
+import RelatorioPeriodoPage from "./pages/periodo/RelatorioPeriodoPage";
+import RelatorioAdministrativoPage from "./pages/relatorios/RelatorioAdministrativoPage";
+import PainelAdministrativoPage from "./pages/painel/PainelAdministrativoPage";
+import PainelPortalPage from "./pages/painel-portais/PainelPortalPage";
 import ClientArquivosTecnicosPage from "./pages/client/ClientArquivosTecnicosPage";
 import ClientSolicitacoesPage from "./pages/client/ClientSolicitacoesPage";
-import SupplierDashboard from "./pages/supplier/SupplierDashboard";
-import ModulePage from "./pages/ModulePage";
+import AdminProducaoPage from "./pages/producao-admin/AdminProducaoPage";
+import ArquivosTecnicosFornecedorPage from "./pages/supplier/ArquivosTecnicosFornecedorPage";
 import LoginPage from "./pages/auth/LoginPage";
+
+function SenhaInicial({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const local = useLocation();
+  if (user?.deve_alterar_senha && local.pathname !== "/conta") return <Navigate to="/conta" replace />;
+  return children;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <SenhaInicial><Routes>
+        <Route path="/conta" element={<ContaAcessoPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
 
@@ -35,105 +63,45 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route index element={<PainelAdministrativoPage />} />
+          <Route path="empresas" element={<EmpresasOperacoesPage />} />
 
-          <Route
-            path="solicitacoes"
-            element={
-              <ModulePage
-                title="Solicitações"
-                description="Gerenciamento das solicitações de serviços mecânicos."
-              />
-            }
-          />
+          <Route path="solicitacoes" element={<AdminComercialPage modo="solicitacoes" />} />
 
-          <Route
-            path="cotacoes"
-            element={
-              <ModulePage
-                title="Cotações"
-                description="Cotações e propostas dos fornecedores."
-              />
-            }
-          />
+          <Route path="cotacoes" element={<AdminComercialPage modo="cotacoes" />} />
 
-          <Route
-            path="contratacoes"
-            element={
-              <ModulePage
-                title="Contratações"
-                description="Contratações de serviços entre clientes e fornecedores."
-              />
-            }
-          />
+          <Route path="contratacoes" element={<AdminContratacaoPage modo="contratacoes" />} />
 
-          <Route
-            path="ordens-servico"
-            element={
-              <ModulePage
-                title="Ordens de Serviço"
-                description="Execução e controle das ordens de serviço."
-              />
-            }
-          />
+          <Route path="ordens-servico" element={<AdminContratacaoPage modo="ordens-servico" />} />
 
           <Route
             path="producao"
             element={
-              <ModulePage
-                title="Acompanhamento de Produção"
-                description="Acompanhamento das etapas de produção."
-              />
+              <AdminProducaoPage />
             }
           />
 
-          <Route
-            path="entregas"
-            element={
-              <ModulePage
-                title="Entregas e Aceite"
-                description="Controle das entregas e aceite pelo cliente."
-              />
-            }
-          />
+          <Route path="entregas" element={<AdminIntermediacaoPage />} />
+          <Route path="intermediacao" element={<AdminIntermediacaoPage />} />
 
-          <Route
-            path="pagamentos"
-            element={
-              <ModulePage
-                title="Pagamentos"
-                description="Controle financeiro e pagamentos das contratações."
-              />
-            }
-          />
+          <Route path="pagamentos" element={<FinanceiroPage perfil="admin" />} />
+          <Route path="resultado-administracao" element={<ResultadoAdministracaoPage />} />
+          <Route path="relatorios" element={<RelatorioAdministrativoPage />} />
+          <Route path="relatorios-periodo" element={<RelatorioPeriodoPage />} />
+          <Route path="relatorios-empresas" element={<RelatorioEmpresasPage />} />
+          <Route path="pendencias" element={<CentralPendenciasPage />} />
+          <Route path="resumo-gerencial" element={<ResumoGerencialPage />} />
+          <Route path="comparativo-gerencial" element={<ComparativoGerencialPage />} />
+          <Route path="extrato-financeiro" element={<ExtratoFinanceiroPage />} />
 
-          <Route
-            path="avaliacoes"
-            element={
-              <ModulePage
-                title="Avaliações"
-                description="Avaliações e reputação dos fornecedores."
-              />
-            }
-          />
+          <Route path="avaliacoes" element={<AvaliacoesPage perfil="admin" />} />
 
-          <Route
-            path="ranking"
-            element={
-              <ModulePage
-                title="Ranking de Fornecedores"
-                description="Consulta da classificação derivada das avaliações."
-              />
-            }
-          />
+          <Route path="ranking" element={<RankingAvaliacoesPage />} />
 
           <Route
             path="arquivos-tecnicos"
             element={
-              <ModulePage
-                title="Arquivos Técnicos"
-                description="Gerenciamento dos arquivos técnicos dos serviços."
-              />
+              <AdminDocumentacaoPage />
             }
           />
         </Route>
@@ -142,15 +110,15 @@ export default function App() {
           path="/cliente"
           element={
             <ProtectedRoute role="cliente">
-              <ClientLayout />
+              <PortalSemRanking><ClientLayout /></PortalSemRanking>
             </ProtectedRoute>
           }
         >
-          <Route index element={<ClientDashboard />} />
+          <Route index element={<PainelPortalPage perfil="cliente" />} />
 
                     <Route path="solicitacoes" element={<ClientSolicitacoesPage />} />
 
-          <Route path="cotacoes" element={<ClientCotacoesPage />} />
+          <Route path="cotacoes" element={<CotacoesClientePage />} />
 
           <Route
             path="contratacoes"
@@ -180,25 +148,10 @@ export default function App() {
             }
           />
 
-          <Route
-            path="pagamentos"
-            element={
-              <ModulePage
-                title="Pagamentos"
-                description="Consulte pagamentos e situação financeira das contratações."
-              />
-            }
-          />
+          <Route path="pagamentos" element={<FinanceiroPage perfil="cliente" />} />
 
-          <Route
-            path="avaliacoes"
-            element={
-              <ModulePage
-                title="Avaliações"
-                description="Avalie os fornecedores dos serviços contratados."
-              />
-            }
-          />
+          <Route path="avaliacoes" element={<AvaliacoesPage perfil="cliente" />} />
+          <Route path="ranking" element={<Navigate to="/cliente/avaliacoes" replace />} />
 
           <Route path="arquivos-tecnicos" element={<ClientArquivosTecnicosPage />} />
         </Route>
@@ -207,11 +160,11 @@ export default function App() {
           path="/fornecedor"
           element={
             <ProtectedRoute role="fornecedor">
-              <SupplierLayout />
+              <PortalSemRanking><SupplierLayout /></PortalSemRanking>
             </ProtectedRoute>
           }
         >
-          <Route index element={<SupplierDashboard />} />
+          <Route index element={<PainelPortalPage perfil="fornecedor" />} />
 
           <Route
             path="solicitacoes"
@@ -255,43 +208,16 @@ export default function App() {
             }
           />
 
-          <Route
-            path="pagamentos"
-            element={
-              <ModulePage
-                title="Pagamentos"
-                description="Consulte os pagamentos e valores a receber."
-              />
-            }
-          />
+          <Route path="pagamentos" element={<FinanceiroPage perfil="fornecedor" />} />
 
-          <Route
-            path="avaliacoes"
-            element={
-              <ModulePage
-                title="Avaliações"
-                description="Consulte as avaliações recebidas dos clientes."
-              />
-            }
-          />
+          <Route path="avaliacoes" element={<AvaliacoesPage perfil="fornecedor" />} />
 
-          <Route
-            path="ranking"
-            element={
-              <ModulePage
-                title="Ranking de Fornecedores"
-                description="Consulte sua posição e histórico de avaliações."
-              />
-            }
-          />
+          <Route path="ranking" element={<Navigate to="/fornecedor/avaliacoes" replace />} />
 
           <Route
             path="arquivos-tecnicos"
             element={
-              <ModulePage
-                title="Arquivos Técnicos"
-                description="Consulte os arquivos técnicos disponibilizados pelos clientes."
-              />
+              <ArquivosTecnicosFornecedorPage />
             }
           />
         </Route>
@@ -338,7 +264,7 @@ export default function App() {
         />
 
         <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
+      </Routes></SenhaInicial>
     </BrowserRouter>
   );
 }

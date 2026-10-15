@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from backend.app.database.sessao import obter_banco
@@ -83,9 +83,17 @@ def criar_cotacao(
     response_model=list[CotacaoLeitura],
 )
 def listar_cotacoes(
+    request: Request,
     solicitacao_id: int,
     banco: SessaoBanco,
 ) -> list[CotacaoLeitura]:
+    from backend.app.services.precos_portais import ativa
+    usuario=request.state.usuario_acesso
+    if usuario.perfil=='cliente' and ativa(banco):
+        from backend.app.services.cotacoes_cliente import ServicoCotacoesCliente
+        s=ServicoCotacoesCliente(banco,usuario);linhas=s.linhas_legadas(solicitacao_id)
+        return [CotacaoLeitura(**{**CotacaoLeitura.model_validate(l[0]).model_dump(),
+            'valor_total':s._item(l)['valor_total'],'status':s._item(l)['status'],'observacoes':None}) for l in linhas]
     try:
         cotacoes = ServicoCotacao(banco).listar(solicitacao_id)
     except CotacaoSolicitacaoNaoEncontrada as exc:

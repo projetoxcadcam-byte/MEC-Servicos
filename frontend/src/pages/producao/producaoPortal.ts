@@ -5,7 +5,7 @@ export const ETAPAS_PRODUCAO = [
   { valor: "em_usinagem", rotulo: "Em usinagem" },
   { valor: "em_solda_dobra", rotulo: "Em solda/dobra" },
   { valor: "em_acabamento", rotulo: "Em acabamento" },
-  { valor: "pronto_para_envio", rotulo: "Pronto para envio" },
+  { valor: "pronto_para_envio", rotulo: "Pronto para coleta" },
 ] as const;
 export type EtapaValor = typeof ETAPAS_PRODUCAO[number]["valor"];
 export type EtapaProducao = {

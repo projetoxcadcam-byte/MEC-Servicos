@@ -1,0 +1,56 @@
+MEC-Serviços D48 — PDF técnico com carimbo MEC-Serviços
+
+O ADM prepara uma cópia do PDF enviado pelo cliente, mantendo os campos técnicos relevantes e inserindo a logo de teste MEC-Serviços. O original permanece intacto e continua acessível ao cliente e à administração.
+
+INSTALAÇÃO
+1. Pare o backend e o frontend com Ctrl+C nas respectivas janelas.
+2. Coloque MEC_SERVICOS_V0_1_D48_PREPARACAO_PDF_COTACAO.py na raiz C:\Users\Omega\Desktop\MEC-Servicos.
+3. Execute no PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D48_PREPARACAO_PDF_COTACAO.py
+4. O instalador exige D47 FIX1 concluída, confere a origem MEC e as fontes conhecidas, cria backup de fontes, frontend e dos dois bancos. Instala as dependências de PDF na .venv, se necessário. Os testes usam bancos e pastas isolados; nenhuma cópia ou liberação de documento real é criada automaticamente.
+5. A suíte completa executa em até dois processos com saída ao vivo. Aguarde RESULTADO=OK. O limite máximo de execução não é um tempo de espera obrigatório. Falhas interrompem a aplicação das fontes e restauram o build anterior. Os bancos nunca são substituídos por cópias de backup; alterações externas são preservadas.
+6. Reinicie o backend:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+7. Em outra janela PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+8. Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE MANUAL
+1. Como cliente, envie um PDF técnico de teste em uma solicitação aberta. Use o desenho original de exemplo se desejar; não envie a cópia já preparada como original para este teste.
+2. Como ADM, abra Administração > Arquivos Técnicos e pesquise o número da solicitação.
+3. Clique Preparar PDF com nossa logo. A página é carregada somente ao abrir a preparação. Escolha a página e clique Incluir carimbo nesta página.
+4. Arraste na página para selecionar o carimbo inteiro, incluindo a logo e identificação antigas. Os percentuais permitem ajuste preciso. Use Ampliação para conferir os detalhes sem recarregar o PDF. Não inclua cotas, vistas, símbolos ou notas externas ao carimbo. Uma seleção que corte texto, imagem ou formulário é recusada.
+5. Transcreva a descrição, material, quantidade, escala, unidade e tolerâncias diretamente do PDF. Confira dureza, tratamento térmico, revestimento e revisão. Estes campos não são adivinhados pelo sistema e não substituem a análise técnica. Use um código técnico neutro, sem identificação do cliente.
+6. Configure cada página que precisa de novo carimbo. As páginas sem configuração continuam na cópia e também precisam ser revisadas.
+7. Informe o registro interno e clique Gerar cópia para revisão. A geração não muda a versão já liberada e não cria uma liberação automaticamente.
+8. Veja a cópia preparada; navegue por todas as páginas e use Baixar cópia para revisar. Confira que as especificações estão corretas e que o restante do desenho não foi encoberto. Procure contatos e identificação do cliente em todo o documento, inclusive inscrições fora do carimbo.
+9. Marque a conferência da cópia e clique Liberar esta versão para cotação. Na confirmação, confira o número da versão, marque a revisão final e registre o motivo. Confirme somente a cópia efetivamente revisada.
+10. Como fornecedor compatível com a solicitação, abra a oportunidade e baixe o arquivo técnico. A cópia recebida deve ter o carimbo MEC e as especificações transcritas. Nome original, registro interno e configurações da preparação não são fornecidos ao fornecedor.
+11. Como cliente, baixe novamente o documento original: ele deve continuar igual ao enviado.
+12. Como ADM, gere outra cópia. Antes de liberar esta nova versão, o fornecedor deve continuar recebendo a versão anterior. Após a revisão e nova liberação, o download passa a entregar a nova cópia. As versões e os registros anteriores continuam no histórico.
+13. Cliente e fornecedor não podem usar as rotas de preparação, prévia administrativa ou histórico. Ranking continua exclusivo do ADM.
+
+EXEMPLO DO DESENHO CAVIDADE SUPERIOR
+Material: TYRAX ESR. Quantidade: 20. Dureza: 56/58 HRC.
+Tratamento: TEMP./REV. Revestimento: --- (não informado no desenho).
+Escala: 2 : 1. Unidade: mm. Código técnico: 0002. Revisão: --.
+Tolerâncias: Geral ±0.1; 0.00 ±0.01; angular ±0°15'.
+Para o PDF A1 original, página 1, uma seleção testada é:
+  Esquerda: 77.937% | Topo: 89.620% | Largura: 20.806% | Altura: 8.635%.
+Os valores arredondados servem como ponto de partida; confira os limites da área visualmente. Preserve a nota FOR MISSING DIMENSIONS SEE 3D MODEL acima do carimbo.
+O código M1691P0002 existe fora da área substituída no modelo do desenho. Este exemplo não demonstra remoção automática de todos os identificadores do documento.
+
+LIMITES DESTA ETAPA
+- PDFs de até 30 MB e de 1 a 50 páginas, com páginas orientadas normalmente e sem recortes especiais.
+- Não edita PDFs protegidos, anotados, com formulário ou assinatura digital. Solicite uma cópia simples do desenho nesses casos.
+- PDFs digitalizados ou com o desenho inteiro dentro de uma imagem/formulário podem exigir preparação externa. O sistema recusa uma seleção que corte o mesmo objeto, para evitar apenas cobrir dados ainda recuperáveis.
+- Os campos aceitam letras em português e símbolos comuns como ±, ° e Ø. Símbolos não suportados são recusados; não são substituídos silenciosamente.
+- Uma área retangular por página, com pelo menos 320 × 132 pontos, para caber o carimbo. Campos extensos que não cabem são recusados; amplie a seleção sem atingir o desenho.
+- Logo de teste incluída no pacote. Substituição por logo definitiva requer atualização conferida do recurso; este instalador protege arquivos locais divergentes.
+- Não detecta automaticamente todos os dados do cliente nem extrai todos os campos técnicos. A revisão integral e a liberação são administrativas.
+- São removidos os objetos inteiramente contidos na área selecionada e regravadas as páginas; o carimbo não é apenas um retângulo sobre texto oculto. Metadados, anexos e ações do catálogo original não são copiados.
+- Se o original ou a cópia selecionada perder integridade, o download para o fornecedor é recusado. Não entrega o original como substituto de uma cópia preparada ausente.
+- Formatos anteriores e documentos originais já revisados continuam usando a liberação D42 existente.
+- Históricos, contas, senhas, sessões, cotações, valores financeiros e notas anteriores são preservados.

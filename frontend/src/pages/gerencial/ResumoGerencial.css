@@ -1,0 +1,21 @@
+.gerencial38-contagens { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; margin: 18px 0; }
+.gerencial38-contagens > div { background: #edf4fb; border: 1px solid #d5e3f1; border-radius: 10px; padding: 16px; min-width: 0; }
+.gerencial38-contagens span { display: block; color: #526b87; font-size: 14px; }
+.gerencial38-contagens strong { display: block; font-size: 26px; margin-top: 6px; }
+.gerencial38-meses table { min-width: 1300px; }
+.gerencial38-meses .gerencial38-mes-acoes { position: sticky; left: 0; min-width: 180px; border-right: 1px solid #dce5ef; }
+.gerencial38-meses th.gerencial38-mes-acoes { z-index: 2; background: #f3f7fc; }
+.gerencial38-meses td.gerencial38-mes-acoes { z-index: 1; background: #fff; }
+.gerencial38-meses .gerencial38-selecionado td.gerencial38-mes-acoes { background: #edf5ff; }
+.gerencial38-mes-acoes nav { margin-top: 10px; }
+.gerencial38-meses td:nth-child(3) { min-width: 160px; }
+.gerencial38-meses td:nth-child(5) { min-width: 180px; }
+.gerencial38-meses td small { margin-top: 3px; }
+.gerencial38 td nav { display: grid; min-width: 135px; }
+.gerencial38 .gerencial38-selecionado { background: #edf5ff; }
+.gerencial38-detalhe > header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.gerencial38-detalhe table { min-width: 1250px; margin-top: 20px; }
+.gerencial38-detalhe td:nth-child(3) { min-width: 190px; max-width: 280px; overflow-wrap: anywhere; }
+.gerencial38 .gerencial38-filtros label:first-child { flex: 0 1 150px; }
+@media (max-width: 1100px) { .gerencial38-contagens { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 620px) { .gerencial38-contagens { grid-template-columns: repeat(2,minmax(0,1fr)); } .gerencial38 .gerencial38-filtros label:first-child { flex-basis: 100%; } }

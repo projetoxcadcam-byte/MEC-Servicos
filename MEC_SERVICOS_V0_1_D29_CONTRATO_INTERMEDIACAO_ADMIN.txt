@@ -1,0 +1,84 @@
+MEC-Serviços D29 — Contrato do fluxo administrativo
+REVISION=MEC-SERVICOS-V0.1-D29-DIAGNOSTICO-INTERMEDIACAO-ADMIN-2026-10-05
+SITUACAO=FLUXO_ALVO_AINDA_NAO_IMPLANTADO
+
+REGRA PRINCIPAL
+Cliente e fornecedor não mantêm contato direto. A administração intermedeia toda a operação.
+Identificação da outra empresa por código público: premissa adotada para implementar a regra de ausência de contato.
+
+RESPONSABILIDADES
+CLIENTE
+- Solicitar o serviço e disponibilizar requisitos técnicos à administração.
+- Responder à proposta apresentada pela administração.
+- Informar a disponibilidade do material e combinar seu encaminhamento com a administração.
+- Acompanhar o andamento e a entrega final pela plataforma.
+- Confirmar o recebimento final ou comunicar uma ocorrência à administração.
+
+FORNECEDOR
+- Receber oportunidades técnicas encaminhadas pela administração, sem identificar o cliente.
+- Apresentar proposta à administração e receber a autorização de execução.
+- Receber material encaminhado pela administração e informar o andamento da produção.
+- Sinalizar peças prontas para coleta; essa sinalização não representa entrega ao cliente.
+- Executar eventual retrabalho solicitado pela administração.
+
+ADMINISTRACAO
+- Intermediar solicitações, propostas, contratos e comunicação entre as partes.
+- Agendar, registrar, conferir e encaminhar o material ao fornecedor.
+- Agendar e registrar o recolhimento das peças prontas.
+- Avaliar as peças e registrar aprovação ou reprovação fundamentada.
+- Coordenar devolução para retrabalho e nova coleta, quando necessário.
+- Agendar e registrar a entrega das peças aprovadas ao cliente.
+- Encerrar a OS e a contratação somente após a entrega final registrada.
+
+ETAPAS
+- material_agendado | responsável=administracao
+- material_recebido | responsável=administracao
+- material_conferido | responsável=administracao
+- material_encaminhado_ao_fornecedor | responsável=administracao
+- em_producao | responsável=fornecedor | Reutiliza o acompanhamento de produção existente.
+- pronto_para_coleta | responsável=fornecedor
+- pecas_recolhidas | responsável=administracao
+- em_avaliacao | responsável=administracao
+- avaliacao_aprovada | responsável=administracao
+- avaliacao_reprovada | responsável=administracao | Exige motivo e segue para retrabalho; não encerra a OS.
+- retrabalho_solicitado | responsável=administracao
+- entrega_final_agendada | responsável=administracao
+- entregue_ao_cliente | responsável=administracao
+- encerrado | responsável=administracao
+
+AVALIAÇÃO
+- A administração realiza a avaliação técnica antes de liberar a entrega ao cliente.
+- Aprovação técnica, recebimento final e avaliação de satisfação são eventos distintos.
+- Reprovação exige motivo; registrar quantidade afetada e evidências quando disponíveis.
+- Peças reprovadas voltam ao fornecedor por intermédio da administração e recebem nova avaliação.
+- O cliente não aprova diretamente uma entrega do fornecedor.
+- O fornecedor não entrega peças diretamente ao cliente.
+
+ACESSO E COMUNICAÇÃO
+- Autenticar o usuário no servidor e vincular a conta à empresa e ao perfil autorizado.
+- IDs recebidos do navegador e o perfil no localStorage não comprovam identidade ou autorização.
+- Cliente e fornecedor acessam apenas seus próprios pedidos e os dados liberados pela administração.
+- Verificar permissões nas rotas novas e nas rotas legadas; esconder botões não impede chamadas diretas à API.
+- A conta administrativa é uma conta de operador; não utilizar a empresa cliente como identidade administrativa.
+- Respostas da API para as empresas omitem identidade, contato e endereço da outra parte.
+- Observações, nomes de arquivos, anexos e comprovantes destinados à outra parte passam por revisão administrativa.
+- Comunicação é cliente-administração ou fornecedor-administração; não criar chat direto entre as empresas.
+
+RASTREABILIDADE
+- Registrar OS, lote, etapa, data, operador, quantidades, motivo e evidências pertinentes.
+- Preservar histórico; não substituir uma ocorrência anterior por uma nova situação.
+- Impedir duplicação de eventos por duplo clique, repetição de requisição ou concorrência.
+- Não declarar coleta, inspeção ou entrega final a partir de uma simples mudança de status de produção.
+
+HISTÓRICO D28
+- Manter o checkpoint v0.1.0-d28 e preservar OS, contratações e entregas já concluídas.
+- Tratar dados antigos como histórico do fluxo anterior, sem inventar etapas administrativas retroativas.
+- Revisar operações pendentes antes de enquadrá-las no novo fluxo.
+- Manter CGX e MEC-Serviços independentes.
+
+ORDEM DE IMPLANTAÇÃO
+- Conferir o diagnóstico do projeto real e implementar autenticação e autorização no servidor.
+- Restringir as rotas legadas e separar as respostas dos portais para ocultar a contraparte.
+- Aplicar o painel administrativo de material, coleta e avaliação, com histórico persistente.
+- Substituir entrega direta e aceite do cliente pelo fluxo administrativo e entrega final.
+- Validar acesso entre perfis, preservação do histórico e o ciclo completo com dados de teste.

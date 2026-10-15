@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from backend.app.models.contratacao import ContratacaoServico
 from backend.app.models.pagamento import PagamentoContratacao
 from backend.app.models.empresa import Empresa
+from backend.app.services.financeiro_administrativo import bloquear_pagamento_legado
 from backend.app.repositories.pagamento import RepositorioPagamento
 from backend.app.schemas.pagamento import PagamentoContratacaoCriacao
 
@@ -105,6 +106,7 @@ class ServicoPagamento:
         return contratacao, valor_contratado, total_pago, status, self.repositorio.listar_por_contratacao(contratacao_id)
 
     def registrar(self, contratacao_id: int, dados: PagamentoContratacaoCriacao) -> PagamentoContratacao:
+        bloquear_pagamento_legado(self.banco, contratacao_id)
         contratacao = self._contratacao(contratacao_id)
         self._validar_empresa_cliente(contratacao, dados.empresa_cliente_id)
 
@@ -146,6 +148,8 @@ class ServicoPagamento:
         return self.repositorio.listar_por_contratacao(contratacao_id)
 
     def cancelar(self, pagamento_id: int, empresa_cliente_id: int) -> PagamentoContratacao:
+        item = self.obter(pagamento_id)
+        bloquear_pagamento_legado(self.banco, item.contratacao_id)
         item = self.obter(pagamento_id)
         contratacao = self._contratacao(item.contratacao_id)
         self._validar_empresa_cliente(contratacao, empresa_cliente_id)

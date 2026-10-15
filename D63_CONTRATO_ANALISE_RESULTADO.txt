@@ -1,0 +1,87 @@
+MEC-Serviços D63 — Análise do resultado por mês, cliente e fornecedor
+REVISION=MEC-SERVICOS-V0.1-D63-ANALISE-RESULTADO-2026-10-14
+
+BASE
+Exige D62 FIX2 concluída com RESULTADO=OK. Antes de aplicar, pare backend
+e frontend com Ctrl+C. O instalador confere a origem MEC e as fontes conhecidas,
+faz backup de fontes, build e dos dois bancos, executa testes seletivos em
+bancos temporários e compila o frontend. Não cria tabelas, contas, despesas,
+contratações ou liquidações. Falhas restauram fontes e build, preservando
+eventuais registros feitos por outros processos.
+
+INSTALAÇÃO — janela PowerShell na pasta MEC-Servicos
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D63_ANALISE_RESULTADO.py
+Aguarde RESULTADO=OK. A saída dos testes aparece ao vivo, com avisos de
+atividade durante o processamento. Não interrompa enquanto os testes avançam.
+
+ATIVAÇÃO — primeira janela PowerShell, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+ATIVAÇÃO — segunda janela PowerShell, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173, atualize com Ctrl+F5 e entre como ADM.
+
+ONDE ENCONTRAR
+Administração > Pagamentos > Resultado da administração
+ou http://localhost:5173/admin/resultado-administracao
+Consulte o período desejado e clique Abrir análise por mês e empresa.
+O painel aparece junto ao resultado, com rolagem e foco automáticos.
+Abrir relatório do resultado continua disponível para o PDF da D62 FIX2.
+Somente uma das duas áreas fica aberta por vez.
+
+TESTE MANUAL
+1. Consulte de 01/01/2026 a 14/10/2026, ou um período que inclua a criação
+   da contratação #5 / OS #5 em 13/10/2026 UTC.
+2. Abra a análise. Compare os nove totais com a tela principal e com o
+   relatório da D62, usando todas as empresas e todas as liquidações.
+3. Alterne Meses, Clientes e Fornecedores. Mês segue a criação da contratação;
+   meses sem serviços têm zero. Empresas aparecem com seu número de cadastro.
+4. Troque Indicador do gráfico entre Resultado previsto, Despesas pagas
+   confirmadas, Resultado após despesas pagas e Resultado dos serviços
+   liquidados após despesas. A escolha altera apenas o gráfico.
+5. Selecione Cliente Mecânico D5 e oficina mecanica nos filtros e clique
+   Aplicar filtros da análise. Confira que a contratação #5 está incluída.
+6. No cenário conferido na D62, antes de novos gastos ou liquidação:
+   venda R$ 14.380,75; custo R$ 12.505,00; ganho bruto R$ 1.875,75;
+   despesas previstas R$ 100,00; resultado previsto R$ 1.775,75;
+   despesas pagas R$ 0,00; após despesas pagas R$ 1.875,75;
+   ganho confirmado e resultado liquidado R$ 0,00.
+   Se houve novas despesas, estornos ou liquidação, os valores atuais prevalecem.
+7. Se o serviço ainda não foi liquidado, Somente liquidadas mostra seleção
+   vazia para essa contratação; Aguardando liquidação volta a incluí-la.
+   Clique Limpar filtros da análise para consultar o conjunto completo.
+8. Baixe CSV da análise. Confira resumo, meses, clientes, fornecedores e
+   contratações. Todos os grupos e serviços entram, mesmo em outras páginas.
+9. Clique Conferir contratações e critérios para abrir o financeiro de um
+   serviço pelo número. O PDF do relatório original deve continuar em A4
+   horizontal; esta etapa não muda a geração do PDF da D62 FIX2.
+10. Entre como cliente e fornecedor. Eles não devem ver esta análise nem
+    conseguir abrir a rota administrativa. Seu financeiro mantém os preços
+    e permissões anteriores.
+
+CRITÉRIOS
+Uso exclusivo da administração. Mesmas contratações e cálculos D60/D61/D62:
+ativas ou encerradas com preço formado pelo ADM. Contratações canceladas e
+anteriores à formação do preço ficam fora. Não há cálculo retroativo.
+O período usa criação da contratação em UTC, incluindo seus gastos confirmados
+em qualquer data de pagamento. Portanto não representa fluxo de caixa mensal.
+Previsto e pago ficam separados. Despesas estornadas ficam fora do valor pago.
+Liquidação exige entrega concluída, recebimento integral e repasse integral,
+sem divergência. Resultados podem ser negativos e mudar com gastos ou estornos.
+Cada dimensão repete o mesmo total: não some meses, clientes e fornecedores
+entre si. O gráfico de empresas exibe até doze maiores valores absolutos;
+a tabela é paginada em vinte grupos e o CSV inclui toda a seleção.
+Empresas de mesmo nome são separadas pelo ID, sem ranking ou escolha automática.
+CSV só é exportado se os filtros e dados financeiros da consulta continuarem
+vigentes. Se mudarem, atualize a análise antes de exportar. Os centavos são
+calculados como inteiros, sem arredondamento por número de ponto flutuante.
+
+ROTAS RESERVADAS
+GET /administracao/despesas/resultado/analise
+GET /administracao/despesas/resultado/analise/csv
+Filtros: inicio, fim, empresa_cliente_id, empresa_fornecedora_id, liquidacao.
+Liquidação: todas, liquidadas, aguardando. CSV exige também versao da consulta.
+Consulta somente leitura, sem novas dependências e sem alteração do histórico.

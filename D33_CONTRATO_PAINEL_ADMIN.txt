@@ -1,0 +1,60 @@
+MEC-Serviços V0.1 — D33 Painel administrativo e pendências
+REVISION=MEC-SERVICOS-V0.1-D33-PAINEL-ADMINISTRATIVO-2026-10-05
+
+Escopo
+A página inicial da administração passa a consultar dados reais de contratações, OS, intermediação D31 e financeiro D32.
+Acesso exclusivo da administração, com a mesma sessão e permissões já instaladas.
+Cliente e fornecedor continuam consultando somente seus próprios dados nos portais existentes.
+O projeto permanece independente do CGX.
+
+Indicadores
+Os indicadores gerais incluem todas as contratações e não dependem do filtro ou da página aberta.
+Contagens: contratações ativas, acompanhamento operacional, pendências financeiras, concluídas e registros para conferência.
+Uma contratação pode aparecer no acompanhamento operacional e nas pendências financeiras; essas contagens não devem ser somadas.
+Recebimentos confirmados incluem registros anteriores D12/D13 e D32. Pagamentos cancelados/estornados não entram.
+Repasses confirmados incluem somente os movimentos D32 confirmados; estornados não entram.
+Saldo a receber e saldo a repassar incluem somente controles financeiros D32 abertos.
+Disponível para repasse exige controle aberto, contratação ativa, OS concluída, entrega D31 concluída e cobertura pelos recebimentos.
+Os valores são calculados por contratação antes da soma, com centavos exatos e agregados separados de recebimentos/repasses.
+Não há taxa/comissão automática ou transferência bancária.
+
+Próximos passos
+Os próximos passos são derivados do estado registrado: criar OS, iniciar ciclo, receber/encaminhar material, acompanhar produção, solicitar coleta, receber peças, avaliar, encaminhar retrabalho ou entregar ao cliente.
+A sinalização de coleta exige a última etapa de produção pronta e posterior à etapa já usada na coleta/retrabalho.
+No financeiro: iniciar controle, conferir recebimento, aguardar entrega/cobertura, registrar repasse ou encerrar o controle.
+Os atalhos abrem a contratação ou a OS indicada, mesmo quando estiver fora da primeira página da lista de origem.
+O atalho Criar OS preseleciona a contratação ativa na página de intermediação; continua exigindo revisão e confirmação administrativa.
+Consultar, pesquisar, filtrar e paginar não executa nenhum próximo passo.
+
+Histórico e conferência
+Contratações encerradas/canceladas no fluxo anterior continuam no histórico, sem criar controles ou etapas retroativas.
+Financeiro D32 encerrado com entrega e saldos corretos aparece em Concluídas, sem pendências.
+Divergências de valores, cobertura, entrega, cancelamento ou estado aparecem em Para conferência; o painel não altera esses registros.
+Reabrir um financeiro pelo D32 atualiza a fila ao consultar novamente, preservando a OS concluída.
+A busca aceita OS #3, contratação #1, número exato ou nomes de empresas com ou sem acentos.
+Filtros: todas, acompanhamento operacional, pendências financeiras, para conferência, concluídas e canceladas.
+Lista com 20 registros por página; a API aceita até 100. Ordem de listagem: contratação mais recente primeiro.
+A consulta utiliza um SELECT em lote, com a mesma fotografia de dados para indicadores e página, sem consultas individuais por contratação.
+
+Instalação
+Pare o backend na porta 8000 e execute o instalador com a .venv na raiz do MEC-Serviços.
+O instalador exige o relatório D32 com RESULTADO=OK e as tabelas D31/D32 conhecidas.
+Confere origin MEC e os fontes que serão alterados; conteúdo diferente é preservado e informado no relatório.
+Cria backup dos fontes/build e cópias SQLite dos bancos de negócio e de acesso.
+Aplica os fontes, executa a suíte pytest em bancos temporários e o build do frontend existente.
+Confere a preservação integral dos registros de negócio, controles/eventos D32, contas e senhas.
+O D33 não cria tabelas nem altera dados existentes. Falha de validação restaura os fontes e o build anteriores.
+Reexecutar a mesma revisão preserva os registros e reconhece os fontes já aplicados.
+Modo de teste local D31 FIX2 preservado quando instalado; autenticação normal preservada quando não instalado.
+
+Roteiro local sobre o D32 já validado
+1. Reinicie o backend pelo comando MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e inicie npm run dev no frontend.
+2. Escolha Administrador e abra Dashboard: a tela será Painel administrativo.
+3. Pesquise OS #3 ou contratação #1. Confira recebido e repassado de R$ 12.500,00 e situação Concluída / Financeiro encerrado.
+4. Filtre Concluídas: contratação #1 / OS #3 deve aparecer, sem próximos passos pendentes.
+5. Filtre Com pendência financeira e Em acompanhamento operacional: a contratação #1 encerrada não deve aparecer.
+6. No registro da contratação #1, abra Financeiro e confira o histórico anterior, inclusive o recebimento de R$ 1.250,00 estornado.
+7. Volte ao painel e abra Intermediação para conferir o ciclo concluído da OS #3.
+8. Valores gerais podem incluir outras contratações anteriores; saldos abertos não incluem o financeiro encerrado da OS #3.
+9. Troque para cliente e fornecedor: o painel administrativo continua exclusivo do administrador; os portais financeiros anteriores continuam funcionando.
+Não reabra nem gere novos movimentos apenas para validar os indicadores desse roteiro.

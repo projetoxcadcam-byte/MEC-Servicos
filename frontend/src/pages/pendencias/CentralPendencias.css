@@ -1,0 +1,14 @@
+.pendencias37 .pendencias37-filtros label { flex-basis: 180px; }
+.pendencias37 .pendencias37-filtros .periodo35-busca { flex-basis: 300px; }
+.pendencias37-contagem { font-size: 18px; color: #123050; }
+.pendencias37-areas { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-bottom: 16px; }
+.pendencias37-areas > div { background: #edf4fb; border: 1px solid #d5e3f1; border-radius: 10px; padding: 16px; }
+.pendencias37-areas span { display: block; color: #526b87; }
+.pendencias37-areas strong { display: block; font-size: 26px; margin-top: 6px; }
+.pendencias37-fila table { min-width: 1200px; }
+.pendencias37-fila td:nth-child(3) { min-width: 190px; max-width: 280px; overflow-wrap: anywhere; }
+.pendencias37-fila td:nth-child(4) { min-width: 170px; }
+.pendencias37-fila td:nth-child(5) { min-width: 230px; max-width: 380px; line-height: 1.6; }
+.pendencias37-fila td nav { display: grid; min-width: 140px; }
+.pendencias37 .pendencias37-destino { border: 1px solid #becfe2; border-radius: 8px; padding: 9px 12px; text-decoration: none; background: #f3f7fc; }
+@media (max-width: 620px) { .pendencias37-areas { grid-template-columns: 1fr; } .pendencias37 .pendencias37-filtros label { flex-basis: 100%; } }

@@ -11,6 +11,7 @@ from backend.app.models.solicitacao import SolicitacaoServico
 from backend.app.repositories.ordem_servico import RepositorioOrdemServico
 from backend.app.schemas.ordem_servico import OrdemServicoAcao, OrdemServicoCriacao
 
+from backend.app.services.documentacao_cotacao import travar_documentacao
 
 class OrdemServicoNaoEncontrada(Exception):
     pass
@@ -66,6 +67,7 @@ class ServicoOrdemServico:
             raise EmpresaNaoPodeOperarOS
 
     def criar(self, contratacao_id: int, dados: OrdemServicoCriacao) -> OrdemServico:
+        travar_documentacao(self.banco)
         contratacao = self._contratacao(contratacao_id)
         self._cliente_contratacao(contratacao, dados.empresa_cliente_id)
 

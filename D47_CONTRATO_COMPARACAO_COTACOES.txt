@@ -1,0 +1,69 @@
+MEC-Serviços D47 — Comparação administrativa de cotações
+REVISION=MEC-SERVICOS-V0.1-D47-COMPARACAO-COTACOES-2026-10-08
+
+REGRAS
+1. Somente ADM consulta a comparação, as médias e o ranking.
+2. Em Administração > Cotações ou Solicitações, abra uma solicitação e clique Comparar propostas.
+3. A tabela reúne valor total, prazo de execução, validade, situação e notas por origem.
+4. Notas de clientes e da administração têm médias e quantidades independentes.
+   Cada média considera todo o histórico do fornecedor daquela origem.
+   Sem avaliações aparece como Sem avaliações; não equivale a nota zero.
+   A média é exibida com duas casas decimais. A ordenação por nota usa a média exata;
+   em empate, quantidade de avaliações decrescente, preço, prazo e identificador.
+5. Ordenações por preço e prazo usam valores numéricos. Notas não alteram preço ou prazo.
+6. Disponíveis para decisão segue os mesmos impedimentos da análise comercial D43:
+   solicitação aberta, cotação enviada e dentro da validade, sem contratação ou cotação aceita.
+   Uma cotação vencida aparece como expirada na consulta, sem alterar o registro no banco.
+7. Todas, incluindo histórico permite consultar propostas já decididas ou expiradas.
+   Resumos de menor preço e prazo consideram somente propostas disponíveis, incluindo outras páginas.
+8. Conferir cotação abre a proposta na própria análise. O ADM revisa a proposta e decide
+   pelo fluxo existente de aceite/recusa, registro interno e confirmação.
+9. Consultar ou ordenar não escolhe fornecedor, não aceita cotação e não cria contratação ou OS.
+   Se as propostas mudarem, atualize a análise antes de decidir. A validação de versão D43 é preservada.
+10. Cliente e fornecedor continuam sem acesso à comparação, médias ou ranking.
+    O fornecedor continua consultando apenas as notas por contratação em Avaliações.
+11. Dados, avaliações, documentos, decisões, financeiro, contas, sessões e notificações são preservados.
+
+INSTALAR
+Exige D46 FIX1 concluída. Pare backend e frontend com Ctrl+C.
+Salve o instalador na raiz C:\Users\Omega\Desktop\MEC-Servicos e execute no PowerShell:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D47_COMPARACAO_COTACOES.py
+
+O instalador confere origem, fontes e esquema da base aprovada, cria backup dos bancos
+e arquivos alterados, executa todos os testes MEC em bancos isolados com saída ao vivo
+e executa o build real do frontend local. Não cria tabelas ou registros de negócio.
+Em falha restaura fontes e build anteriores sem sobrescrever alterações externas dos bancos.
+Aguarde RESULTADO=OK. Não altere dados durante a aplicação e validação.
+
+ATIVAR
+Terminal do backend:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Outro terminal, frontend:
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE
+1. Entre como ADM > Cotações e abra uma solicitação com propostas.
+   Uma solicitação com duas ou mais propostas permite comparar diferentes fornecedores.
+2. Clique Comparar propostas. Confira preço, prazo, validade e as duas colunas de notas.
+3. Alterne as quatro ordenações. Fornecedores sem avaliações devem mostrar Sem avaliações.
+4. Se a solicitação já foi decidida ou contratada, a lista Disponíveis pode ficar vazia.
+   Selecione Todas, incluindo histórico e confira as propostas registradas.
+5. Clique Conferir cotação: a proposta correspondente fica destacada na análise.
+   A consulta não deve registrar aceite ou recusa. Confira o histórico existente.
+6. Caso queira testar uma decisão em uma solicitação pendente, revise os dados,
+   clique Aceitar/Recusar na proposta, preencha o registro interno e confira a prévia.
+   Somente Confirmar registra a decisão, como na D43.
+7. Confira as notas no ranking do ADM. As médias por origem devem coincidir com a comparação.
+8. Entre como cliente e fornecedor: comparação e ranking continuam indisponíveis.
+   As notas individuais continuam disponíveis no fornecedor > Avaliações.
+
+API SOMENTE ADMINISTRATIVA
+GET /api/v1/administracao/comercial/solicitacoes/{id}/comparacao
+ordenacao: valor, prazo, nota_cliente ou nota_admin
+escopo: disponiveis ou todas; deslocamento >= 0; limite de 1 a 100

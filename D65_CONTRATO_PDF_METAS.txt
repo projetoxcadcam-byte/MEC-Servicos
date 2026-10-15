@@ -1,0 +1,75 @@
+MEC-Serviços D65 — PDF das metas mensais e acesso direto à edição
+REVISION=MEC-SERVICOS-V0.1-D65-PDF-METAS-2026-10-14
+
+BASE E PRESERVAÇÃO
+Exige D64 concluída com RESULTADO=OK. Antes de aplicar, pare backend e frontend
+com Ctrl+C. O instalador confere origem MEC, fontes e ativação D64, faz backup
+de fontes, build e dos dois bancos, executa testes seletivos em bancos temporários
+e compila o frontend. Não cria tabelas ou metas. Preserve sua meta de outubro,
+valor, administrador, motivo e histórico: esta etapa mantém todos esses dados.
+O PDF usa ReportLab já instalado na preparação de documentos D48.
+
+INSTALAÇÃO — PowerShell na pasta MEC-Servicos
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D65_PDF_METAS.py
+Aguarde RESULTADO=OK. A saída dos testes aparece ao vivo.
+
+ATIVAÇÃO — primeira janela PowerShell, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+ATIVAÇÃO — segunda janela PowerShell, mantenha aberta
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173, atualize com Ctrl+F5 e entre como ADM.
+
+ONDE ENCONTRAR
+Administração > Pagamentos > Resultado da administração > Abrir metas mensais
+ou http://localhost:5173/admin/resultado-administracao
+Na parte superior do painel aparecem Baixar CSV das metas, Baixar PDF das metas
+e Imprimir / salvar PDF das metas.
+O seletor Mês para definir ou editar a meta fica junto às ações do painel,
+antes do resumo e do gráfico. A edição continua disponível também na tabela.
+
+TESTE MANUAL
+1. Abra metas mensais e consulte 2026.
+2. No seletor Mês para definir ou editar a meta, escolha 10/2026. A opção deve
+   indicar a meta existente de R$ 2.000,00, se ela não foi alterada depois.
+3. Clique Abrir edição da meta. Confira a meta e seu histórico anterior, com
+   motivo LUCRO, administrador e data. Não é necessário gravar outra meta.
+   Feche a edição para continuar a conferência do relatório.
+4. Clique Baixar PDF das metas. Abra o arquivo e confira A4 horizontal,
+   resumo, gráfico, comparação mensal, os doze meses e número das páginas.
+5. No cenário já conferido em outubro, ainda sem liquidação e sem novos gastos:
+   meta R$ 2.000,00; liquidado R$ 0,00; diferença -R$ 2.000,00; atingimento
+   0,00%; resultado previsto R$ 1.775,75; após despesas pagas R$ 1.875,75.
+   Os valores atuais prevalecem se houve alteração, gasto, estorno ou liquidação.
+6. Compare o PDF com a tabela e Baixar CSV das metas. Eles devem usar os mesmos
+   resultados. Meses sem meta continuam sem meta e sem percentual.
+7. Clique Imprimir / salvar PDF das metas. A visualização deve abrir em nova
+   aba com o PDF em escala própria. Use Imprimir nessa visualização. Se o
+   navegador bloquear a aba, o arquivo será baixado para abrir e imprimir.
+8. Consulte outro ano e escolha um mês pelo seletor. Ele deve abrir o mês desse
+   ano, com sua própria meta e histórico. Volte a 2026 e confira outubro.
+9. Cliente e fornecedor continuam sem acesso a metas, histórico, CSV ou PDF.
+   Os gráficos e CSV D63 e o PDF do resultado D62 FIX2 continuam disponíveis.
+
+CRITÉRIOS DO DOCUMENTO
+Uso exclusivo do ADM. Consulta por ano inteiro, mesma versão e mesmos critérios
+da D64: mês de criação da contratação em UTC, resultado liquidado após despesas
+confirmadas, excluindo estornos. Metas não geram pagamentos ou liquidações.
+Atingimento anual usa somente meses com meta ativa. Sem meta e meta zero não
+calculam percentual. Valores negativos mantêm sinal e podem ficar abaixo de zero.
+Meta, liquidado, diferença e percentual ficam separados dos resultados previstos
+e após despesas pagas. Despesas de outras datas seguem vinculadas ao serviço.
+O PDF é gerado no backend em A4 horizontal, com margens físicas, gráfico vetorial,
+texto legível e cabeçalho de tabela repetido quando houver mais páginas.
+Não depende do zoom da tela ou da escala de impressão do portal.
+Alteração de meta ou resultado invalida uma exportação antiga. Atualize o painel
+antes de exportar novamente. A consulta e a exportação não alteram o histórico.
+
+ROTA RESERVADA
+GET /administracao/despesas/metas/pdf?ano=2026&versao=...
+Sessão ADM, contexto vigente, ano de 1900 a 9998 e versão da consulta são exigidos.
+Filtros desconhecidos ou repetidos são recusados. Resposta sem cache, vinculada
+ao contexto e à versão. Nenhuma dependência nova, tabela nova ou meta automática.

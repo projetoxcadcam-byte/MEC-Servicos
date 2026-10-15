@@ -1,0 +1,52 @@
+.painel33{display:flex;flex-direction:column;gap:22px;color:#e2e8f0;min-width:0}
+.painel33-cabecalho{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.painel33-cabecalho h1{font-size:30px;line-height:1.2;color:#f8fafc;margin:7px 0 12px}
+.painel33-cabecalho p{color:#b7c6da;line-height:1.6;margin:0;max-width:820px}
+.painel33 .painel33-eyebrow{display:flex;align-items:center;gap:8px;color:#93c5fd;font-size:12px;font-weight:700;letter-spacing:.12em}
+.painel33 button,.painel33-links a{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#163250;cursor:pointer;padding:11px 15px;font:inherit;font-size:14px;text-decoration:none;line-height:1.4}
+.painel33 button:hover,.painel33-links a:hover{background:#eff6ff;border-color:#60a5fa}
+.painel33 button:disabled{cursor:wait;opacity:.55}
+.painel33 :is(button,a,input,select):focus-visible{outline:3px solid #60a5fa;outline-offset:3px}
+.painel33 .painel33-indicadores{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.painel33 .painel33-indicador{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#142338;border:1px solid #2b405e;border-radius:12px;padding:19px;color:#dbeafe;gap:9px}
+.painel33 button.painel33-indicador:hover{background:#1c304b;border-color:#6099d8}
+.painel33-indicador span{font-size:13px;line-height:1.5}
+.painel33-indicador strong{font-size:32px;line-height:1.2;color:#fff}
+.painel33-indicador small{font-size:11px;color:#bad0eb;display:flex;align-items:center;gap:5px;line-height:1.5}
+.painel33 .painel33-atencao{border-color:#a67527;background:#352918}
+.painel33 .painel33-painel{color:#172e4d;background:#fff;border:1px solid #dbe3ed;border-radius:14px;padding:25px;min-width:0}
+.painel33-painel h2{font-size:20px;color:#132b49;display:flex;gap:8px;align-items:center;line-height:1.4;margin:0 0 20px}
+.painel33 .painel33-valores{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.painel33-valores>div{display:flex;flex-direction:column;gap:9px;padding:16px;border:1px solid #dbe5f1;border-radius:10px;background:#f7faff;min-width:0}
+.painel33-valores span{font-size:12px;color:#415b7c}
+.painel33-valores strong{font-size:22px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;color:#132b49;line-height:1.3}
+.painel33-valores small{font-size:11px;color:#506887;line-height:1.5}
+.painel33 .painel33-nota{color:#526782;font-size:12px;line-height:1.7;margin:16px 0 0}
+.painel33-titulo{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.painel33-titulo>small{color:#506887;line-height:1.6}
+.painel33-filtros{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px}
+.painel33-filtros label{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:600;color:#294565;flex:1 1 230px}
+.painel33-filtros input,.painel33-filtros select{width:100%;box-sizing:border-box;color:#172e4d;background:#fff;border:1px solid #cbd5e1;border-radius:9px;font:inherit;font-size:14px;min-height:43px;padding:10px 12px}
+.painel33-filtros input::placeholder{color:#657b97}
+.painel33-tabela{overflow-x:auto;margin-top:20px;border:1px solid #e0e7f0;border-radius:10px}
+.painel33 table{width:100%;border-collapse:collapse;text-align:left;font-size:13px;min-width:1030px}
+.painel33 th{background:#f5f8fc;color:#3a5374;padding:14px;font-size:11px;white-space:nowrap}
+.painel33 td{padding:17px 14px;vertical-align:top;border-top:1px solid #e2e8f0;line-height:1.65;color:#213957}
+.painel33 td small{display:block;margin-top:5px;color:#506887;font-size:11px;line-height:1.6}
+.painel33 td p{margin:0;max-width:310px}
+.painel33-situacao{display:inline-block;padding:3px 8px;border-radius:6px;background:#eff6ff;color:#195597;font-size:11px;font-weight:700;white-space:nowrap}
+.painel33 .painel33-concluida{background:#e8f7ef;color:#176443}
+.painel33 .painel33-cancelada{background:#f1f5f9;color:#485a70}
+.painel33 .painel33-verificar{background:#fff4d9;color:#7c520c}
+.painel33 td .painel33-pronto{color:#176443;font-weight:700}
+.painel33-passos{margin:0;padding-left:15px;min-width:210px;max-width:350px}
+.painel33-passos li+li{margin-top:8px}
+.painel33-passos span{font-size:10px;font-weight:700;color:#537394;display:inline-flex;align-items:center;gap:3px;margin-right:3px}
+.painel33-links{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.painel33-links a{font-size:12px;padding:8px 10px;white-space:nowrap}
+.painel33-paginacao{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;font-size:12px;color:#506887;flex-wrap:wrap}
+.painel33-paginacao>div{display:flex;gap:10px}
+.painel33-alerta{background:#451f2a;border:1px solid #a95166;border-radius:10px;padding:15px;color:#ffe1e8;line-height:1.7;margin:0}
+.painel33-carregando{padding:12px 0;line-height:1.6;color:#cbd5e1;margin:0}
+@media(max-width:760px){.painel33-cabecalho{flex-direction:column}.painel33-cabecalho h1{font-size:25px}.painel33 .painel33-painel{padding:17px}.painel33 .painel33-indicadores{grid-template-columns:repeat(2,minmax(0,1fr))}.painel33-indicador strong{font-size:27px}.painel33 .painel33-indicador{padding:14px}.painel33-filtros label{flex-basis:100%}.painel33-valores strong{font-size:20px}}
+@media(max-width:410px){.painel33 .painel33-indicadores{grid-template-columns:1fr}.painel33 .painel33-valores{grid-template-columns:1fr}}

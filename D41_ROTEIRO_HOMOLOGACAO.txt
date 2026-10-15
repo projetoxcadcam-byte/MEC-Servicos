@@ -1,0 +1,73 @@
+MEC-Serviços D41 — Consolidação e recuperação de backup
+
+EXECUÇÃO:
+1. Salve MEC_SERVICOS_V0_1_D41_CONSOLIDACAO_BACKUP.py na raiz do MEC.
+2. Pare o backend com Ctrl+C. Execute o script com a .venv do MEC.
+3. Aguarde RESULTADO=OK. A saída mostra o diretório do pacote recuperável,
+   a integridade, a recuperação isolada e a preservação dos dois bancos.
+4. Reinicie MEC_SERVICOS_INICIAR_TESTE_LOCAL.py e atualize com Ctrl+F5.
+
+O D41 não altera fontes do backend/frontend nem registra operações de negócio.
+Confere a instalação D40 e as evidências de pytest/build dessa instalação.
+Não repete a suíte inteira quando os fontes não mudaram. Executa um ensaio
+novo em uma cópia: recupera arquivos e bancos, inicia a aplicação com
+TestClient e verifica leituras e permissões administrativas e dos portais.
+As contas temporárias do ensaio existem apenas na cópia descartável. Contas,
+senhas, sessões, modo de teste e histórico dos bancos originais permanecem.
+
+PACOTE:
+- Bancos de negócio e acesso copiados pela API de backup SQLite.
+- Backend, frontend/src, frontend/public, build frontend/dist, configurações do frontend,
+  dependências declaradas, documentos e scripts/relatórios MEC da raiz.
+- Arquivos físicos de storage/arquivos_tecnicos, inclusive os já existentes.
+- MANIFESTO.json com caminho relativo, tamanho e SHA-256 de cada arquivo,
+  estrutura completa, quantidades e impressões digitais lógicas dos bancos.
+- LEIA_RECUPERACAO.txt com a abrangência e as condições de recuperação.
+- O pacote só recebe validado=true após passar pelas verificações e pelo
+  ensaio. Falha/interrupção deixa um pacote incompleto, que não é aprovado.
+- Pastas anteriores são preservadas; cada execução cria um pacote novo.
+- A pasta .venv, node_modules e o histórico Git não integram o pacote.
+  As dependências devem ser reinstaladas a partir das declarações incluídas.
+- A aplicação e os dois bancos devem ser recuperados juntos. Caminhos
+  originais são registrados; referências de arquivos técnicos podem ser
+  absolutas e exigem a mesma raiz original em uma recuperação real.
+
+VERIFICAR UM PACOTE NOVAMENTE:
+Execute o mesmo script com --verificar-backup e o caminho completo da pasta
+do pacote. Essa opção verifica arquivos, integridade e conteúdo lógico dos
+bancos e recupera uma cópia temporária para comparação, sem depender dos
+bancos originais. Não sobrescreve a aplicação nem restaura os bancos em uso.
+Uma recuperação real deve ser feita com o backend parado e preservando
+primeiro a instalação atual. Este script ensaia a recuperação isoladamente.
+
+HOMOLOGAÇÃO MANUAL DA PRIMEIRA VERSÃO — registrar OK/pendência e evidência:
+1. Acesso: administrador, cliente e fornecedor; login normal, troca de senha,
+   troca de perfil local e vínculo da empresa corretos.
+2. Novo serviço: solicitação com arquivo técnico, oportunidade do fornecedor,
+   envio/aceite de cotação e contratação sem duplicidade.
+3. Execução: criação da OS, recebimento/encaminhamento de material, etapas de
+   produção, coleta, recebimento, avaliação e entrega ao cliente.
+4. Retrabalho: reprovação, encaminhamento, nova produção/coleta e nova
+   conferência antes de concluir. Histórico anterior permanece disponível.
+5. Financeiro manual: recebimento parcial, correção por estorno, recebimento
+   restante, repasse após entrega, encerramento e reabertura justificada.
+6. Cancelamento e permissões: ações fora da etapa devem ser recusadas;
+   cliente/fornecedor consultam apenas os próprios recursos.
+7. Consultas: Dashboard, relatórios D34-D36, pendências, Ver mês, comparativo
+   A/B, extrato D40, CSV e impressão coerentes com os registros existentes.
+8. Mais de uma empresa/serviço: confirmar que os dados e saldos não se misturam
+   e que paginação não limita os totais/CSV.
+
+CONTROLE EXISTENTE:
+A contratação #1 / OS #3 foi conferida nas telas como concluída e com financeiro
+encerrado. Extrato: bruto recebido R$ 13.750,00; estorno R$ 1.250,00; líquido
+recebido R$ 12.500,00; líquido repassado R$ 12.500,00; resultado R$ 0,00.
+Essa referência é para conferência. D41 não exige esses IDs/valores em outra
+base, não cria demonstrações e não modifica registros para atingir um total.
+
+CONCLUSÃO:
+A estimativa anterior de aproximadamente 80% refere-se à versão funcional
+local. RESULTADO=OK do D41 comprova as verificações técnicas descritas acima;
+não substitui a homologação manual de todos os fluxos nem a preparação de
+publicação, configuração e acompanhamento em produção. MEC e CGX seguem
+totalmente independentes. Integração bancária automática não integra o D41.

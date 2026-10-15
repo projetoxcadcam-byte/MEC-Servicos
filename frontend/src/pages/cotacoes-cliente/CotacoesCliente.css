@@ -1,0 +1,23 @@
+.c59 { background: #0b1826; min-height: 100%; padding: 26px; }
+.c59 .c23-alert { margin: 0; }
+.c59 .c23-metrics small { color: #a5b9d2; line-height: 1.5; }
+.c59 .c23-header p, .c59 .c23-toolbar p { color: #b0c4da; }
+.c59 td > small, .c59 th { color: #adbfdb; }
+.c59 a:focus-visible, .c59 button:focus-visible, .c59 input:focus-visible, .c59 select:focus-visible { outline: 3px solid #89cfff; outline-offset: 3px; }
+.c59-filtros { display: flex; flex-wrap: wrap; gap: 13px; padding: 20px; align-items: flex-end; }
+.c59-filtros label { display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: #c4d6eb; }
+.c59-filtros input { width: 145px; }
+.c59-paginacao { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 16px 20px; border-top: 1px solid #2b4057; }
+.c59-paginacao span { font-size: 12px; color: #b2c6dd; }
+.c59-detalhe { padding: 22px; scroll-margin-top: 20px; }
+.c59-detalhe:focus { outline: 2px solid #76baff; outline-offset: 4px; }
+.c59-cabecalho-detalhe { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.c59-cabecalho-detalhe h2 { font-size: 20px; margin: 0; flex: 1; }
+.c59-campos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0 0 22px; }
+.c59-campos dt { color: #b6cce4; font-size: 12px; margin-bottom: 6px; }
+.c59-campos dd { margin: 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; color: #edf5ff; }
+.c59-horario { color: #b3c7dd; font-size: 12px; line-height: 1.6; margin: 0; }
+.c59-detalhe .c59-horario { margin-top: 17px; }
+.c59-atalhos { display: flex; gap: 10px; flex-wrap: wrap; }
+@media (max-width: 900px) { .c59-campos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .c59 { padding: 18px 12px; } .c59-campos { grid-template-columns: 1fr; } .c59-filtros label { width: 100%; } .c59-filtros input { width: 100%; } .c59-paginacao { gap: 8px; padding: 14px 10px; } .c59-detalhe { padding: 16px; } }

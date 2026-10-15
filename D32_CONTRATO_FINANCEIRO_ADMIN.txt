@@ -1,0 +1,50 @@
+MEC-Serviços V0.1 — D32 Financeiro administrativo
+REVISION=MEC-SERVICOS-V0.1-D32-FINANCEIRO-ADMINISTRATIVO-2026-10-05
+
+Escopo
+A administração registra recebimentos do cliente e repasses ao fornecedor já realizados.
+Este módulo registra o financeiro; não efetua cobrança ou transferência bancária.
+Não há taxa ou comissão automática: o total a repassar é o valor contratado.
+Cliente e fornecedor consultam somente seus próprios movimentos e saldos, sem dados internos ou contato entre as partes.
+
+Regras
+O controle começa somente por ação administrativa em contratação ativa.
+Os pagamentos D12/D13 confirmados entram no saldo do cliente; cancelados não entram.
+A instalação não inicia controles nem cria pagamentos ou repasses.
+Recebimentos e repasses parciais são permitidos, em reais com duas casas decimais.
+Repasse exige OS concluída e ciclo D31 com entrega ao cliente concluída.
+O repasse é limitado ao valor contratado e ao dinheiro recebido ainda não repassado.
+Comprovante é uma referência textual obrigatória; o D32 não anexa arquivos bancários.
+O servidor define o operador e as empresas pelo contrato/sessão.
+A versão evita gravação sobre saldos desatualizados. Repetir a mesma operação não duplica dinheiro.
+Uma referência não pode ser usada duas vezes na mesma contratação.
+Estorno registra o motivo e conserva os movimentos; não apaga o histórico.
+Um recebimento não pode ser estornado se deixar repasses sem cobertura.
+Depois do início do controle, recebimentos e estornos usam exclusivamente o D32.
+As novas intenções de gateway e a confirmação via gateway ficam bloqueadas para contratos administrados no D32.
+Pagamentos antigos não são recriados nem convertidos em eventos retroativos.
+Encerrar financeiro exige entrega final e saldos de cliente e fornecedor zerados; encerra também a contratação.
+Reabertura administrativa exige motivo, reativa a contratação e preserva a OS concluída e todos os eventos.
+Contratações antigas encerradas/canceladas ficam disponíveis para consulta, sem início retroativo automático.
+
+Instalação
+Pare o backend na porta 8000. Execute o instalador com a .venv do MEC-Serviços.
+A instalação confirma a origem MEC no Git, preserva fontes e build em _mec_backups e copia o banco com SQLite backup.
+Testes usam bancos temporários. O build usa o package.json existente.
+A migração cria apenas três tabelas D32 e seus índices, em uma transação, após os testes/build.
+Falha antes do commit desfaz a migração e restaura os fontes/build anteriores.
+Reexecutar a mesma revisão confere as tabelas existentes e preserva todos os registros D32.
+Contas e senhas não são alteradas. O modo de teste D31 FIX2 continua disponível se já instalado.
+
+Roteiro de teste para contratação #1 / OS #3
+Entre como Administração e abra Pagamentos.
+Confira o valor contratado e os pagamentos anteriores antes de iniciar o controle.
+Inicie com registro interno identificando que é uma simulação.
+Se o saldo do cliente for R$ 12.500,00, registre recebimento de 12500,00 por Pix, referência TESTE-RECEB-OS3-001.
+Confira e confirme o registro. Se já existem recebimentos, registre somente o saldo restante.
+Como a entrega D31 está concluída, registre o repasse disponível para a oficina, referência TESTE-REPASSE-OS3-001.
+Confira os saldos antes de encerrar o financeiro e a contratação.
+Troque para Cliente e consulte Pagamentos; troque para Fornecedor/oficina #1 e consulte Pagamentos.
+Comprove que cada portal mostra apenas seus movimentos, sem motivo/comprovante/operador administrativo.
+Para testar um estorno após encerrar: reabra, registre primeiro o estorno do repasse e depois o do recebimento, com referências novas e motivo.
+Use exclusivamente registros simulados neste roteiro.

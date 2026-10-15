@@ -1,0 +1,67 @@
+MEC-Serviços D48 FIX3 - Preservação das vistas e cotas
+
+Problema corrigido
+A regravação dos objetos de certos PDFs de impressão CAD alterava as
+transformações de cotas e vistas. Agora os operadores originais são
+preservados. PDFium apenas mede e renderiza; não regrava os objetos.
+
+Controle automático
+Cada página preparada é comparada com a página original fora da legenda,
+na resolução da prévia. A cópia é recusada se algum pixel externo mudar
+(descontando um pixel de antialiasing da borda). O teste protege a geometria;
+a transcrição das especificações e a seleção da área continuam exigindo
+revisão do administrador. PDFs cuja estrutura não permita remoção segura
+são recusados, sem salvar uma versão parcial.
+
+Antes de instalar
+Pare backend e frontend com Ctrl+C nos respectivos terminais.
+Coloque o instalador na raiz C:\Users\Omega\Desktop\MEC-Servicos.
+Exige D48 FIX2 concluída (relatório com RESULTADO=OK).
+
+Instalação - PowerShell
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D48_FIX3_PRESERVACAO_DESENHO.py
+
+São executados somente os testes do módulo PDF e o build do frontend,
+com saída ao vivo. Há backup e restauração das fontes e build em caso de
+falha. Os dois bancos, originais, versões preparadas, publicações, contas
+e senhas são preservados. Não há migrações ou liberações automáticas.
+
+Reiniciar backend - PowerShell
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Reiniciar frontend - outro PowerShell
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Teste manual
+1. Abra http://localhost:5173, Ctrl+F5, Administração > Arquivos Técnicos.
+2. No original, clique Preparar PDF com nossa logo. Gere uma NOVA versão.
+3. Selecione apenas a legenda, preservando as vistas, cotas e notas.
+4. Transcreva as especificações completas. No inserto P0002 do exemplo:
+   Descrição: INSERTO DE SAIDA DE GASES
+   Material: FORMADUR 2083
+   Quantidade: 18
+   Dureza: 49 - 51 HRC
+   Tratamento: TÊMP./REVEN.
+   Escala: 3 : 1; unidade: mm; revisão: A
+   Tolerâncias: Geral ±0.1; 0.00 ±0.01; angular ±0°15'
+   O código técnico deve ser neutro e sem identificação do cliente.
+5. Gere a cópia, baixe e confira todas as páginas em um leitor de PDF.
+   Alterne Ver original / Ver cópia preparada para conferir as posições.
+   No exemplo: 21.9, 25.30, 5.00, 14.9, Ø6.46, Ø6.50 g6, Ø12.0, Ø26.0,
+   4.50 g6, raios e chanfros devem manter posição, orientação e valores.
+6. Confira também tolerâncias individuais, notas de áreas coloridas,
+   "USINAR MONTADO COM A POSIÇÃO 1" e a nota sobre modelamento 3D.
+7. Confira a ausência de contatos ou identificação do cliente em todas as
+   vistas, inclusive inscrições da peça e imagens fora da legenda.
+8. Somente após a revisão, marque a conferência e libere a NOVA versão.
+   No fornecedor, baixe o documento e confira que recebeu essa versão.
+
+Cópias anteriores
+A correção não altera PDFs já preparados nem sua liberação atual.
+Uma cópia com cotas deslocadas não deve ser utilizada para cotação.
+Se a cópia divergente já estiver liberada, bloqueie o arquivo pela revisão
+administrativa enquanto gera e confere uma nova versão. O histórico fica
+preservado; a troca da versão exige nova liberação explícita.

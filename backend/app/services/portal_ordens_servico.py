@@ -111,6 +111,9 @@ class ServicoPortalOrdens:
         if resultado.rowcount != 1:
             self.banco.rollback()
             raise HTTPException(409, detail="ordem_servico_alterada_atualize")
+        if acao == "iniciar":
+            from backend.app.services.eventos_notificacoes import notificar_inicio_ordem
+            notificar_inicio_ordem(self.banco, ordem_id)
         self.banco.commit()
         self.banco.expire_all()
         return self.obter(ordem_id, empresa_id, "fornecedor")

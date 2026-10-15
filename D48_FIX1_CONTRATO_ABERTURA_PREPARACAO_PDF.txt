@@ -1,0 +1,53 @@
+MEC-Serviços D48 FIX1 — Abertura visível da preparação do PDF
+
+O painel da D48 era renderizado depois de toda a lista de solicitações.
+Agora ele abre dentro do arquivo selecionado, logo abaixo do botão, com
+rolagem automática e foco. Repetir o clique localiza a preparação já aberta
+e mantém os campos preenchidos. Fechar devolve o foco ao botão do arquivo.
+A conferência de liberação ou bloqueio também abre junto ao arquivo.
+Ao mudar o filtro ou a página, a preparação anterior é encerrada.
+
+APLICAÇÃO
+1. Pare o backend e o frontend com Ctrl+C nos terminais correspondentes.
+2. Salve MEC_SERVICOS_V0_1_D48_FIX1_ABERTURA_PREPARACAO_PDF.py na raiz:
+   C:\Users\Omega\Desktop\MEC-Servicos
+3. Execute cada comando separadamente no PowerShell:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D48_FIX1_ABERTURA_PREPARACAO_PDF.py
+
+4. Aguarde RESULTADO=OK. A correção executa o build do frontend e reutiliza
+   a validação aprovada do backend D48, sem repetir a suíte longa.
+5. Inicie o backend:
+
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+6. Em outro PowerShell, inicie o frontend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+7. Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE DA CORREÇÃO
+1. Entre como ADM e abra Administração > Arquivos Técnicos.
+2. Na lista com várias solicitações, clique Preparar PDF com nossa logo
+   no PDF desejado. A tela deve ir imediatamente ao painel no mesmo arquivo.
+3. O painel mostra Conferindo PDF e depois a página do desenho; se a consulta
+   falhar, o erro aparece dentro do painel. O nome deve ser o do PDF clicado.
+4. Preencha um campo, clique novamente no botão Preparar PDF com nossa logo
+   do mesmo arquivo e confira que o campo permanece preenchido.
+5. Feche a preparação e confira o retorno ao botão. Abra outro PDF e confira
+   que existe apenas um painel, junto ao novo arquivo.
+6. Se já houver uma cópia preparada e revisada, clique Liberar esta versão:
+   a conferência deve aparecer no mesmo arquivo, identificando a versão.
+   Use Voltar se estiver somente conferindo a interface.
+
+ESCOPO E PRESERVAÇÃO
+Exige D48 concluída e seus dois bancos íntegros. Backup dos bancos, das fontes
+alteradas e do build antes da aplicação. Altera dois arquivos do frontend e
+adiciona este roteiro. Não altera o backend, dependências, tabelas, contas,
+senhas, sessões, PDF original, cópias preparadas ou liberações existentes.
+Não gera nem libera documentos automaticamente. Em falha de build, restaura
+as fontes e o build anteriores; alterações externas nos bancos são preservadas.
+As regras e limitações do roteiro D48 original continuam aplicáveis.

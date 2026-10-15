@@ -1,0 +1,20 @@
+.comparativo39-filtros fieldset { flex: 1 1 310px; min-width: 0; display: flex; flex-wrap: wrap; gap: 14px; margin: 0; padding: 16px; border: 1px solid #becfe2; border-radius: 10px; }
+.comparativo39-filtros legend { font-weight: 700; padding: 0 7px; }
+.comparativo39-filtros-comuns { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; flex-basis: 100%; }
+.comparativo39-periodos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.comparativo39-valores { display: grid; gap: 12px; margin: 18px 0; }
+.comparativo39-valores > div { padding: 14px; border: 1px solid #dfe7f0; border-radius: 10px; background: #f6f8fc; }
+.comparativo39-valores span { color: #526b87; font-size: 14px; }
+.comparativo39-valores strong { display: block; margin-top: 6px; font-size: 22px; }
+.comparativo39-periodo nav { margin-top: 18px; }
+.comparativo39-medidas table { min-width: 780px; }
+.comparativo39-medidas th:first-child { position: sticky; left: 0; z-index: 1; min-width: 190px; border-right: 1px solid #dce5ef; white-space: normal; }
+.comparativo39-medidas thead th:first-child { z-index: 2; }
+.comparativo39-medidas td { white-space: nowrap; }
+.comparativo39-diferenca { font-weight: 700; }
+.comparativo39-sobreposicao { background: #edf4fb; padding: 12px; border-radius: 8px; }
+.comparativo39-detalhe > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.comparativo39-detalhe table { min-width: 1250px; margin-top: 20px; }
+.comparativo39-detalhe td:nth-child(3) { min-width: 190px; max-width: 280px; overflow-wrap: anywhere; }
+.comparativo39-detalhe td nav { display: grid; min-width: 135px; }
+@media (max-width: 800px) { .comparativo39-periodos { grid-template-columns: 1fr; } }

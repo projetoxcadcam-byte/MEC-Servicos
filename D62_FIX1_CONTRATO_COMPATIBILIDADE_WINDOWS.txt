@@ -1,0 +1,25 @@
+MEC-Serviços D62 FIX1 — Compatibilidade dos módulos no Windows
+REVISION=MEC-SERVICOS-V0.1-D62-FIX1-COMPATIBILIDADE-WINDOWS-2026-10-14
+
+Correção: o componente RelatorioResultado.tsx e o auxiliar relatorioResultado.ts
+tinham nomes que o resolvedor de imports do Windows considerava iguais. O auxiliar
+agora se chama dadosRelatorioResultado.ts e os imports apontam para esse nome.
+Os cálculos, permissões, despesas e exportações da D62 permanecem os mesmos.
+
+Aplicação: use este instalador sobre a D61 FIX1, inclusive depois de a tentativa
+da D62 terminar em npm_build com RESTAURADO=True. A D62 não precisa ter terminado
+com sucesso. O pacote inclui o relatório completo corrigido, sem novas tabelas.
+Um auxiliar antigo deixado por uma D62 aplicada somente é retirado quando seu
+conteúdo corresponde ao arquivo conhecido; é copiado no backup e restaurado
+junto às fontes se houver falha. Arquivos desconhecidos são preservados.
+
+Validação: o instalador confere o relatório local da execução D62, o sucesso dos
+133 testes e a igualdade dos arquivos Python testados, além das fontes da base.
+Quando confirmados, os testes são reaproveitados e o build é executado novamente.
+Se não puder confirmar essa execução, roda os oito testes do relatório D62 em
+bancos isolados antes do build. Não repete toda a suíte de treze minutos.
+
+Depois de RESULTADO=OK, reinicie backend e frontend nas duas janelas e Ctrl+F5.
+ADM > Pagamentos > Resultado da administração > consultar período > Abrir
+relatório do resultado. Confira despesas, Baixar CSV e Imprimir / salvar PDF.
+O roteiro funcional completo continua em D62_CONTRATO_RELATORIO_RESULTADO.txt.

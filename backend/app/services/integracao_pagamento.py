@@ -16,6 +16,7 @@ from backend.app.repositories.intencao_pagamento import RepositorioEventoGateway
 from backend.app.schemas.intencao_pagamento import IntencaoPagamentoCriacao, WebhookPagamento
 from backend.app.schemas.pagamento import PagamentoContratacaoCriacao
 from backend.app.services.pagamento import ServicoPagamento
+from backend.app.services.financeiro_administrativo import bloquear_pagamento_legado
 
 CENTAVO = Decimal("0.01")
 FORMAS_PAGAMENTO = {"pix", "transferencia", "boleto", "cartao", "dinheiro", "outro"}
@@ -90,6 +91,7 @@ class ServicoIntegracaoPagamento:
     def iniciar(self, contratacao_id: int, dados: IntencaoPagamentoCriacao, idempotency_key: str) -> tuple[IntencaoPagamento, bool]:
         if not idempotency_key.strip():
             raise IntegracaoIdempotencyInvalida
+        bloquear_pagamento_legado(self.banco, contratacao_id)
         existente = self.repositorio.buscar_por_idempotency(idempotency_key)
         if existente is not None:
             return existente, True

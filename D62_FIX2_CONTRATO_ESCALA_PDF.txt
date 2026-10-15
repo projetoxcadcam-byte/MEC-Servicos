@@ -1,0 +1,31 @@
+MEC-Serviços D62 FIX2 - PDF em A4 horizontal
+REVISION=MEC-SERVICOS-V0.1-D62-FIX2-ESCALA-PDF-2026-10-14
+
+O relatório agora gera PDF no backend, em A4 horizontal, com margens de 14 mm,
+fontes legíveis, tabelas na largura útil e rodapé com número da página.
+Relatórios maiores usam várias páginas, sem reduzir tudo para uma única folha.
+O arquivo independe do tema, largura e escala de impressão da página do portal.
+ReportLab já integra as dependências da preparação de PDF D48.
+
+ADM > Pagamentos > Resultado da administração > consultar período > Abrir
+relatório do resultado. Clique Baixar PDF para obter o arquivo. Imprimir / salvar
+PDF abre o documento gerado em outra aba; use o botão de impressão do leitor.
+Se a aba for bloqueada ou fechada, o arquivo é baixado para abrir localmente.
+Ao imprimir, use A4, orientação horizontal e tamanho real/escala 100%.
+
+O PDF usa o relatório completo conferido. Novos gastos, estornos ou alterações
+no período que mudem a consulta recusam a exportação; Atualizar relatório.
+Cliente e fornecedor continuam sem acesso ao PDF, CSV e resultado interno.
+A visualização aberta pelo painel é fechada quando o painel é encerrado.
+
+Homologação: use contratação #5 / OS #5 da solicitação #12 no cenário atual.
+Confira venda R$ 14.380,75, custo R$ 12.505,00, ganho previsto R$ 1.875,75 e
+despesas previstas R$ 100,00, enquanto estes forem os valores do seu serviço.
+O resultado previsto é R$ 1.775,75 e, sem despesas pagas, o resultado após
+despesas pagas é R$ 1.875,75. Liquidação ainda pendente deixa ganho confirmado
+e resultado liquidado em zero. Nenhum destes valores é alterado pela correção.
+Baixe PDF: confira A4 horizontal, texto completo e todas as colunas dentro das
+margens. Compare ao CSV e à tela. Teste também a visualização para impressão.
+
+Aplicação: D62 FIX1 concluída, backup, testes seletivos isolados e build.
+Sem novas tabelas. Os dois bancos, contas, arquivos e históricos são conferidos.

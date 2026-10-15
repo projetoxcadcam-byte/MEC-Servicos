@@ -1,0 +1,18 @@
+MEC-Serviços D42 FIX2 — Compatibilidade da base local
+
+Preserva integralmente models/__init__.py e a página de arquivos do cliente.
+A revisão dos documentos ocorre na tela administrativa D42 e o bloqueio das
+novas cotações ocorre no servidor e no portal do fornecedor.
+
+O registro tests/mec_d30_legado_sha256.json foi criado no computador durante
+o D30 e contém assinaturas dos arquivos locais, inclusive diferenças Windows.
+O FIX2 conserva todas as entradas anteriores e atualiza somente as assinaturas
+dos dois testes de cotação alterados pelo D42. Não concede compatibilidade a
+    novos testes nem autoriza usuários no sistema. O backup conserva os bytes
+anteriores do registro e o restaura em caso de falha nos testes ou build.
+
+Continuam as verificações de origin, D41, fontes necessários ao D42, bancos,
+backup, pytest e build. Não libera documentos nem altera cotações anteriores.
+Após RESULTADO=OK, reinicie o teste local e atualize com Ctrl+F5. Entre como
+administrador em Arquivos Técnicos, consulte solicitação #8 e revise seu
+arquivo antes de registrar a liberação. A cotação #7 anterior fica preservada.

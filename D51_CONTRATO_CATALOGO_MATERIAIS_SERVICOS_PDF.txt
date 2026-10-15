@@ -1,0 +1,47 @@
+MEC-Serviços D51 - Materiais e operações para o PDF de cotação
+
+Exige a D50 concluída. Amplia somente o preparo administrativo da legenda do PDF.
+
+1. Pare o backend e o frontend com Ctrl+C nos terminais correspondentes.
+2. Salve MEC_SERVICOS_V0_1_D51_CATALOGO_MATERIAIS_SERVICOS_PDF.py na raiz MEC-Servicos.
+3. Execute no PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D51_CATALOGO_MATERIAIS_SERVICOS_PDF.py
+4. Aguarde RESULTADO=OK. O instalador mostra os testes ao vivo, faz backup dos dois
+   bancos, das fontes e do build, e restaura fontes/build em caso de falha.
+5. Reinicie o teste local:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+   Em outro PowerShell, se o frontend ainda não estiver iniciado:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+6. Acesse http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE NA TELA
+- Entre como administrador. Abra Administração > Arquivos Técnicos > Preparar PDF.
+- Inclua o carimbo da página e mantenha a seleção dentro da legenda antiga.
+- Clique na setinha de Material. Confira aços, inox, alumínio, ferros fundidos,
+  cobre/bronze/latão, titânio e plásticos. Os materiais do seu histórico vêm primeiro.
+- Busque 1045, inox ou alumínio. Selecione uma opção; confira que os outros campos
+  não são preenchidos automaticamente. Complete a especificação quando necessário.
+- Digite um material próprio e saia do campo. Feche/reabra: ele continua no histórico.
+- Em Operações do serviço, selecione por exemplo Usinagem, Dobra, Solda TIG e
+  Pintura líquida. A seleção aceita até 8 operações por página. Remova uma escolha
+  clicando no x ou desmarcando a opção. A busca aceita termos sem acentos.
+- O escopo da usinagem (desbaste, acabamento ou peça completa) continua disponível.
+  Não há tolerância, tratamento, dureza ou sobremetal obrigatório ou automático.
+- Informe sequência e requisitos nas observações quando necessários.
+- Em um PDF com várias páginas, confira que cada página conserva suas próprias escolhas.
+- Gere uma cópia para revisão e baixe. Confira logo, material, operações, cotas,
+  vistas e notas. As operações aparecem no campo ESCOPO DO SERVICO da legenda.
+- Se os dados não couberem, o sistema recusa a geração sem cortar informações.
+  Revise os dados/área dentro da legenda ou use outra exportação do desenho.
+- Marque a conferência e libere explicitamente a versão quando tudo estiver correto.
+  O fornecedor recebe essa cópia somente após a liberação. O cliente mantém o original.
+
+PRESERVAÇÃO
+Não cria tabelas, não insere os materiais prontos no banco de negócios, não modifica
+o cadastro de capacidades dos fornecedores e não gera liberações/contratações.
+Mantém históricos, escolhas da D50, originais, versões/publicações anteriores,
+contas, senhas, sessões e ranking exclusivo da administração.
+Pedidos antigos e seleções vazias mantêm o mesmo hash e a mesma versão.
+Não associa marcas ou materiais por equivalência nem define especificações da peça.

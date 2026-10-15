@@ -1,0 +1,66 @@
+MEC-Serviços D49 — Escopo da usinagem para cotação
+
+O QUE MUDA
+Na preparação administrativa do PDF, cada página pode indicar o serviço:
+Conforme solicitação, Somente desbaste, Somente acabamento ou Peça completa.
+Sobremetal e observações do serviço são opcionais e aparecem na nova legenda
+quando preenchidos. Não há valor de sobremetal ou tolerância automático.
+Tolerâncias gerais, dureza, tratamento e revestimento só precisam ser
+preenchidos quando aplicáveis ao serviço contratado.
+
+O escopo registrado na legenda não altera cotas ou notas nas vistas do desenho.
+Confira se as informações da cópia correspondem ao trabalho solicitado.
+O sistema mantém o desenho fora da seleção e recusa divergências visuais.
+Os textos não são reduzidos nem cortados para caber. Se houver recusa por
+falta de espaço, confira os dados e a seleção dentro da legenda original.
+
+COMPATIBILIDADE
+Exige D48 FIX3 concluída, com relatório RESULTADO=OK.
+Não cria tabelas, não instala dependências e não altera o registro local de
+modelos, a página de arquivos do cliente ou o registro de testes legados.
+Os campos são registrados na configuração de cada nova versão do PDF.
+Cópias antigas, publicações, originais, contas, senhas e históricos continuam
+preservados. Cópias sem escopo explícito mostram “Escopo não indicado nesta
+cópia” na revisão; não recebem uma classificação retroativa.
+Repetir um pedido antigo com a mesma chave recupera a mesma versão.
+
+INSTALAÇÃO
+1. Salve MEC_SERVICOS_V0_1_D49_ESCOPO_USINAGEM_COTACAO.py na raiz do projeto.
+2. Pare backend e frontend com Ctrl+C em cada terminal.
+3. No PowerShell, execute cada comando em sua própria linha:
+   cd C:\Users\Omega\Desktop\MEC-Servicos
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D49_ESCOPO_USINAGEM_COTACAO.py
+4. Aguarde os testes seletivos do PDF e o build até RESULTADO=OK.
+   A saída informa a etapa e continua mostrando progresso durante os testes.
+   O instalador cria backup dos arquivos alterados e dos dois bancos antes
+   de aplicar a atualização. Em falha, restaura os arquivos e o build.
+
+ATIVAÇÃO
+Backend, na raiz:
+   .\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+Frontend, em outro PowerShell:
+   cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+   npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE MANUAL
+1. Entre como ADM e abra Administração > Arquivos Técnicos.
+2. Escolha um PDF original e clique em Preparar PDF com nossa logo.
+3. Selecione apenas a legenda; preserve vistas, cotas e notas.
+4. Preencha descrição, material, quantidade, escala e unidade.
+5. Selecione Somente desbaste. Deixe tolerâncias gerais, dureza, tratamento
+   e revestimento vazios quando não se aplicarem ao serviço desta peça.
+6. Se o pedido definir sobremetal, informe valor, unidade e superfícies.
+   Registre as observações acordadas; esses dados estarão no PDF do fornecedor.
+   O Registro interno da preparação continua restrito ao ADM.
+7. Gere a cópia para revisão. Baixe e confira todas as páginas: geometria,
+   escopo, dados preenchidos e ausência de identificação do cliente.
+8. Gerar a cópia mantém a liberação atual. Depois da conferência, marque a
+   revisão e clique em Liberar esta versão para cotação; confirme o registro.
+9. No fornecedor, atualize a solicitação e baixe o arquivo: a nova cópia
+   deve conter Somente desbaste e o sobremetal informado, quando houver.
+10. Abra uma versão anterior como ADM: o PDF e seu histórico devem continuar
+    disponíveis. Para outro serviço, gere uma nova versão e repita a revisão.
+
+Os testes locais da atualização usam bancos isolados. Não criam solicitações,
+cotações, liberações ou versões de PDF automaticamente no banco do projeto.

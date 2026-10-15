@@ -1,0 +1,18 @@
+MEC-Serviços D31 — Intermediação administrativa
+Administração coordena recebimento/encaminhamento de material, coleta, avaliação e entrega.
+Sem contato direto entre cliente e fornecedor; portais consultam somente etapas e datas.
+Observações internas, pareceres, comprovantes e identidade do operador são exclusivos da administração.
+Um ciclo por ordem. A ordem precisa estar aberta/em execução e a contratação ativa.
+Ordens concluídas/canceladas anteriores não recebem ciclos retroativos nem são reabertas.
+O ciclo registra o lote completo: quantidade recebida, aprovada e entregue deve ser a quantidade da OS.
+Produção do ciclo exige encaminhamento administrativo. A coleta exige Pronto para coleta informado pelo fornecedor.
+Retrabalho exige devolução administrativa, novo registro de produção, nova coleta e nova avaliação.
+Entrega final exige aprovação, quantidade total e referência do comprovante; conclui a OS.
+Cancelamento exige registro interno do encaminhamento do material/peças e cancela a OS.
+A contratação mantém seu estado para os controles financeiros posteriores.
+As ações antigas de entrega/conclusão/cancelamento não operam ordens com ciclo D31.
+Referências são identificações de documentos; este D31 não faz upload de comprovantes.
+Backup dos fontes/build e do banco antes da aplicação; testes com bancos temporários.
+Contas/senhas e os registros anteriores permanecem preservados durante a instalação.
+Painel: /admin/intermediacao ou Entregas no portal administrativo.
+Consulta nos portais: Entregas, sem comandos de movimentação ou avaliação.

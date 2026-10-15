@@ -47,9 +47,9 @@ export function statusCotacao(cotacao: CotacaoCliente, agora = Date.now()): stri
   return cotacao.status;
 }
 
-export function podeDecidirCotacao(cotacao: CotacaoCliente, possuiAceita: boolean, agora = Date.now()): boolean {
-  const vencimento = vencimentoCotacao(cotacao);
-  return !possuiAceita && cotacao.status === "enviada" && vencimento !== null && agora < vencimento;
+export function podeDecidirCotacao(_cotacao: CotacaoCliente, _possuiAceita: boolean, _agora = Date.now()): boolean {
+  // Decisões registradas exclusivamente pela administração.
+  return false;
 }
 
 export function rotuloStatusCotacao(status: string): string {

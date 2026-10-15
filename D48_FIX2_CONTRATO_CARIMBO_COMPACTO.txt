@@ -1,0 +1,57 @@
+MEC-Serviços D48 FIX2 — Carimbo compacto para legendas baixas
+
+A D48 exigia uma área mínima de 320 x 132 pontos. Essa altura não cabe em
+algumas legendas A4. O FIX2 aceita áreas a partir de 320 x 96 pontos e usa
+automaticamente um formato compacto quando a altura é menor que 132 pontos.
+O formato compacto redistribui os mesmos campos em quatro linhas, mantendo
+a fonte dos valores técnicos em 7,2 pontos. Não omite nem trunca valores.
+Textos que não couberem continuam sendo recusados para revisão da transcrição.
+A seleção permanece exatamente como o ADM definiu; a área não é ampliada
+automaticamente sobre vistas, cotas ou notas do desenho.
+
+APLICAÇÃO
+1. Exige D48 e D48 FIX1 concluídas com RESULTADO=OK.
+2. Pare backend e frontend com Ctrl+C nos terminais correspondentes.
+3. Salve MEC_SERVICOS_V0_1_D48_FIX2_CARIMBO_COMPACTO.py em:
+   C:\Users\Omega\Desktop\MEC-Servicos
+4. Execute cada linha separadamente no PowerShell:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D48_FIX2_CARIMBO_COMPACTO.py
+
+5. Aguarde RESULTADO=OK. São executados apenas os testes de preparação de
+   PDF D48 e os novos testes do carimbo compacto, seguidos do build da interface.
+   A suíte completa já aprovada da D48 não é repetida.
+6. Inicie o backend:
+
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+7. Em outro PowerShell, inicie o frontend:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+8. Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE
+1. ADM > Arquivos Técnicos > Preparar PDF com nossa logo.
+2. Inclua o carimbo na página e selecione a legenda inteira que será substituída.
+   A seleção deve conter a logo e a identificação antigas por inteiro.
+   Mantenha cotas, vistas e notas externas fora da seleção.
+3. Copie os dados efetivos do desenho para os campos. O sistema não extrai
+   automaticamente material, quantidade, dureza, tratamentos ou tolerâncias.
+4. Confira as dimensões em pontos mostradas junto aos percentuais.
+   A interface indica uma seleção insuficiente antes de enviar a geração.
+5. Gere e baixe a cópia. Revise todos os dados técnicos e todas as páginas.
+6. Após a revisão, libere explicitamente a versão escolhida para cotação.
+   Confira o download da versão pelo fornecedor e o original no cliente.
+
+PRESERVAÇÃO
+Backup de fontes alteradas, build e ambos os bancos antes da aplicação.
+Sem migração ou instalação de dependências novas. Não altera contas, senhas,
+sessões, tabelas ou históricos. Originais e cópias preparadas anteriormente
+permanecem intactos; uma nova cópia usa uma nova versão. Nenhum arquivo real
+é preparado ou liberado automaticamente. Em falha de teste ou build, restaura
+as fontes e o build anteriores sem apagar alterações externas nos bancos.
+As proteções contra área que corta texto/imagem/formulário, original alterado,
+cópia corrompida, sessão indevida e publicação sem revisão continuam aplicáveis.

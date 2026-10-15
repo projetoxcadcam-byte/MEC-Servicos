@@ -22,7 +22,6 @@ type ModalCotacao = {
   cotacaoId: number;
   acao: AcaoCotacao | "detalhes";
 };
-type EmpresaFornecedor = { id: number; razao_social: string };
 
 function resumoSolicitacao(item: SolicitacaoCliente): string {
   return `Solicitação #${item.id} · ${item.quantidade} un. · ${item.dimensao_x_maxima_mm} × ${item.dimensao_y_maxima_mm} × ${item.dimensao_z_maxima_mm} mm`;
@@ -117,22 +116,8 @@ export default function ClientCotacoesPage() {
         const nomes: Record<number, string> = {};
         setGrupo({ empresaId, solicitacaoId, itens, fornecedores: nomes });
         setCarregandoCotacoes(false);
-        const ids = [...new Set(itens.map((item) => item.empresa_fornecedora_id))];
-        let falhas = 0;
-        for (let inicio = 0; inicio < ids.length && vigente; inicio += 8) {
-          const resultados = await Promise.allSettled(ids.slice(inicio, inicio + 8).map(async (id) => {
-            const empresa = await api.get<EmpresaFornecedor>(`/empresas/${id}`, { signal: controlador.signal });
-            if (empresa.data.id !== id || !empresa.data.razao_social) throw new Error("Fornecedor indisponível.");
-            return empresa.data;
-          }));
-          if (!vigente) return;
-          for (const resultado of resultados) {
-            if (resultado.status === "fulfilled") nomes[resultado.value.id] = resultado.value.razao_social;
-            else falhas += 1;
-          }
-          setGrupo({ empresaId, solicitacaoId, itens, fornecedores: { ...nomes } });
-        }
-        if (vigente && falhas) setAvisoFornecedores("Alguns nomes de fornecedores estão indisponíveis. As propostas continuam identificadas pelo número da empresa.");
+        for (const item of itens) nomes[item.empresa_fornecedora_id] = `Fornecedor F-${String(item.empresa_fornecedora_id).padStart(4, "0")}`;
+        setGrupo({ empresaId, solicitacaoId, itens, fornecedores: nomes });
       } catch (erro) {
         if (vigente && !controlador.signal.aborted) setErroCotacoes(mensagemErroCotacao(erro));
       } finally {
@@ -212,6 +197,7 @@ export default function ClientCotacoesPage() {
   }
 
   return <div className="c23-page">
+    <p className="c23-alert">As propostas são identificadas por código. A administração registra as decisões e coordena a contratação do serviço.</p>
     <header className="c23-header">
       <div><div className="c23-eyebrow"><FileText size={16} /> PORTAL DO CLIENTE</div><h1>Cotações Recebidas</h1><p>Compare as propostas e escolha a mais adequada ao seu serviço.</p></div>
       <button type="button" className="c23-button" onClick={atualizar} disabled={carregandoSolicitacoes || carregandoCotacoes || decidindo}><RefreshCw size={16} className={carregandoSolicitacoes || carregandoCotacoes ? "c23-spin" : ""} /> Atualizar</button>

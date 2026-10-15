@@ -1,0 +1,11 @@
+.empresas36 .empresas36-filtros label { flex-basis: 160px; }
+.empresas36 .empresas36-filtros .periodo35-busca { flex-basis: 280px; }
+.empresas36-selecionada { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.empresas36-selecionada p { margin: 0; overflow-wrap: anywhere; }
+.empresas36-grupos table { min-width: 1330px; }
+.empresas36-itens table { min-width: 1030px; }
+.empresas36-grupos td:first-child { min-width: 200px; max-width: 320px; overflow-wrap: anywhere; }
+.empresas36-grupos td:first-child strong { white-space: normal; }
+.empresas36-grupos td:not(:first-child) { white-space: nowrap; }
+.empresas36-grupos td small:first-child { margin-top: 0; }
+@media (max-width: 620px) { .empresas36 .empresas36-filtros label { flex-basis: 100%; } }

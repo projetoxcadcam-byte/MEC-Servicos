@@ -1,0 +1,57 @@
+MEC-Serviços D61 FIX1 - Pedidos visíveis e visual do financeiro
+Revision: MEC-SERVICOS-V0.1-D61-FIX1-VISIBILIDADE-VISUAL-2026-10-13
+
+REQUISITO
+D61 concluída com RESULTADO=OK. Não cria tabelas nem modifica dados de negócio.
+O instalador confere fontes e estrutura, faz backup, executa testes e build.
+Solicitações, cotações, preços, despesas, pagamentos, repasses, histórico e
+credenciais permanecem preservados. Nenhuma contratação é confirmada pelo pacote.
+
+O QUE A TELA MOSTRA
+Administração > Pagamentos > Resultado da administração:
+1. Pedidos e orçamentos em andamento: solicitações abertas sem contratação,
+   com proposta pendente/aceita ou ainda aguardando proposta. A data do filtro
+   corresponde à criação da solicitação em UTC. Abrir pedido leva à análise
+   comercial do pedido correto. Proposta aceita tem Conferir contratação.
+2. Resultado por contratação: preço D60 vinculado a uma contratação ativa ou
+   encerrada. O filtro usa a criação da contratação em UTC, como antes.
+3. Histórico sem formação do preço D60: contratações anteriores, com seus
+   valores originais e acesso ao financeiro. Não calcula lucro retroativo.
+As três listas têm páginas independentes. As duas listas de acompanhamento
+não entram nos totais de resultado. Uma solicitação pode ter várias propostas.
+Consultar não aceita cotação, não cria OS, não registra ou estorna despesas.
+Proposta vencida aparece para conferência sem alterar seu estado no banco.
+
+VISUAL
+Financeiro e resultado usam o tema escuro do portal, com títulos legíveis,
+botões e atalhos consistentes, espaçamento e contornos. O botão Consultar
+período fica alinhado aos campos de data e tem tamanho normal.
+Resultado da administração e Extrato financeiro são atalhos separados.
+Inclui foco visível por teclado e adaptação para telas menores.
+
+APLICAR (PowerShell, uma linha por vez)
+Pare backend e frontend com Ctrl+C. Salve o arquivo na raiz do MEC-Servicos.
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D61_FIX1_VISIBILIDADE_VISUAL.py
+Aguarde RESULTADO=OK.
+
+Backend, primeira janela:
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Frontend, outra janela:
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+Mantenha ambos abertos e pressione Ctrl+F5 em http://localhost:5173.
+
+CONFERIR
+1. ADM > Pagamentos: confira os títulos claros e os dois atalhos separados.
+2. Abra Resultado da administração e consulte o período que inclui o pedido.
+3. Em Pedidos e orçamentos em andamento, encontre a solicitação e clique
+   Abrir pedido. Confira aprovação, aceite e contratação na etapa indicada.
+4. No Histórico sem formação do preço D60, confira os contratos #1 a #4
+   quando estiverem dentro do período. Abrir financeiro mantém seu número.
+5. Um orçamento aprovado sem contratação aparece em andamento; só após a
+   confirmação administrativa da contratação ele compõe o resultado D60.
+6. Confira o cadastro/estorno de despesas já validado, contas e saldos.
+7. Cliente e fornecedor continuam sem despesas, resultado e ranking do ADM.

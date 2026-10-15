@@ -1,0 +1,9 @@
+.mec-portal-sem-ranking { display: contents; }
+.mec-portal-sem-ranking a[href$="/ranking"],
+.mec-portal-sem-ranking a[href*="/ranking?"],
+.mec-portal-sem-ranking a[href*="/ranking#"],
+.mec-portal-sem-ranking a[href*="/ranking/"],
+.mec-portal-sem-ranking a[href="ranking"],
+.mec-portal-sem-ranking a[href^="ranking?"],
+.mec-portal-sem-ranking a[href^="ranking#"],
+.mec-portal-sem-ranking a[href^="ranking/"] { display: none !important; }

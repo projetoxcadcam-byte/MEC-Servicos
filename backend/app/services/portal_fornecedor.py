@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import timedelta
 
 from fastapi import HTTPException
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from backend.app.models.capacidade import CapacidadeFornecedor
@@ -22,6 +22,7 @@ from backend.app.schemas.portal_fornecedor import (
 )
 from backend.app.schemas.solicitacao import SolicitacaoServicoLeitura
 from backend.app.services.cotacao import ServicoCotacao
+from backend.app.services.documentacao_cotacao import ServicoDocumentacaoCotacao
 
 
 class ServicoPortalFornecedor:
@@ -74,7 +75,7 @@ class ServicoPortalFornecedor:
             material_nome=material,
         )
 
-    def listar_oportunidades(self, empresa_id: int, deslocamento: int, limite: int) -> OportunidadesFornecedorLeitura:
+    def listar_oportunidades(self, empresa_id: int, deslocamento: int, limite: int, solicitacao_id: int | None = None) -> OportunidadesFornecedorLeitura:
         self.validar_fornecedor(empresa_id)
         ja_enviou = select(CotacaoFornecedor.id).where(
             CotacaoFornecedor.solicitacao_id == SolicitacaoServico.id,
@@ -87,7 +88,10 @@ class ServicoPortalFornecedor:
         filtros = (
             SolicitacaoServico.status == "aberta", self._compativel(empresa_id),
             ~ja_enviou, ~possui_aceita,
+            SolicitacaoServico.id.in_(ServicoDocumentacaoCotacao(self.banco).solicitacoes_disponiveis()),
         )
+        if solicitacao_id is not None:
+            filtros += (SolicitacaoServico.id == solicitacao_id,)
         contagem = self._nomes(select(func.count()).select_from(SolicitacaoServico)).where(*filtros)
         total = self.banco.scalar(contagem) or 0
         consulta = self._nomes(select(
@@ -96,20 +100,34 @@ class ServicoPortalFornecedor:
         itens = [self._solicitacao(*linha) for linha in self.banco.execute(consulta).all()]
         return OportunidadesFornecedorLeitura(itens=itens, total=total, deslocamento=deslocamento, limite=limite)
 
-    def listar_cotacoes(self, empresa_id: int, deslocamento: int, limite: int) -> CotacoesFornecedorLeitura:
+    def listar_cotacoes(self, empresa_id: int, deslocamento: int, limite: int, solicitacao_id: int | None = None, *, somente_leitura: bool = False) -> CotacoesFornecedorLeitura:
+        if somente_leitura:
+            conexao = self.banco.connection()
+            if conexao.dialect.name == "sqlite" and not conexao.connection.driver_connection.in_transaction:
+                self.banco.execute(text("BEGIN"))
         self.validar_fornecedor(empresa_id)
-        filtros = CotacaoFornecedor.empresa_fornecedora_id == empresa_id
+        filtros = [CotacaoFornecedor.empresa_fornecedora_id == empresa_id]
+        if solicitacao_id is not None:
+            filtros.append(CotacaoFornecedor.solicitacao_id == solicitacao_id)
         contagem = self._nomes(
             select(func.count()).select_from(CotacaoFornecedor)
             .join(SolicitacaoServico, SolicitacaoServico.id == CotacaoFornecedor.solicitacao_id)
-        ).where(filtros)
+        ).where(*filtros)
         total = self.banco.scalar(contagem) or 0
         consulta = self._nomes(
             select(CotacaoFornecedor, SolicitacaoServico, Empresa.razao_social, ProcessoFabricacao.nome, Material.nome)
             .join(SolicitacaoServico, SolicitacaoServico.id == CotacaoFornecedor.solicitacao_id)
-        ).where(filtros).order_by(CotacaoFornecedor.id.desc()).offset(deslocamento).limit(limite)
+        ).where(*filtros).order_by(CotacaoFornecedor.id.desc()).offset(deslocamento).limit(limite)
         linhas = self.banco.execute(consulta).all()
         agora = ServicoCotacao._agora_utc_sem_fuso()
+        if somente_leitura:
+            itens = []
+            for cotacao, item, cliente, processo, material in linhas:
+                leitura = CotacaoLeitura.model_validate(cotacao)
+                if cotacao.status == "enviada" and agora >= ServicoCotacao._normalizar_data(cotacao.criada_em) + timedelta(days=cotacao.validade_dias):
+                    leitura = leitura.model_copy(update={"status": "expirada", "encerrada_em": agora, "decidida_por_empresa_id": None})
+                itens.append(CotacaoFornecedorLeitura(**leitura.model_dump(), solicitacao=self._solicitacao(item, cliente, processo, material)))
+            return CotacoesFornecedorLeitura(itens=itens, total=total, deslocamento=deslocamento, limite=limite)
         alterou = False
         for cotacao, *_ in linhas:
             if cotacao.status == "enviada" and agora >= ServicoCotacao._normalizar_data(cotacao.criada_em) + timedelta(days=cotacao.validade_dias):

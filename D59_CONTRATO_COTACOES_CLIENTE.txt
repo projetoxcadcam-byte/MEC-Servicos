@@ -1,0 +1,80 @@
+MEC-Serviços D59 — Consulta de cotações do cliente
+Revisão: MEC-SERVICOS-V0.1-D59-COTACOES-CLIENTE-2026-10-13
+
+BASE
+Exige D58 concluída. O teste em três computadores fica para uma etapa futura;
+esta versão mantém o teste local com as duas janelas já utilizadas.
+
+PROBLEMA CORRIGIDO
+O resumo antigo usava a permissão de decidir para contar cotações válidas.
+Como o cliente não decide propostas, esse contador podia mostrar zero mesmo
+com uma proposta enviada dentro da validade. A D59 calcula essa contagem
+independentemente da permissão de decidir. A administração continua decidindo.
+
+APLICAR (PowerShell)
+Pare o backend e o frontend com Ctrl+C nas duas janelas. Coloque o instalador
+na raiz do MEC-Servicos e execute uma linha por vez:
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_V0_1_D59_COTACOES_CLIENTE.py
+
+Aguarde RESULTADO=OK. O pacote cria backup, executa testes seletivos com saída
+ao vivo e compila o frontend. O tempo depende do computador.
+
+ATIVAR AS DUAS JANELAS
+Primeira janela (backend):
+
+cd C:\Users\Omega\Desktop\MEC-Servicos
+.\.venv\Scripts\python.exe .\MEC_SERVICOS_INICIAR_TESTE_LOCAL.py
+
+Segunda janela (frontend):
+
+cd C:\Users\Omega\Desktop\MEC-Servicos\frontend
+npm.cmd run dev -- --host localhost --port 5173 --strictPort
+
+Mantenha ambas abertas. Abra http://localhost:5173 e atualize com Ctrl+F5.
+
+TESTE DO CLIENTE
+1. Entre como cliente e abra Cotações, ou use o atalho do Dashboard D58.
+2. Confira Cotações encontradas, Aguardando decisão, Aceitas e Expiradas.
+   Aguardando decisão conta propostas enviadas dentro da validade. Se todas
+   estiverem aceitas, recusadas, canceladas ou vencidas, zero é correto.
+3. Percorra Próxima e Anterior, caso haja mais de 20 propostas. Os números do
+   resumo incluem todas as páginas da consulta atual.
+4. Copie um número de solicitação da própria lista, preencha Solicitação #
+   e clique Consultar cotações. Só as propostas desse pedido devem aparecer.
+5. Repita com Cotação #. A busca exata por cotação abre seus detalhes quando
+   ela pertence à consulta. URLs existentes com ?solicitacao= continuam úteis.
+6. Teste Situação e Ordenação. A ordenação por valor ou prazo considera todas
+   as propostas encontradas antes de separar as páginas.
+7. Clique Ver detalhes. Confira solicitação, código do fornecedor, valor,
+   processo, material, quantidade, prazo e validade. O foco vai para o painel.
+8. Se a proposta tiver uma OS vinculada, use Acompanhar produção da OS.
+   Deve abrir o histórico dessa mesma ordem de serviço.
+9. Use Atualizar detalhes, Fechar detalhes, Limpar filtros e Atualizar cotações.
+10. Um número inexistente não retorna dados de outras empresas. Um campo
+    inválido informa o erro sem enviar a consulta.
+
+PRIVACIDADE E REGRAS
+- Só o cliente autenticado da empresa consulta esta nova janela e sua API.
+- O ADM mantém a decisão nas telas administrativas existentes.
+- O fornecedor mantém suas próprias cotações no portal existente.
+- A contraparte é identificada por código; não há nomes ou contatos privados,
+  observações não revisadas, médias ou posição no ranking nesta consulta.
+- Lista, totais e validade usam a mesma fotografia do banco em cada consulta.
+- Vencimento é calculado em UTC; datas aparecem no horário do navegador.
+- Abrir a janela não grava expiração, decisão, contratação, OS ou notificação.
+- Propostas expiradas conservam seu registro original no banco. A janela de
+  consulta apenas apresenta a validade vigente no instante da leitura.
+- Falha, mudança de empresa/usuário ou saída remove resultados anteriores.
+- O código e os estilos da janela antiga são preservados; a rota protegida
+  /cliente/cotacoes passa a usar a nova consulta.
+- Nenhuma tabela, biblioteca, senha ou conta nova é criada.
+
+VALIDAÇÃO
+Testes reais de sessão, empresa, privacidade, contagem válida, paginação,
+filtros, vínculos, vencimento, ausência de gravações e leitura concorrente.
+Regras do ADM, ranking privado e Dashboards D58 preservados. Verificação
+TypeScript, build e fluxos da interface com API real em ambiente isolado.
+Backup, reaplicação, recusa de fontes divergentes e restauração conferidos.
+Relatórios: MEC_SERVICOS_V0_1_D59_COTACOES_CLIENTE_RELATORIO.json e .txt.

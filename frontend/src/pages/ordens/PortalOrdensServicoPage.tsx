@@ -116,7 +116,7 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
     const controlador = new AbortController();
     let vigente = true;
     setErroArquivos(""); setCarregandoArquivos(Boolean(ordem));
-    if (!ordem) return () => { vigente = false; controlador.abort(); };
+    if (!ordem || perfil === "fornecedor") { setCarregandoArquivos(false); return () => { vigente = false; controlador.abort(); }; }
     async function carregarArquivos() {
       try {
         const { data } = await api.get<ArquivoFornecedor[]>(`${base}/ordens-servico/${ordem!.id}/arquivos`, {
@@ -147,11 +147,9 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
   }
 
   function revisar(acao: AcaoOrdem) {
-    if (bloquear || trava.current) return;
+    if (acao !== "iniciar" || perfil !== "fornecedor" || bloquear || trava.current) return;
     setAvisoAcao(null); setSucesso(null);
-    if (acao === "gerar" && contrato && perfil === "cliente") setRevisao({ chave: selecaoChave, dono, acao, contrato });
-    if (acao !== "gerar" && ordem && perfil === "fornecedor" && ordem.contratacao_status === "ativa"
-        && ordem.status === (acao === "iniciar" ? "aberta" : "em_execucao")) setRevisao({ chave: selecaoChave, dono, acao, ordem });
+    if (ordem && ordem.contratacao_status === "ativa" && ordem.status === "aberta") setRevisao({ chave: selecaoChave, dono, acao: "iniciar", ordem });
   }
 
   async function confirmar() {
@@ -217,6 +215,7 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
   const pedido = item?.solicitacao;
   const revisado = modalAtual ? modalAtual.acao === "gerar" ? modalAtual.contrato : modalAtual.ordem : null;
   return <main className="o26-page">
+    <p className="o26-readonly">As ordens e o encerramento dos serviços são registrados pela administração.</p>
     <header className="o26-header"><div><p className="o26-eyebrow"><Wrench size={16} /> PORTAL DO {perfil === "cliente" ? "CLIENTE" : "FORNECEDOR"}</p>
       <h1>Ordens de Serviço</h1><p>{perfil === "cliente" ? "Gere a ordem da contratação e acompanhe a execução do serviço." : "Consulte suas ordens e registre o início e a conclusão do serviço."}</p></div>
       <button className="o26-button" disabled={enviando || carregando} onClick={() => { setAvisoAcao(null); setAtualizacao((v) => v + 1); }}><RefreshCw size={16} /> Atualizar</button></header>
@@ -227,12 +226,12 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
       {perfil === "cliente" && <article><span>Contratações prontas para gerar ordem</span><strong>{grupoAtual ? grupoAtual.contratos.total : "—"}</strong><small>Ativas e ainda sem ordem de serviço</small></article>}</div>
     <nav className="o26-tabs" aria-label="Consultas de ordens de serviço">
       <button className={`o26-button ${visaoAtual === "ordens" ? "o26-tab-active" : ""}`} aria-pressed={visaoAtual === "ordens"} disabled={enviando} onClick={() => mudarVisao("ordens")}><Wrench size={16} /> Ordens de Serviço</button>
-      {perfil === "cliente" && <button className={`o26-button ${visaoAtual === "contratos" ? "o26-tab-active" : ""}`} aria-pressed={visaoAtual === "contratos"} disabled={enviando} onClick={() => mudarVisao("contratos")}><ClipboardList size={16} /> Contratações para gerar ordem</button>}
+      {perfil === "cliente" && <button className={`o26-button ${visaoAtual === "contratos" ? "o26-tab-active" : ""}`} aria-pressed={visaoAtual === "contratos"} disabled={enviando} onClick={() => mudarVisao("contratos")}><ClipboardList size={16} /> Contratações aguardando ordem</button>}
       <Link className="o26-button" to={`/${perfil}/contratacoes`}><Handshake size={16} /> Contratações</Link>
     </nav>
     <section className="o26-panel" aria-busy={carregando}><div className="o26-section-head"><div><h2>{visaoAtual === "contratos" ? "Contratações disponíveis" : "Ordens da sua empresa"}</h2><p>{visaoAtual === "contratos" ? "Selecione a contratação e revise os dados antes de gerar a ordem." : "Selecione a ordem para consultar os dados, as datas e os arquivos técnicos."}</p></div></div>
       {carregando ? <div className="o26-empty" role="status">Carregando {visaoAtual === "contratos" ? "contratações" : "ordens"}…</div>
-        : !erroLista && linhas.length === 0 ? <div className="o26-empty"><Wrench size={32} /><h3>{visaoAtual === "contratos" ? "Nenhuma contratação pronta para gerar ordem" : "Nenhuma ordem de serviço cadastrada"}</h3><p>{visaoAtual === "contratos" ? "Crie uma contratação ativa. Cada contratação pode ter uma única ordem de serviço." : perfil === "cliente" ? "Abra Contratações para gerar ordem e selecione uma contratação ativa." : "A ordem aparecerá aqui quando o cliente gerá-la a partir da contratação."}</p></div>
+        : !erroLista && linhas.length === 0 ? <div className="o26-empty"><Wrench size={32} /><h3>{visaoAtual === "contratos" ? "Nenhuma contratação pronta para gerar ordem" : "Nenhuma ordem de serviço cadastrada"}</h3><p>{visaoAtual === "contratos" ? "A administração registrará a contratação e a ordem. Cada contratação pode ter uma única ordem de serviço." : perfil === "cliente" ? "Abra Contratações aguardando ordem e selecione uma contratação ativa." : "A ordem aparecerá aqui quando a administração encaminhar o serviço."}</p></div>
         : grupoAtual && <div className="o26-table-wrap"><table><thead><tr><th>Ordem / referência</th><th>{perfil === "cliente" ? "Fornecedor" : "Cliente"}</th><th>Valor total</th><th>Prazo</th><th>Situação</th><th><span className="o26-sr-only">Ações</span></th></tr></thead><tbody>
           {linhas.map((linha) => { const os = "contratacao_id" in linha; const ativa = linha.id === item?.id;
             return <tr key={linha.id} className={ativa ? "o26-selected" : ""}><td><strong>{os ? `OS #${linha.id}` : `Contratação #${linha.id}`}</strong><small>{`Solicitação #${linha.solicitacao_id} · ${os ? `Contratação #${linha.contratacao_id}` : `Cotação #${linha.cotacao_id}`}`}</small></td>
@@ -253,7 +252,8 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
           <div className="o26-wide"><dt>Dimensões máximas X / Y / Z</dt><dd>{[pedido.dimensao_x_maxima_mm, pedido.dimensao_y_maxima_mm, pedido.dimensao_z_maxima_mm].map((v) => formatarMedidaContrato(v)).join(" × ")} mm</dd></div></dl>
         <h3>Observações da solicitação</h3><p className="o26-observacoes">{pedido.observacoes || "Sem observações."}</p>
         {ordem && <><div className="o26-section-head o26-files-head"><h3>Arquivos técnicos</h3><button className="o26-button" disabled={carregandoArquivos || baixando !== null} onClick={() => setAtualizacaoArquivos((v) => v + 1)}>Atualizar arquivos</button></div>
-          {erroArquivos && <p className="o26-alert o26-error" role="alert">{erroArquivos}</p>}
+          {perfil === "fornecedor" && <p>Os arquivos técnicos serão encaminhados pela administração após revisão.</p>}
+        {erroArquivos && <p className="o26-alert o26-error" role="alert">{erroArquivos}</p>}
           {carregandoArquivos ? <p role="status">Carregando arquivos…</p> : !erroArquivos && arquivosAtuais.length === 0 ? <p>Nenhum arquivo ativo vinculado a esta solicitação.</p> : <ul className="o26-files">{arquivosAtuais.map((a) => <li key={a.id}><FileText size={19} /><span><strong>{a.nome_original}</strong><small>{a.extensao.toUpperCase()} · {formatarTamanhoArquivo(a.tamanho_bytes)}</small></span><button className="o26-button" disabled={baixando !== null} onClick={() => void baixar(a)}><Download size={15} /> {baixando === a.id ? "Baixando…" : "Baixar"}</button></li>)}</ul>}
         </>}
       </section>
@@ -264,11 +264,11 @@ export default function PortalOrdensServicoPage({ perfil }: { perfil: PerfilOrde
             <div><dt>Iniciada em</dt><dd>{ordem.iniciada_em ? formatarInstanteCotacao(instanteUtc(ordem.iniciada_em)) : "Ainda não iniciada"}</dd></div><div><dt>Concluída em</dt><dd>{ordem.concluida_em ? formatarInstanteCotacao(instanteUtc(ordem.concluida_em)) : "Ainda não concluída"}</dd></div>
             {ordem.cancelada_em && <div><dt>Cancelada em</dt><dd>{formatarInstanteCotacao(instanteUtc(ordem.cancelada_em))}</dd></div>}</>}
         </dl><h3>{ordem ? "Observações da ordem" : "Observações da contratação"}</h3><p className="o26-observacoes">{item.observacoes || "Sem observações."}</p>
-        {contrato && perfil === "cliente" && <div className="o26-operacao"><p>A ordem será aberta com o valor e o prazo contratados e a quantidade da solicitação.</p><button className="o26-button o26-primary" disabled={bloquear} onClick={() => revisar("gerar")}><ClipboardList size={16} /> Revisar ordem de serviço</button></div>}
+        {contrato && perfil === "cliente" && <p>A administração registra a ordem de serviço e encaminha a execução.</p>}
         {ordem && perfil === "fornecedor" && <div className="o26-operacao">
           {ordem.contratacao_status !== "ativa" ? <p>A contratação está {rotuloContratacao(ordem.contratacao_status).toLowerCase()}. A execução da ordem está indisponível.</p>
             : ordem.status === "aberta" ? <><p>Registre o início quando começar a executar o serviço.</p><button className="o26-button o26-primary" disabled={bloquear} onClick={() => revisar("iniciar")}><Play size={16} /> Iniciar serviço</button></>
-            : ordem.status === "em_execucao" ? <><p>Registre a conclusão após finalizar a execução do serviço.</p><button className="o26-button o26-primary" disabled={bloquear} onClick={() => revisar("concluir")}><CheckCircle2 size={16} /> Concluir serviço</button></>
+            : ordem.status === "em_execucao" ? <p>Quando terminar a produção, registre Pronto para coleta na página Produção. A administração coordena a coleta, a avaliação das peças e o encerramento.</p>
             : <p>{ordem.status === "concluida" ? "O serviço foi concluído." : "Esta ordem não permite novas ações de execução."}</p>}
         </div>}
         {ordem && perfil === "cliente" && <p>A execução é atualizada pelo fornecedor responsável. Use Atualizar para conferir a situação mais recente.</p>}

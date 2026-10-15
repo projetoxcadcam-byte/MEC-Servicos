@@ -48,8 +48,9 @@ export default function PortalContratacoesPage({ perfil }: { perfil: PerfilContr
   const cotacao = visaoAtual === "aceitas" ? aceitas.find((item) => item.id === selecionadoId) ?? aceitas[0] : undefined;
   const solicitacao = contrato?.solicitacao ?? cotacao?.solicitacao;
   const selecaoChave = `${perfil}:${empresaId}:${visaoAtual}:${contrato?.id ?? cotacao?.id ?? 0}`;
+  const bloqueioAdministrativo = true;
   const textoObservacoes = rascunho.chave === selecaoChave ? rascunho.texto : "";
-  const modalAtual = revisao?.chave === selecaoChave && revisao.empresaId === empresaId && perfil === "cliente" && grupoAtual ? revisao : null;
+  const modalAtual = !bloqueioAdministrativo && revisao?.chave === selecaoChave && revisao.empresaId === empresaId && perfil === "cliente" && grupoAtual ? revisao : null;
   const arquivosAtuais = arquivos?.chave === selecaoChave ? arquivos.itens : [];
   const bloquear = carregando || enviando || !grupoAtual;
   const parametrosEmpresa = perfil === "cliente" ? { empresa_cliente_id: empresaId } : { empresa_fornecedora_id: empresaId };
@@ -119,7 +120,7 @@ export default function PortalContratacoesPage({ perfil }: { perfil: PerfilContr
     const controlador = new AbortController();
     let vigente = true;
     setErroArquivos(""); setCarregandoArquivos(Boolean(contrato));
-    if (!contrato) return () => { vigente = false; controlador.abort(); };
+    if (!contrato || perfil === "fornecedor") { setCarregandoArquivos(false); return () => { vigente = false; controlador.abort(); }; }
     async function carregarArquivos() {
       try {
         const { data } = await api.get<ArquivoFornecedor[]>(`${base}/contratacoes/${contrato!.id}/arquivos`, {
@@ -212,10 +213,11 @@ export default function PortalContratacoesPage({ perfil }: { perfil: PerfilContr
   const total = pagina?.total ?? 0;
   const linhas = visaoAtual === "aceitas" ? aceitas : contratos;
   return <main className="k25-page">
+    <p className="k25-readonly">A administração decide as propostas, registra as contratações e faz os encaminhamentos. O contato entre as partes passa pela administração.</p>
     <header className="k25-header">
       <div><p className="k25-eyebrow"><Handshake size={16} /> PORTAL DO {perfil === "cliente" ? "CLIENTE" : "FORNECEDOR"}</p>
         <h1>{perfil === "cliente" ? "Minhas Contratações" : "Contratações"}</h1>
-        <p>{perfil === "cliente" ? "Contrate uma proposta aceita e acompanhe os serviços da sua empresa." : "Consulte os serviços contratados pelos seus clientes."}</p></div>
+        <p>{perfil === "cliente" ? "Consulte as contratações encaminhadas pela administração." : "Consulte os serviços encaminhados pela administração."}</p></div>
       <button className="k25-button" disabled={enviando || carregando} onClick={() => setAtualizacao((valor) => valor + 1)}><RefreshCw size={16} /> Atualizar</button>
     </header>
     {sucesso?.dono === `${perfil}:${empresaId}` && <p className="k25-alert k25-success" role="status"><CheckCircle2 size={18} /> {sucesso.texto}</p>}
@@ -255,7 +257,8 @@ export default function PortalContratacoesPage({ perfil }: { perfil: PerfilContr
         <h3>Observações da solicitação</h3><p className="k25-observacoes">{solicitacao.observacoes || "Sem observações."}</p>
         {perfil === "cliente" && <Link className="k25-button" to={`/cliente/cotacoes?solicitacao=${solicitacao.id}`}>Consultar cotações desta solicitação</Link>}
         {contrato && <><div className="k25-section-head k25-files-head"><h3>Arquivos técnicos</h3><button className="k25-button" disabled={carregandoArquivos || baixando !== null} onClick={() => setAtualizacaoArquivos((valor) => valor + 1)}>Atualizar arquivos</button></div>
-          {erroArquivos && <p className="k25-alert k25-error" role="alert">{erroArquivos}</p>}
+          {perfil === "fornecedor" && <p>Os arquivos técnicos serão encaminhados pela administração após revisão.</p>}
+        {erroArquivos && <p className="k25-alert k25-error" role="alert">{erroArquivos}</p>}
           {carregandoArquivos ? <p role="status">Carregando arquivos…</p> : !erroArquivos && arquivosAtuais.length === 0 ? <p>Nenhum arquivo ativo vinculado a esta solicitação.</p> : <ul className="k25-files">{arquivosAtuais.map((arquivo) => <li key={arquivo.id}><FileText size={19} /><span><strong>{arquivo.nome_original}</strong><small>{arquivo.extensao.toUpperCase()} · {formatarTamanhoArquivo(arquivo.tamanho_bytes)}</small></span><button className="k25-button" disabled={baixando !== null} onClick={() => void baixar(arquivo)}><Download size={15} /> {baixando === arquivo.id ? "Baixando…" : "Baixar"}</button></li>)}</ul>}
         </>}
       </section>
@@ -267,7 +270,7 @@ export default function PortalContratacoesPage({ perfil }: { perfil: PerfilContr
           {cotacao && <div className="k25-wide"><dt>Proposta aceita em</dt><dd>{formatarInstanteCotacao(instanteUtc(cotacao.encerrada_em))}</dd></div>}
         </dl>
         <h3>{contrato ? "Observações da contratação" : "Observações da proposta aceita"}</h3><p className="k25-observacoes">{(contrato ?? cotacao)!.observacoes || "Sem observações."}</p>
-        {cotacao && perfil === "cliente" && <form className="k25-form" onSubmit={revisar}><fieldset disabled={bloquear}><label htmlFor="k25-observacoes">Observações da contratação (opcional)</label>
+        {cotacao && perfil === "cliente" && !bloqueioAdministrativo && <form className="k25-form" onSubmit={revisar}><fieldset disabled={bloquear}><label htmlFor="k25-observacoes">Observações da contratação (opcional)</label>
           <textarea id="k25-observacoes" maxLength={5000} rows={4} value={textoObservacoes} onChange={(evento) => { setRascunho({ chave: selecaoChave, texto: evento.target.value }); setErroEnvio(""); }} placeholder="Registre os termos adicionais já acordados com o fornecedor." />
           <p>O valor e o prazo serão os da cotação aceita. Ao contratar, a solicitação será encerrada para novas propostas.</p>
           {erroEnvio && <p className="k25-alert k25-error" role="alert">{erroEnvio}</p>}
